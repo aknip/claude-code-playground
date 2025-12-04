@@ -1,0 +1,237 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f5f5f5;
+  color: #1f2937;
+  line-height: 1.5;
+}
+
+.demo-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.demo-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.demo-header h1 {
+  margin: 0 0 8px 0;
+  font-size: 2rem;
+  color: #111827;
+}
+
+.demo-header p {
+  margin: 0;
+  color: #6b7280;
+}
+
+.demo-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 768px) {
+  .demo-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.demo-controls {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+}
+
+.demo-controls h2 {
+  margin: 0 0 16px 0;
+  font-size: 1.1rem;
+  color: #374151;
+}
+
+.control-group {
+  margin-bottom: 16px;
+}
+
+.control-group > label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+.control-group > label:not(:has(input)) {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.control-group input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.button-group {
+  display: flex;
+  gap: 4px;
+}
+
+.button-group button {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.button-group button:hover {
+  background: #f9fafb;
+}
+
+.button-group button.active {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+button.secondary {
+  width: 100%;
+  padding: 10px 16px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+button.secondary:hover {
+  background: #f3f4f6;
+}
+
+.demo-preview {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.demo-preview h2 {
+  margin: 0 0 16px 0;
+  font-size: 1.1rem;
+  color: #374151;
+}
+
+.preview-area {
+  display: flex;
+  justify-content: center;
+  padding: 32px;
+  background: #f9fafb;
+  border-radius: 8px;
+  min-height: 300px;
+  align-items: flex-start;
+}
+
+.preview-compact {
+  align-items: center;
+}
+
+.preview-card {
+  align-items: center;
+}
+
+.demo-code {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.demo-code h2 {
+  margin: 0 0 16px 0;
+  font-size: 1.1rem;
+  color: #374151;
+}
+
+.demo-code pre {
+  margin: 0;
+  padding: 16px;
+  background: #1f2937;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.demo-code code {
+  color: #e5e7eb;
+  font-family: 'SF Mono', Monaco, monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #111827;
+    color: #f9fafb;
+  }
+
+  .demo-header h1 {
+    color: #f9fafb;
+  }
+
+  .demo-controls,
+  .demo-preview,
+  .demo-code {
+    background: #1f2937;
+  }
+
+  .demo-controls h2,
+  .demo-preview h2,
+  .demo-code h2 {
+    color: #e5e7eb;
+  }
+
+  .control-group > label {
+    color: #d1d5db;
+  }
+
+  .button-group button {
+    background: #374151;
+    border-color: #4b5563;
+    color: #e5e7eb;
+  }
+
+  .button-group button:hover {
+    background: #4b5563;
+  }
+
+  button.secondary {
+    background: #374151;
+    border-color: #4b5563;
+    color: #e5e7eb;
+  }
+
+  button.secondary:hover {
+    background: #4b5563;
+  }
+
+  .preview-area {
+    background: #111827;
+  }
+}
