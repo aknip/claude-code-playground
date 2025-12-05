@@ -17,7 +17,11 @@ https://github.com/anthropics/skills
 
 
 
+# Initial Setup
+- just the ./claude/skills folder with the two skills: frontend-design and web-artifacts-builder (from Anthropic Repo)
 
 # What i have done within Claude:
 
 - Initialize a frontend repo named "mockup"
+- erstelle eine Landing page in einem modernen, reduziereten design für eine
+ KFZ-Versicherung 
