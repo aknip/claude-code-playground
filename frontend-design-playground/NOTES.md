@@ -5,10 +5,13 @@ https://www.claude.com/blog/improving-frontend-design-through-skills?__readwiseL
 https://github.com/anthropics/skills
 
 
-#   To start developing:
+#   Quickstart
   cd mockup
   pnpm dev
+  http://localhost:5173
 
+
+#   To start developing:
   Import components like:
   import { Button } from '@/components/ui/button'
   import { Card, CardHeader, CardTitle, CardContent } from

@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(bash:*)",
-      "Bash(NPM_CONFIG_REGISTRY=https://registry.npmjs.org bash:*)"
+      "Bash(NPM_CONFIG_REGISTRY=https://registry.npmjs.org bash:*)",
+      "Skill(frontend-design)",
+      "Bash(pnpm dev)"
     ],
     "deny": [],
     "ask": []
