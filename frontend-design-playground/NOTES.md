@@ -5,16 +5,16 @@ https://www.claude.com/blog/improving-frontend-design-through-skills
 
 
 #   Quickstart
-  cd mockup
-  pnpm dev
-  http://localhost:5173
+cd mockup
+pnpm dev
+http://localhost:5173
 
 
 #   To start developing:
-  Import components like:
-  import { Button } from '@/components/ui/button'
-  import { Card, CardHeader, CardTitle, CardContent } from
-  '@/components/ui/card'
+Import components like:
+import { Button } from '@/components/ui/button'
+import { Card, CardHeader, CardTitle, CardContent } from
+'@/components/ui/card'
 
 
 
@@ -24,7 +24,15 @@ https://www.claude.com/blog/improving-frontend-design-through-skills
 
 
 # What i have done within Claude:
-- Initialize a frontend repo named "mockup"
-- erstelle eine Landing page in einem modernen, reduziereten design für eine
+- @.claude/skills/web-artifacts-builder/ erstelle ein frontend repo "mockup"
+- @.claude/skills/web-artifacts-builder/ erstelle eine Landing page in einem modernen, reduziereten design für eine
  KFZ-Versicherung 
-- Lies die folgende Spezifikation und erstelle eine Mockup-Version der beschriebenen Anwendung im Verzeichnis "mockup"  @Spezifikation-Howden-KFZ-Marktplatz.md 
+- @.claude/skills/web-artifacts-builder/ Lies die folgende Spezifikation und erstelle eine Mockup-Version der beschriebenen Anwendung im Verzeichnis "mockup"  @Spezifikation-Howden-KFZ-Marktplatz.md 
+
+
+
+# shadcn hello world
+- Installation nach https://ui.shadcn.com/docs/installation/vite
+- Alle Komponenten hinzufügen: `npx shadcn@latest add --all``
+
+
