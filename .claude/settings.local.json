@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx --version:*)",
+      "Bash(timeout 5 npx:*)",
+      "Bash(npx @playwright/mcp@latest:*)",
+      "Bash(npx playwright:*)",
+      "Bash(timeout 10 npx:*)",
+      "Bash(cat:*)",
+      "Bash(npm root:*)",
+      "Bash(npm update:*)",
+      "Bash(timeout 5 node:*)",
+      "Bash(echo:*)",
+      "Bash(npm install:*)"
+    ]
+  }
+}

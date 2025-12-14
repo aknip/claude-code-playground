@@ -1,0 +1,14 @@
+{
+  "name": "playwright-playground",
+  "version": "1.0.0",
+  "description": "This directory contains templates and examples for implementing an automated design review system that provides feedback on front-end code changes with design implications. This workflow allows engineers to automatically run design reviews on pull requests or working changes, ensuring design consistency and quality throughout the development process.",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^25.0.1"
+  }
+}

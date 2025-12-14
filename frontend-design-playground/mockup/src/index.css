@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 10%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+    --primary: 0 0% 10%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 10%;
+    --muted: 0 0% 92%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 10%;
+    --destructive: 0 0% 30%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 20%;
+    --input: 0 0% 80%;
+    --ring: 0 0% 10%;
+    --radius: 0;
+
+    /* Wireframe specific */
+    --wireframe-line: 0 0% 20%;
+    --wireframe-fill: 0 0% 94%;
+    --wireframe-fill-dark: 0 0% 85%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+}
+
+/* Wireframe utilities */
+@layer utilities {
+  .wireframe-box {
+    @apply border border-black/20 bg-[hsl(var(--wireframe-fill))];
+  }
+
+  .wireframe-box-dark {
+    @apply border border-black/30 bg-[hsl(var(--wireframe-fill-dark))];
+  }
+
+  .wireframe-outline {
+    @apply border border-black/20 bg-transparent;
+  }
+
+  .wireframe-dashed {
+    @apply border border-dashed border-black/30;
+  }
+}
