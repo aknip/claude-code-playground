@@ -11,7 +11,7 @@ claude mcp add playwright npx @playwright/mcp@latest
 
 
 
-# Check Playwright MCP Server
+## Check Playwright MCP Server
 1. Start Claude
 claude
 2. Within Claude: Check status
@@ -19,8 +19,18 @@ claude
 3. When not connecting, ask Claude Code for help to fix it. Its often related to version conflicts / outdated versions of the globally installed Playwright
 
 
+## In Claude: Execute a test
+```
 Navigate into this website "https://www.saucedemo.com/"
 Login with user name as "standard_user" and password as "secret_sauce"
+Verify that product page is loaded with products.
+```
+
+
+## Use the three Playwright Agents:
+https://medium.com/@hbsasithadilshan/supercharge-playwright-automation-mcp-servers-playwright-ai-agents-github-copilot-in-action-6521a25ae61e
+
+
 
 
 
@@ -28,9 +38,6 @@ Optional: Konfiguration anpassen
 Wenn du Feinheiten wie Headless/Browser-Typ etc. setzen willst, kannst du zusätzliche Args hinter  @playwright/mcp@latest  hängen, z.B.:
 claude mcp add playwright \
   npx @playwright/mcp@latest --browser=chrome --headless
-
-
-
 
 
 
@@ -75,6 +82,10 @@ npx playwright show-report
 
 
 # Sources:
+
+Tutorial:
+https://medium.com/@hbsasithadilshan/supercharge-playwright-automation-mcp-servers-playwright-ai-agents-github-copilot-in-action-6521a25ae61e
+
 
 https://playwright.dev/docs/intro
 

@@ -4,7 +4,7 @@
 
 **shadcn/ui** ist kein „fertiges CSS-Theme“, sondern eine Sammlung von Komponenten, die du **in dein Projekt kopierst** und die dann über **Tailwind CSS + Design Tokens** gestylt werden. Das Theming passiert vor allem über:
 
-1. **Semantische CSS-Variablen** (Design Tokens) in deiner globalen CSS-Datei (z. B. `app/globals.css`)
+1. **Semantische CSS-Variablen** (Design Tokens) in deiner globalen CSS-Datei (z. B. `src/index.css`)
 2. **Tailwind Utilities**, die diese Variablen konsumieren (`bg-background`, `text-foreground`, `bg-primary`, …)
 3. Optional: **Komponenten-spezifische Klassen/Varianten** (z. B. `Button`-Sizes mit `px-4 py-2`, `rounded-md`, …)
 
@@ -22,7 +22,7 @@ In den offiziellen shadcn/ui Docs kannst du wählen zwischen:
 Damit shadcn/ui weiß, dass du mit CSS-Variablen themen willst, muss in deiner `components.json` Folgendes aktiv sein:
 
 * `tailwind.cssVariables: true`
-* `tailwind.css`: Pfad zu deiner globalen CSS Datei (z. B. `app/globals.css`)
+* `tailwind.css`: Pfad zu deiner globalen CSS Datei (z. B. `src/index.css`)
 
 Beispiel (sinngemäß, wichtig sind die Felder `cssVariables`, `css`, `baseColor`):
 
@@ -30,18 +30,18 @@ Beispiel (sinngemäß, wichtig sind die Felder `cssVariables`, `css`, `baseColor
 {
   "style": "new-york",
   "tailwind": {
-    "css": "app/globals.css",
+    "css": "src/index.css",
     "baseColor": "neutral",
     "cssVariables": true
   }
 }
 ```
 
-> **Merke:** `baseColor` beeinflusst, welche „Basis-Neutralpalette“ die CLI/Theme-Templates anfangs nutzen. Dein echtes Custom Theme definierst du danach über die Variablen in `globals.css`.
+> **Merke:** `baseColor` beeinflusst, welche „Basis-Neutralpalette“ die CLI/Theme-Templates anfangs nutzen. Dein echtes Custom Theme definierst du danach über die Variablen in `index.css`.
 
 ---
 
-#### 2.2 `app/globals.css` – Dein Theme-Zentrum
+#### 2.2 `src/index.css` – Dein Theme-Zentrum
 
 In shadcn/ui + Tailwind v4 ist das typische Muster:
 
@@ -264,7 +264,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 ### 4.3 Tailwind „auf die Next.js Font-Variablen zeigen lassen“
 
-Jetzt willst du, dass `font-sans` wirklich deinen Inter nutzt. Dafür setzt du in deiner `globals.css`:
+Jetzt willst du, dass `font-sans` wirklich deinen Inter nutzt. Dafür setzt du in deiner `index.css`:
 
 * `--font-sans: var(--font-inter);`
 * `--font-mono: var(--font-mono);`

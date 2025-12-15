@@ -64,20 +64,14 @@ const getStatusVariant = (status: string) => {
 
 function App() {
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header with photographic background */}
-      <header className="header-bg relative h-64 bg-cover bg-center bg-no-repeat">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-background" />
-        <div className="relative mx-auto max-w-7xl px-8 pt-16">
-          <h1 className="text-4xl font-bold tracking-tight text-white drop-shadow-lg">Dashboard</h1>
-          <p className="mt-2 text-lg text-white/80">
+    <div className="min-h-screen bg-background p-8">
+      <div className="mx-auto max-w-7xl space-y-8">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+          <p className="text-muted-foreground">
             Overview of your business metrics
           </p>
         </div>
-      </header>
-
-      <div className="mx-auto max-w-7xl space-y-8 px-8 py-8 -mt-16">
-        <div className="h-8" />
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <Card>

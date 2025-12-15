@@ -11,7 +11,8 @@
       "Bash(npm update:*)",
       "Bash(timeout 5 node:*)",
       "Bash(echo:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)"
     ]
   }
 }

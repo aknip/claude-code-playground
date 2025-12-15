@@ -54,7 +54,7 @@ Configured in `vite.config.ts` and `components.json`:
 - `@/hooks` for custom hooks
 
 ### Styling
-- Tailwind with CSS variables defined in `src/index.css`
+- Theming (Tailwind, shadcn-ui) with CSS variables defined in `src/index.css`
 - Dark mode support via class strategy
 - Custom color tokens: `background`, `foreground`, `primary`, `secondary`, `destructive`, `muted`, `accent`, `popover`, `card`
 - Use `cn()` utility from `@/lib/utils` for conditional class merging
