@@ -36,4 +36,5 @@ import { Card, CardHeader, CardTitle, CardContent } from
 - Alle Komponenten hinzufügen: `npx shadcn@latest add --all``
 - Playwright MCP added
 
-
+## In progress...
+npx @jpisnice/shadcn-ui-mcp-server --github-api-key YOURKEY_ghp_xxx
