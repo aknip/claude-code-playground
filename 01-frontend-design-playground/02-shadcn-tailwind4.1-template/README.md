@@ -25,6 +25,15 @@ http://localhost:5173
 ## Skills
 .claude/skills/frontend-design
 
+## MCP
+add github key to shadcn MCP in `.mcp.json`
+```
+"shadcn-ui": {
+    "command": "npx",
+    "args": ["@jpisnice/shadcn-ui-mcp-server", "--github-api-key", "YOUR KEY ghp_"]
+}
+```
+
 
 ## How was this built 
 

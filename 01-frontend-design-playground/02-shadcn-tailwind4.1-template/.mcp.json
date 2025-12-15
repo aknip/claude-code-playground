@@ -10,7 +10,7 @@
     },
     "shadcn-ui": {
       "command": "npx",
-      "args": ["@jpisnice/shadcn-ui-mcp-server", "--github-api-key", "YOUR-KEY-HERE-ghp_xxx"]
+      "args": ["@jpisnice/shadcn-ui-mcp-server"]
     }
   }
 }
