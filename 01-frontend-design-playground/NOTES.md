@@ -31,8 +31,9 @@ import { Card, CardHeader, CardTitle, CardContent } from
 
 
 
-# shadcn hello world
+# How was this installed?
 - Installation nach https://ui.shadcn.com/docs/installation/vite
 - Alle Komponenten hinzufügen: `npx shadcn@latest add --all``
+- Playwright MCP added
 
 
