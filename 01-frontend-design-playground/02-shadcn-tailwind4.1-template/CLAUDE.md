@@ -55,7 +55,8 @@ Configured in `vite.config.ts`:
 
 ### Styling (Tailwind CSS 4.1)
 This project uses Tailwind CSS 4.1's new CSS-first configuration:
-- All theme configuration is in `src/index.css` using `@theme inline` directive
+- All theme configuration is in `src/index.css` using `@theme inline` directive. 
+- One of the `index.css-*.css`is merged dynamically at runtime to the `src/index.css` (see compontent theme-toggle and theme-provider). Default is `index.css-default.css`
 - CSS variables defined in `:root` and `.dark` selectors using OKLCH color space
 - Dark mode via class strategy (`@custom-variant dark (&:is(.dark *))`)
 - Color tokens: `background`, `foreground`, `primary`, `secondary`, `destructive`, `muted`, `accent`, `popover`, `card`, `sidebar`, `chart-1` through `chart-5`
@@ -64,7 +65,8 @@ This project uses Tailwind CSS 4.1's new CSS-first configuration:
 
 
 ### Themes (styling configurations)
-There a some prepared themes (css configurations) which can be used by copying their content to `src/index.css` to see the effect:
+There a some prepared themes (css configurations) which can toggled with a button at the top right corner of the page.
+- `src/index.css-default.css`
 - `src/index.css-colored.css`
 - `src/index.css-final-design.css`
 - `src/index.css-wireframe.css`

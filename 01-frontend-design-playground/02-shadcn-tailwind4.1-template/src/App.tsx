@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { ThemeToggle } from "@/components/theme-toggle"
 import {
   type ChartConfig,
   ChartContainer,
@@ -65,6 +66,9 @@ const getStatusVariant = (status: string) => {
 function App() {
   return (
     <div className="min-h-screen bg-background">
+      {/* Theme Toggle - fixed position */}
+      <ThemeToggle />
+
       {/* Header with photographic background */}
       <header className="header-bg relative h-64 bg-cover bg-center bg-no-repeat">
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-background" />

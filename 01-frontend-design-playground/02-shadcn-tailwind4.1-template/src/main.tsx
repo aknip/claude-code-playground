@@ -1,10 +1,14 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
+import './base.css' // Base Tailwind CSS (compiled at build time)
+// Theme-specific CSS is loaded dynamically by ThemeProvider
 import App from './App.tsx'
+import { ThemeProvider } from '@/components/theme-provider'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
   </StrictMode>,
 )
