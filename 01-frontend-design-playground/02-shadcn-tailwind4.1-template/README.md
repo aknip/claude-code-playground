@@ -25,7 +25,7 @@ http://localhost:5173
 ## Skills
 .claude/skills/frontend-design
 
-## MCP
+## MCP Configuration
 add github key to shadcn MCP in `.mcp.json`
 ```
 "shadcn-ui": {
