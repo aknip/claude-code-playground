@@ -38,3 +38,18 @@ import { Card, CardHeader, CardTitle, CardContent } from
 
 ## In progress...
 npx @jpisnice/shadcn-ui-mcp-server --github-api-key YOURKEY_ghp_xxx
+
+
+
+
+
+
+
+
+# Notes, drafts, prompts....
+
+Ergänze einen Umschalter (Toggle) zur Umschaltung des Themes zur Laufzeit.
+Darstellung: Ein Icon, oben rechts im Header, ähnlich "Dark/Ligh"-Theme-Umschaltern
+Aufgabe: Beim Klick auf den "Umschalter" wird zwischen verschiedenen css-Themes umgeschaltet und diese zur Laufzeit ausgetauscht.
+Bei jedem Klick wird auf das nächste verfügbare Theme umgeschaltet.
+Im Verzeichnis `src` befinden sich die Vorlagen für die Themes: `src/index.css-*.css"
