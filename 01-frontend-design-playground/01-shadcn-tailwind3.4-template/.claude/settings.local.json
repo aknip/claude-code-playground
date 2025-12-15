@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bash:*)",
+      "Bash(NPM_CONFIG_REGISTRY=https://registry.npmjs.org bash:*)",
+      "Skill(frontend-design)",
+      "Bash(pnpm dev)",
+      "Bash(pnpm add:*)",
+      "Bash(NPM_CONFIG_REGISTRY=https://registry.npmjs.org pnpm add:*)",
+      "Bash(pnpm test:*)",
+      "Skill(web-artifacts-builder)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
