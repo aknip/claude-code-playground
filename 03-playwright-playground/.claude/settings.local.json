@@ -2,17 +2,18 @@
   "permissions": {
     "allow": [
       "Bash",
-      "mcp__playwright__*",
-      "mcp__playwright__browser_navigate",
-      "mcp__playwright__browser_type",
-      "mcp__playwright__browser_click"
+      "mcp__playwright-test__browser_navigate",
+      "mcp__playwright-test__generator_setup_page",
+      "mcp__playwright-test__browser_type",
+      "mcp__playwright-test__browser_click",
+      "mcp__playwright-test__browser_verify_text_visible"
     ],
     "deny": [],
     "ask": [],
     "defaultMode": "acceptEdits"
   },
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "playwright"
-  ],
-  "enableAllProjectMcpServers": true
+  ]
 }

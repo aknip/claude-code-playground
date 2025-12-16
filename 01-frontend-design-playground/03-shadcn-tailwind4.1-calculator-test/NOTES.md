@@ -5,6 +5,11 @@
 - Testfälle E2E erstellen lassen => Playwright Agents !
 
 
+## 1st test ???
+@.claude/agents/playwright-test-planner.md : create plan for this scenario: 
+Navigate into this website "https://www.saucedemo.com/"
+Login with user name as "standard_user" and password as "secret_sauce"
+Verify that product page is loaded with products.
 =====================================================================
 
 

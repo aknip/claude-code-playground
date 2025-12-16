@@ -15,7 +15,13 @@
       "mcp__playwright__browser_console_messages",
       "mcp__playwright__browser_hover",
       "mcp__shadcn-ui__list_components",
-      "mcp__playwright__browser_close"
+      "mcp__playwright__browser_close",
+      "mcp__playwright-test__browser_navigate",
+      "mcp__playwright-test__generator_setup_page",
+      "mcp__playwright-test__browser_type",
+      "mcp__playwright-test__browser_click",
+      "mcp__playwright-test__browser_verify_text_visible",
+      "mcp__playwright-test__browser_verify_element_visible"
     ],
     "deny": [],
     "ask": [],
