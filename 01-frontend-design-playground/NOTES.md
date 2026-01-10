@@ -5,7 +5,6 @@ https://www.claude.com/blog/improving-frontend-design-through-skills
 
 
 #   Quickstart
-cd mockup
 pnpm dev
 http://localhost:5173
 

@@ -8,10 +8,7 @@ This is a React + TypeScript + Vite frontend project used as a playground for te
 
 ## Development Commands
 
-All commands should be run from the `mockup/` directory:
-
 ```bash
-cd mockup
 
 # Install dependencies
 pnpm install
