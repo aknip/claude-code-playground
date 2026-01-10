@@ -1,0 +1,52 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__a12_rag_ws__query_a12_chunks",
+      "Bash(lsof:*)",
+      "Bash(docker compose:*)",
+      "Bash(docker-compose:*)",
+      "Bash(kill:*)",
+      "Bash(gradle :server:app:bootrun:*)",
+      "Bash(npm start)",
+      "Bash(grep:*)",
+      "Bash(cat:*)",
+      "Bash(python3:*)",
+      "Bash(xargs:*)",
+      "Bash(find:*)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_fill_form",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_console_messages",
+      "mcp__playwright__browser_close",
+      "mcp__playwright__browser_resize",
+      "mcp__playwright__browser_press_key",
+      "mcp__playwright__browser_wait_for",
+      "mcp__playwright__browser_evaluate",
+      "mcp__shadcn-ui__get_component",
+      "WebFetch(domain:ui.shadcn.com)",
+      "WebSearch",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:colors.id)",
+      "Bash(npm run compile:*)",
+      "Bash(npx tsc:*)",
+      "mcp__playwright__browser_tabs",
+      "mcp__playwright__browser_install",
+      "mcp__playwright__browser_run_code",
+      "Bash(mkdir:*)",
+      "Bash(npm ls:*)",
+      "Bash(npm install:*)",
+      "Bash(npx prettier:*)",
+      "Bash(gradle :server:init:bootrun:*)",
+      "mcp__playwright__browser_network_requests",
+      "mcp__ide__getDiagnostics"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "playwright",
+    "a12_rag_ws",
+    "shadcn-ui"
+  ]
+}

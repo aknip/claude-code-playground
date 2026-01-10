@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
+    },
+    "a12_rag_ws": {
+      "type": "http",
+      "url": "http://datasciencews03.mgm-edv.de:7411/mcp"
+    }
+  }
+}
