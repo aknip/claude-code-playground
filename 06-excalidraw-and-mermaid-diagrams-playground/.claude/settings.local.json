@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(excalidraw-diagramming)",
+      "Bash(chmod:*)",
+      "Bash(python excalidraw_to_png.py:*)",
+      "Bash(playwright install:*)",
+      "Bash(ls:*)",
+      "Bash(python3:*)",
+      "Skill(mermaid-diagram)",
+      "WebFetch(domain:wireframesketcher.com)"
+    ]
+  }
+}
