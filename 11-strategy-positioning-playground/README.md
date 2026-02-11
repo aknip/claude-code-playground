@@ -1,0 +1,1 @@
+# Command für Strategy Positioning

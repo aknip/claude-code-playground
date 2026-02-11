@@ -13,8 +13,8 @@ Das zu erstellen Planungsdokument soll wie folgt gegliedert sein:
 - Lösungsszenario 1:
     - Lösungsansatz (technische Idee, Umsetzungsstrategie)
     - Ressourcenbedarf (Anzahl Personen pro Rolle)
-    - Lösungsschritte (5 - 10 Tasks, Titel und Kurzbeschreibung in einem Satz, Starttermin, Endtermin, Ressourcenzuordnung, Aufwand in PT). Die einzelnen Schritte sollte alle ungefähr gleich grossen Aufwand haben, bei einem Budget von 100 PT also ca. 10-20 PT pro Schritt.
-    - Visualisierung der Lösunggsschritte als Gantt-Chart. Neben dem Gantt-Chart eine Tabelle mit den Lösunggsschritten (Titel, PT, Kurzbeschreibung). Umsetzung per Excalidraw, professionelles Design (Font Sans Serif, Roughness 0, Border Radius 0, Alle Texte linksbündig, Format 16:9. Achte darauf, dass keine Texte abgeschnitten werden bzw. verloren gehen (ggf. kleinere Schrift wählen). Zeichne  Tabellen immer mit einzelnen Text-Objekten pro Tabellenzelle.  Codiere die Farbbalken nach Rollen. Speichere im selben Verzeichnis wie das Planungsdokument.
+    - Lösungsschritte (5 - 10 Tasks, Titel und Kurzbeschreibung in einem Satz, Starttermin, Endtermin, Ressourcenzuordnung, Aufwand in PT). 
+    - Visualisierung der Lösunggsschritte als Gantt-Chart. Neben dem Gantt-Chart eine Tabelle mit den Lösunggsschritten (Titel, PT, Kurzbeschreibung). Umsetzung per Excalidraw, professionelles Design (Font Sans Serif, Roughness 0, Border Radius 0, Alle Texte linksbündig, Format 16:9. Achte darauf, dass keine Texte abgeschnitten werden bzw. verloren gehen (ggf. kleinere Schrift wählen). Zeichne Tabellen und Gantt-Chart-Zeitachsenelemente immer mit einzelnen Text-Objekten pro Tabellenzelle. Codiere die Farbbalken nach Rollen. Speichere im selben Verzeichnis wie das Planungsdokument.
 - Lösungsszenario 2:
     - ...
 
@@ -23,7 +23,7 @@ Das zu erstellen Planungsdokument soll wie folgt gegliedert sein:
 - Business Analyst
 - Software Architekt
 - Software Entwickler
-- Tester
+- UI Designer
 
 # Workflow-Anweisungen
 

@@ -30,3 +30,39 @@ Please organize all outputs according to this directory structure:
 Please confirm that you have read these rules.
 Create the file “PROTOKOLL.md” and document all files stored in the directories so far (filename and short description).
 Then start by asking the first basic question to understand the core purpose of the application or to continue the interrupted work using `Protocol.md`
+
+
+
+
+
+
+
+====================================================================
+
+
+
+Projekt: Erweiterung einer bestehenden Versicherungsplattform um ein Frontend für Kooperationspartner.
+Idee: Implementierung einer separaten, eigenständigen Frontendanwendung für Makler, die Daten über neu zu erstellende fachliche APIs an die bestehende Versicherungsplattform überträgt. 
+
+Im Projekt müssen also die Frontendapplikation und fachliche APIs implementiert werden und in die bestehende Plattform integriert und getestet werden.
+
+Fachliche Usecases im Frontend sind: Ausschreibungen neu anlegen / suchen / einsehen  
+
+
+
+Erstelle ein drittes Szenario:
+Idee: Ein Business Analyst und ein UI/UX Spezialist entwickelt AI-unterstützt in kurzer Zeit einen voll funktionalen Prototyp, danach übernimmt 
+
+
+Erstelle ein drittes Szenario:
+Schnelle AI-utnersützte Entwicklung zu Beginn (ANfroderugnsklärung, UI/UX/CX), danach professionalle Übernahme / Optimierung des Codes durch Entwicklungsteam
+
+
+
+
+Ergänze Meilenstein "Abnahme durch HOWDEN" nach Fertigstellung von Aufgabe 3
+Ergänze Aufgabe "DPI/Infrastruktur" parallel zu Aufgabe 5
+Ergänze Meilenstein "PEN-Test" nach Aufgabe 8
+Für Aufgaben 4-8: Hier arbeiten Entwickler und BA parallel, bitte den Gantt-Balken horizontal in 2  Farben aufteilen.
+
+
