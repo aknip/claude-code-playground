@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
+    },
+    "slidev": {
+      "command": "node",
+      "args": ["/Users/aknipschild/github/claude-code-playground/10-ppt-presentation-playground/slidev-mcp-server/src/index.js"]
+    }
+  }
+}
+
+

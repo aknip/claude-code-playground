@@ -2,7 +2,15 @@
   "permissions": {
     "allow": [
       "Skill(mermaid-diagram)",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "Bash(lsof:*)",
+      "Bash(pnpm dev:*)",
+      "Bash(npx slidev:*)",
+      "Bash(pnpm install:*)",
+      "Bash(node -e:*)",
+      "mcp__slidev__serve_presentation",
+      "Bash(curl:*)",
+      "Bash(pkill:*)"
     ]
   }
 }
