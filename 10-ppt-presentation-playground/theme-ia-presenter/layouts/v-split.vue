@@ -1,13 +1,13 @@
 <script setup lang="ts">
 defineProps({
-  background: { type: String, default: '#4A13FF' },
+  background: { type: String, default: '' },
 })
 </script>
 
 <template>
   <div
     class="slidev-layout ia-v-split"
-    :style="{ backgroundColor: background }"
+    :style="background ? { backgroundColor: background } : {}"
   >
     <div class="ia-v-split-grid">
       <div class="ia-v-split-left">
@@ -22,6 +22,7 @@ defineProps({
 
 <style scoped>
 .ia-v-split {
+  background-color: var(--ia-slide-bg, #00A8FF);
   padding: 80px 70px 50px 70px;
   width: 100%;
   height: 100%;

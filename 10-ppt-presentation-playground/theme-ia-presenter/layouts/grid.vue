@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineProps({
-  background: { type: String, default: '#AD00FF' },
+  background: { type: String, default: '' },
   cols: { type: Number, default: 3 },
 })
 </script>
@@ -8,7 +8,7 @@ defineProps({
 <template>
   <div
     class="slidev-layout ia-grid"
-    :style="{ backgroundColor: background }"
+    :style="background ? { backgroundColor: background } : {}"
   >
     <div
       class="ia-grid-content"
@@ -21,6 +21,7 @@ defineProps({
 
 <style scoped>
 .ia-grid {
+  background-color: var(--ia-slide-bg, #00A8FF);
   padding: 60px 50px 40px 50px;
   width: 100%;
   height: 100%;

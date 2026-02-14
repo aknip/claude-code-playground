@@ -1,13 +1,13 @@
 <script setup lang="ts">
 defineProps({
-  background: { type: String, default: '#264DFF' },
+  background: { type: String, default: '' },
 })
 </script>
 
 <template>
   <div
     class="slidev-layout ia-title"
-    :style="{ backgroundColor: background }"
+    :style="background ? { backgroundColor: background } : {}"
   >
     <div class="ia-title-content">
       <slot />
@@ -17,6 +17,7 @@ defineProps({
 
 <style scoped>
 .ia-title {
+  background-color: var(--ia-slide-bg, #00A8FF);
   padding: 80px 70px 50px 70px;
   width: 100%;
   height: 100%;
