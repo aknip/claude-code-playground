@@ -30,40 +30,55 @@ function interpolateGradient(t: number): string {
   return `rgb(${r}, ${g}, ${b})`
 }
 
+function getSlideNumber(el: Element): number | null {
+  const match = el.className.match(/\bslidev-page-(\d+)\b/)
+  return match ? parseInt(match[1], 10) : null
+}
+
 function applyGradientColors() {
-  const pages = document.querySelectorAll('.slidev-page')
+  const pages = document.querySelectorAll('[class*="slidev-page-"]')
   if (pages.length === 0) return
 
-  pages.forEach((page, index) => {
-    const t = pages.length === 1 ? 0 : index / (pages.length - 1)
-    ;(page as HTMLElement).style.setProperty('--ia-slide-bg', interpolateGradient(t))
+  // Derive total from the highest slide number found in the DOM
+  let maxSlide = 0
+  const entries: { el: HTMLElement; num: number }[] = []
+  pages.forEach((page) => {
+    const num = getSlideNumber(page)
+    if (num !== null && num >= 1) {
+      entries.push({ el: page as HTMLElement, num })
+      if (num > maxSlide) maxSlide = num
+    }
+  })
+
+  if (maxSlide === 0) return
+
+  entries.forEach(({ el, num }) => {
+    const t = maxSlide === 1 ? 0 : (num - 1) / (maxSlide - 1)
+    el.style.setProperty('--ia-slide-bg', interpolateGradient(t))
   })
 }
 
 export default defineAppSetup(({ router }) => {
   if (typeof window === 'undefined') return
 
+  let debounceTimer: ReturnType<typeof setTimeout> | null = null
+  const debouncedApply = () => {
+    if (debounceTimer) clearTimeout(debounceTimer)
+    debounceTimer = setTimeout(applyGradientColors, 50)
+  }
+
   router.isReady().then(() => {
-    // Initial application after a short delay to let slides render
-    setTimeout(applyGradientColors, 100)
+    setTimeout(debouncedApply, 100)
 
-    // Watch for slide DOM changes (add/remove/reorder)
-    const observer = new MutationObserver(() => {
-      applyGradientColors()
-    })
-
-    const startObserving = () => {
-      const container = document.querySelector('#slide-content') || document.body
-      observer.observe(container, { childList: true, subtree: true })
-    }
-
-    startObserving()
+    // Watch entire document for slide DOM changes (covers overview overlay too)
+    const observer = new MutationObserver(debouncedApply)
+    observer.observe(document.body, { childList: true, subtree: true })
   })
 
   // Vite HMR: re-apply when modules update
   if (import.meta.hot) {
     import.meta.hot.on('vite:afterUpdate', () => {
-      setTimeout(applyGradientColors, 200)
+      setTimeout(debouncedApply, 200)
     })
   }
 })

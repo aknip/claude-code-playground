@@ -1,7 +1,7 @@
 {
-  "name": "slidev-theme-ia-presenter",
+  "name": "slidev-theme-mgm",
   "version": "1.0.0",
-  "description": "mgm Theme based on iA Presenter San Francisco",
+  "description": "mgm Theme",
   "engines": {
     "slidev": ">=0.47.0"
   },

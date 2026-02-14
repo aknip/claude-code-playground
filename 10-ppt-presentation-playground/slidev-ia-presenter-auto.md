@@ -1,5 +1,5 @@
 ---
-theme: ./theme-ia-presenter
+theme: ./theme-mgm
 title: Instant Slides - Getting Started with iA Presenter
 author: mgm
 colorSchema: light
