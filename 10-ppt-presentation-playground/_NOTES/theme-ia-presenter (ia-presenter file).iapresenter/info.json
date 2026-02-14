@@ -1,0 +1,11 @@
+{
+  "creatorIdentifier" : "net.ia.presenter",
+  "net.ia.presenter" : {
+    "localFileIdentifier" : "6B0A479C-CED3-496E-A0BC-963F6DB5643B",
+    "preset" : "Default",
+    "template" : "mgm theme"
+  },
+  "transient" : false,
+  "type" : "net.daringfireball.markdown",
+  "version" : 2
+}

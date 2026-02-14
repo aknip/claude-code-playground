@@ -1,0 +1,190 @@
+:root {
+  --code-background: #282828;
+  --code-border: rgba(0, 0, 0, 0.7);
+  --code-text: #f7f7f7;
+  --code-comment: #80878d;
+  --code-type: #ef98a8;
+  --code-include: #c596c9;
+  --code-string: #a59cc7;
+  --code-class-name: #94a5cb;
+  --code-numbers: #e8d670;
+  --code-variables: #77b5e3;
+  --code-functions: #df8dc0;
+  --code-literal: #f6b99a;
+
+  --dark-code-background: #101010;
+  --dark-code-border: rgba(0, 0, 0, 0.7);
+  --dark-code-text: #f7f7f7;
+  --dark-code-comment: #80878d;
+  --dark-code-type: #ef98a8;
+  --dark-code-include: #c596c9;
+  --dark-code-string: #a59cc7;
+  --dark-code-class-name: #94a5cb;
+  --dark-code-numbers: #e8d670;
+  --dark-code-variables: #77b5e3;
+  --dark-code-functions: #df8dc0;
+  --dark-code-literal: #f6b99a;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  src: url('fonts/Inter-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: italic;
+  font-weight: 400;
+  src: url('fonts/Inter-Italic.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  src: url('fonts/Inter-Medium.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: italic;
+  font-weight: 500;
+  src: url('fonts/Inter-MediumItalic.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  src: url('fonts/Inter-SemiBold.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: italic;
+  font-weight: 600;
+  src: url('fonts/Inter-SemiBoldItalic.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  src: url('fonts/Inter-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: italic;
+  font-weight: 700;
+  src: url('fonts/Inter-BoldItalic.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  src: url('fonts/Inter-ExtraBold.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: italic;
+  font-weight: 800;
+  src: url('fonts/Inter-ExtraBoldItalic.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 900;
+  src: url('fonts/Inter-Black.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: italic;
+  font-weight: 900;
+  src: url('fonts/Inter-BlackItalic.woff2') format('woff2');
+}
+
+section > :not([class*='layout-']) h1,
+[class*='layout-'] > div h1 {
+  font-weight: 900;
+}
+
+section > :not([class*='layout-']) h2,
+[class*='layout-'] > div h2 {
+  font-weight: 800;
+}
+
+section > :not([class*='layout-']) h3,
+[class*='layout-'] > div h3,
+section > :not([class*='layout-']) h4,
+[class*='layout-'] > div h4 {
+  font-weight: 700;
+}
+
+.variable-size-headings section > :not([class*='layout-']) h5,
+.variable-size-headings [class*='layout-'] > div h5,
+.variable-size-headings section > :not([class*='layout-']) h6,
+.variable-size-headings [class*='layout-'] > div h6 {
+  font-weight: 600;
+}
+.hljs {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+table td {
+  font-variation-settings: 'wdth' 60;
+}
+
+
+/*
+.header .trailing {
+  background-image: url('xxx.svg')!important;
+  display:inline!important;
+}
+*/
+
+
+.slides {
+  margin-left: 200px!important;
+  width: calc(100vw - 200px)!important
+}
+
+.slide-contents {
+  padding-top: 100px!important;
+  padding-bottom: 50px!important;
+}
+
+.header::after {
+    content: "";
+    display: inline-block;
+    width: 6vmax;
+    height: 6vmax;
+    right: calc(3vmax);
+    top: 40px;
+    position: absolute;
+    background-image: url('mgm-logo-white.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 1000;
+}
+
+.footer::after {
+    content: "";
+    display: inline-block;
+    width: 10vmax;
+    height: 10vmax;
+    right: calc(-100vw + 18vmax + 200px);
+    top: -60px;
+    position: relative;
+    background-image: url('mgm-color-bar.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 1000;
+}

@@ -1,0 +1,18 @@
+{
+  "name": "slidev-theme-ia-presenter",
+  "version": "1.0.0",
+  "description": "mgm Theme based on iA Presenter San Francisco",
+  "engines": {
+    "slidev": ">=0.47.0"
+  },
+  "slidev": {
+    "colorSchema": "light",
+    "defaults": {
+      "fonts": {
+        "provider": "none",
+        "sans": "Inter",
+        "local": "Inter"
+      }
+    }
+  }
+}

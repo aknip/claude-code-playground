@@ -1,0 +1,11 @@
+{
+  "Name": "mgm Theme",
+  "Version": "1.0.0",
+  "Author": "mgm",
+  "ShortDescription": "Based on San Francisco Theme",
+  "LongDescription": "",
+  "Css": "mgm-theme.css",
+  "TitleFont": "Inter",
+  "BodyFont": "Inter",
+  "CssClasses": "variable-size-headings",
+}
