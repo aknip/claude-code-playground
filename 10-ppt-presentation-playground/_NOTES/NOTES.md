@@ -74,7 +74,19 @@ Korrigiere den bug bei "10-ppt-presentation-playground/slidev-ia-impress-mgm.md"
 
 =============================================================
 
+Wenn "impressEnabled: true" : die Slidev-Toolbar (normalerweise unten am Bildschirmrand) ist nicht sichtbar. bitte einblenden (und bei Fullscreen-Modus ausblenden - wie immer bei slidedev)
+
+Die Präsentation "10-ppt-presentation-playground/slidev-ia-presenter.md" benutzt die "falschen" Headline Level. Ändere sie so ab, dass  h1 ("#"), h2 ("##") etc. eingesetzt werden und ändere die Style-Definitionen im Theme, so dass die Präsentation optisch auch nach dieser Änderung noch gleich aussieht (auch responsiv). Teste mit agent browser
+
+=============================================================
+
+
 Kann man eine "Light"-Version der slidev-App entwickeln, die rein Client-basiert (React, Theme, Addons, .md File) funktioniert? Welche Einschränkungen gibt es, welche Features würden nicht unterstützt?
 
+Basierend auf "10-ppt-presentation-playground/_NOTES/slidev_clientside_analyse.md":
+Erstelle ein Spezifikationsdokument "10-ppt-presentation-playground/_NOTES/slidev_clientside_SPEC.md", dass detailliert die Anforderungen an eine rein clienteitige Implementierung festhält.
+Die Spezifikation soll zum Ziel haben, das ein- und dieselbe Präsentation (.md file), Theme und ggf. Addons (Beispiel: "slidev-addon-impress") sowohl in der jetzigen serverseitigen slidev-Variante lauffähig sind also auch in der neuen clientseitigen Implementierung - ohne Anpassungen.
+Erzeuge nur das Spezifikationsdokument, implementiere nichts.
 
-Die Präsentation "10-ppt-presentation-playground/slidev-ia-presenter.md" benutzt die "falschen" Headline Level. Ändere sie so ab, dass  h1 ("#"), h2 ("##") etc. eingesetzt werden und ändere die Style-Definitionen im Theme, so dass die Präsentation optisch nach dieser Änderung gleich aussieht (auch responsiv). Teste mit agent browser
+Basierend auf "10-ppt-presentation-playground/_NOTES/slidev_clientside_SPEC.md" erstelle einen Implementierungsplan "10-ppt-presentation-playground/_NOTES/slidev_clientside_PLAN.md" , der die Lösung schrittweise / iterativ und nach jedem Schritt testbar umsetzt (Tests mit agent-browser). 
+Erzeuge nur den Implementierungsplan, implementiere nichts.
