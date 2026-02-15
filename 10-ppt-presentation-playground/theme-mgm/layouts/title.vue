@@ -34,8 +34,10 @@ defineProps({
   text-align: center;
 }
 
-.ia-title-content :deep(h2) {
+.ia-title-content :deep(h1) {
   font-size: 3em;
+  font-weight: 800;
+  text-wrap: balance;
 }
 
 .ia-title-content :deep(p) {

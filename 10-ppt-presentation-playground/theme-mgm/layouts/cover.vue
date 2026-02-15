@@ -33,7 +33,7 @@ defineProps({
   text-align: left;
 }
 
-.ia-cover-content :deep(h5) {
+.ia-cover-content :deep(h2) {
   font-size: 1.15em;
   font-weight: 600;
   opacity: 0.9;

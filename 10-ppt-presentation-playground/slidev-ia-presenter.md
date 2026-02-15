@@ -1,6 +1,6 @@
 ---
 theme: ./theme-mgm
-title: Instant Slides - Getting Started 
+title: Instant Slides - Getting Started
 author: mgm
 colorSchema: light
 fonts:
@@ -12,7 +12,7 @@ aspectRatio: 16/9
 transition: slide-left
 ---
 
-##### Fast and Focused
+## Fast and Focused
 
 # Instant Slides
 
@@ -24,7 +24,7 @@ Getting Started with iA Presenter
 layout: default
 ---
 
-### Table of Contents
+# Table of Contents
 
 1. Write
 2. Structure
@@ -38,7 +38,7 @@ layout: default
 layout: title
 ---
 
-## 1. Write
+# 1. Write
 
 Start With a Script
 
@@ -46,7 +46,7 @@ Start With a Script
 layout: section
 ---
 
-### Tell Your Story
+# Tell Your Story
 
 The heart of a great presentation is the message. Get the script right before anything else.
 
@@ -54,13 +54,13 @@ The heart of a great presentation is the message. Get the script right before an
 layout: v-split
 ---
 
-### Write it
+# Write it
 
 Think about what you want to achieve. Then write it down like an email.
 
 ::right::
 
-### Or Paste it
+# Or Paste it
 
 From DMs to articles, any existing text can become a presentation in no time. Paste your instant messages, a work chat, or a Mastodon thread.
 
@@ -68,7 +68,7 @@ From DMs to articles, any existing text can become a presentation in no time. Pa
 layout: v-split
 ---
 
-### Use Placeholder Images
+# Use Placeholder Images
 
 You will be tempted to add images while writing. Resist the temptation. To move fast, use placeholders. Search, choose and place images with the same concentration as a separate task.
 
@@ -80,7 +80,7 @@ You will be tempted to add images while writing. Resist the temptation. To move 
 layout: title
 ---
 
-## 2. Structure
+# 2. Structure
 
 Separating What You Say and What You Show
 
@@ -88,7 +88,7 @@ Separating What You Say and What You Show
 layout: v-split
 ---
 
-### Chop Chop
+# Chop Chop
 
 Type three dashes to split your story up into slides, like this: ---
 
@@ -100,7 +100,7 @@ Type three dashes to split your story up into slides, like this: ---
 layout: v-split
 ---
 
-### Don't show everything
+# Don't show everything
 
 Make it interesting. Show words and images that make people listen. Don't explain what everyone already sees.
 
@@ -119,7 +119,7 @@ cols: 3
 
 <div class="grid-item">
 
-### Headings
+## Headings
 
 Headings are always visible, so make them short, clear, and interesting.
 
@@ -131,7 +131,7 @@ Headings are always visible, so make them short, clear, and interesting.
 
 <div class="grid-item">
 
-### Body Text
+## Body Text
 
 To make a paragraph of plain text visible on the slide add a tab in front of the paragraph.
 
@@ -143,7 +143,7 @@ To make a paragraph of plain text visible on the slide add a tab in front of the
 
 <div class="grid-item">
 
-### Visuals
+## Visuals
 
 Images, videos, and tables are shown by default. Images can be fine-tuned using filters, positioning, etc.
 
@@ -159,7 +159,7 @@ layout: default
 layout: title
 ---
 
-## 3. Iterate
+# 3. Iterate
 
 Make It Better With Every Iteration
 
@@ -167,7 +167,7 @@ Make It Better With Every Iteration
 layout: v-split
 ---
 
-### Editor and Thumbnails
+# Editor and Thumbnails
 
 Fine-tune text, structure, and style on the fly. The preview windows will update simultaneously.
 
@@ -179,7 +179,7 @@ Fine-tune text, structure, and style on the fly. The preview windows will update
 layout: v-split
 ---
 
-### Editor and Preview
+# Editor and Preview
 
 The presentation is shown in a separate window. Use the arrow keys to go back and forth.
 
@@ -191,7 +191,7 @@ The presentation is shown in a separate window. Use the arrow keys to go back an
 layout: v-split
 ---
 
-### The Teleprompter
+# The Teleprompter
 
 Once you feel confident, press play and rehearse. You will quickly spot what needs more work.
 
@@ -203,7 +203,7 @@ Once you feel confident, press play and rehearse. You will quickly spot what nee
 layout: title
 ---
 
-## 4. Design
+# 4. Design
 
 Layout and Themes
 
@@ -246,7 +246,7 @@ Auto-Layout, Built In: The design adjusts itself to any device. No fiddling. No 
 layout: v-split
 ---
 
-### The Layout Picker Gives You More Options
+# The Layout Picker Gives You More Options
 
 ::right::
 
@@ -260,13 +260,13 @@ layout: v-split
 
 ::right::
 
-### Select From a Wide Range of Powerful Designs
+# Select From a Wide Range of Powerful Designs
 
 ---
 layout: title
 ---
 
-## 5. Action
+# 5. Action
 
 Teleprompter and Export
 
@@ -274,7 +274,7 @@ Teleprompter and Export
 layout: v-split
 ---
 
-### A Safety Net
+# A Safety Net
 
 Present from the heart. But in case you get nervous, the teleprompter will help you refresh your memory.
 
@@ -286,7 +286,7 @@ Present from the heart. But in case you get nervous, the teleprompter will help 
 layout: v-split
 ---
 
-### Your Audience Sees the Slides
+# Your Audience Sees the Slides
 
 You See both Thumbnail and Script
 
@@ -298,7 +298,7 @@ You See both Thumbnail and Script
 layout: title-and-columns
 ---
 
-### Share and Export:
+# Share and Export:
 
 When you're done, share the presentation as a handout in article form, as a series of images for a Social Media gallery or as a simple PDF.
 
@@ -312,4 +312,4 @@ When you're done, share the presentation as a handout in article form, as a seri
 layout: title
 ---
 
-## Now Go and Move Mountains
+# Now Go and Move Mountains

@@ -51,8 +51,9 @@ defineProps({
   height: 100%;
 }
 
-.ia-grid-content :deep(h3) {
+.ia-grid-content :deep(h2) {
   font-size: 1.15em;
+  font-weight: 700;
   margin-bottom: 0.15em;
 }
 

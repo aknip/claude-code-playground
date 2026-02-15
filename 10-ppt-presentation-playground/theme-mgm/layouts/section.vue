@@ -34,7 +34,7 @@ defineProps({
   max-width: 75%;
 }
 
-.ia-section-content :deep(h3) {
+.ia-section-content :deep(h1) {
   font-size: 2em;
   margin-bottom: 0.4em;
 }

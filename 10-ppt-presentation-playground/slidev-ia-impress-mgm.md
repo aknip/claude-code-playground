@@ -25,7 +25,7 @@ impressY: 0
 impressScale: 3
 ---
 
-##### Fast and Focused
+## Fast and Focused
 
 # Instant Slides
 
@@ -42,7 +42,7 @@ impressY: 1500
 impressScale: 2
 ---
 
-### Table of Contents
+# Table of Contents
 
 1. Write
 2. Structure
@@ -59,7 +59,7 @@ impressY: -1000
 impressScale: 3
 ---
 
-## 1. Write
+# 1. Write
 
 Start With a Script
 
@@ -70,7 +70,7 @@ impressY: 0
 impressScale: 1
 ---
 
-### Tell Your Story
+# Tell Your Story
 
 The heart of a great presentation is the message. Get the script right before anything else.
 
@@ -81,13 +81,13 @@ impressY: 0
 impressScale: 1
 ---
 
-### Write it
+# Write it
 
 Think about what you want to achieve. Then write it down like an email.
 
 ::right::
 
-### Or Paste it
+# Or Paste it
 
 From DMs to articles, any existing text can become a presentation in no time. Paste your instant messages, a work chat, or a Mastodon thread.
 
@@ -98,7 +98,7 @@ impressY: 0
 impressScale: 1
 ---
 
-### Use Placeholder Images
+# Use Placeholder Images
 
 You will be tempted to add images while writing. Resist the temptation. To move fast, use placeholders. Search, choose and place images with the same concentration as a separate task.
 
@@ -114,7 +114,7 @@ impressScale: 3
 impressRotate: 90
 ---
 
-## 2. Structure
+# 2. Structure
 
 Separating What You Say and What You Show
 
@@ -126,7 +126,7 @@ impressScale: 1
 impressRotate: 90
 ---
 
-### Chop Chop
+# Chop Chop
 
 Type three dashes to split your story up into slides, like this: ---
 
@@ -142,7 +142,7 @@ impressScale: 1
 impressRotate: 90
 ---
 
-### Don't show everything
+# Don't show everything
 
 Make it interesting. Show words and images that make people listen. Don't explain what everyone already sees.
 
@@ -165,7 +165,7 @@ impressRotate: 90
 
 <div class="grid-item">
 
-### Headings
+## Headings
 
 Headings are always visible, so make them short, clear, and interesting.
 
@@ -177,7 +177,7 @@ Headings are always visible, so make them short, clear, and interesting.
 
 <div class="grid-item">
 
-### Body Text
+## Body Text
 
 To make a paragraph of plain text visible on the slide add a tab in front of the paragraph.
 
@@ -189,7 +189,7 @@ To make a paragraph of plain text visible on the slide add a tab in front of the
 
 <div class="grid-item">
 
-### Visuals
+## Visuals
 
 Images, videos, and tables are shown by default. Images can be fine-tuned using filters, positioning, etc.
 
@@ -213,7 +213,7 @@ impressScale: 3
 impressRotate: 180
 ---
 
-## 3. Iterate
+# 3. Iterate
 
 Make It Better With Every Iteration
 
@@ -225,7 +225,7 @@ impressScale: 1
 impressRotate: 180
 ---
 
-### Editor and Thumbnails
+# Editor and Thumbnails
 
 Fine-tune text, structure, and style on the fly. The preview windows will update simultaneously.
 
@@ -241,7 +241,7 @@ impressScale: 1
 impressRotate: 180
 ---
 
-### Editor and Preview
+# Editor and Preview
 
 The presentation is shown in a separate window. Use the arrow keys to go back and forth.
 
@@ -257,7 +257,7 @@ impressScale: 1
 impressRotate: 180
 ---
 
-### The Teleprompter
+# The Teleprompter
 
 Once you feel confident, press play and rehearse. You will quickly spot what needs more work.
 
@@ -273,7 +273,7 @@ impressScale: 3
 impressRotate: 270
 ---
 
-## 4. Design
+# 4. Design
 
 Layout and Themes
 
@@ -328,7 +328,7 @@ impressScale: 1
 impressRotate: 270
 ---
 
-### The Layout Picker Gives You More Options
+# The Layout Picker Gives You More Options
 
 ::right::
 
@@ -346,7 +346,7 @@ impressRotate: 270
 
 ::right::
 
-### Select From a Wide Range of Powerful Designs
+# Select From a Wide Range of Powerful Designs
 
 ---
 layout: title
@@ -356,7 +356,7 @@ impressScale: 3
 impressZ: -2000
 ---
 
-## 5. Action
+# 5. Action
 
 Teleprompter and Export
 
@@ -368,7 +368,7 @@ impressScale: 1
 impressZ: -1000
 ---
 
-### A Safety Net
+# A Safety Net
 
 Present from the heart. But in case you get nervous, the teleprompter will help you refresh your memory.
 
@@ -384,7 +384,7 @@ impressScale: 1
 impressZ: -1000
 ---
 
-### Your Audience Sees the Slides
+# Your Audience Sees the Slides
 
 You See both Thumbnail and Script
 
@@ -400,7 +400,7 @@ impressScale: 1
 impressZ: -1000
 ---
 
-### Share and Export:
+# Share and Export:
 
 When you're done, share the presentation as a handout in article form, as a series of images for a Social Media gallery or as a simple PDF.
 
@@ -417,7 +417,7 @@ impressY: 250
 impressScale: 22
 ---
 
-## Now Go and Move Mountains
+# Now Go and Move Mountains
 
 <style>
 .slidev-layout {
