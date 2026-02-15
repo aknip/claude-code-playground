@@ -1,0 +1,12 @@
+{
+  "name": "slidev-addon-impress",
+  "version": "0.1.0",
+  "private": true,
+  "slidev": {
+    "name": "impress",
+    "colorSchema": "both"
+  },
+  "engines": {
+    "slidev": ">=0.50.0"
+  }
+}

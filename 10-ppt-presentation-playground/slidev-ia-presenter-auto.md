@@ -1,6 +1,6 @@
 ---
 theme: ./theme-mgm
-title: Instant Slides - Getting Started with iA Presenter
+title: Instant Slides 
 author: mgm
 colorSchema: light
 fonts:
@@ -18,6 +18,10 @@ transition: slide-left
 
 Getting Started with iA Presenter
 
+<!--
+note 
+-->
+
 ---
 layout: default
 ---
@@ -29,6 +33,8 @@ layout: default
 3. Iterate
 4. Design
 5. Action
+
+<!-- note TOC -->
 
 ---
 layout: title
