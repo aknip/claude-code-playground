@@ -110,20 +110,29 @@ export default defineAppSetup(({ app, router }) => {
       document.body.classList.add('impress-opaque-bg')
     }
 
-    // 2. Set CSS variables for step dimensions
+    // 2. Boost Slidev overlay z-index above impress viewport (z-100)
+    //    UnoCSS z-modal=z-70, z-nav=z-50 are below the impress viewport
+    const overrideStyle = document.createElement('style')
+    overrideStyle.textContent = `
+      body.impress-enabled .z-70, body.impress-enabled .z-modal { z-index: 200 !important; }
+      body.impress-enabled .z-50, body.impress-enabled .z-nav { z-index: 150 !important; }
+    `
+    document.head.appendChild(overrideStyle)
+
+    // 3. Set CSS variables for step dimensions
     document.documentElement.style.setProperty('--impress-step-width', `${config.width}px`)
     document.documentElement.style.setProperty('--impress-step-height', `${config.height}px`)
 
-    // 3. Create viewport
+    // 4. Create viewport
     viewportEl = document.createElement('div')
     viewportEl.className = 'impress-viewport'
     viewportEl.style.background = config.background
 
-    // 4. Create root
+    // 5. Create root
     rootEl = document.createElement('div')
     rootEl.className = 'impress-root'
 
-    // 5. DOM reparenting: move viewport to body so position:fixed
+    // 6. DOM reparenting: move viewport to body so position:fixed
     //    is relative to the browser viewport, not #slide-content
     //    (a parent with transform creates a new containing block for fixed elements)
     document.body.appendChild(viewportEl)

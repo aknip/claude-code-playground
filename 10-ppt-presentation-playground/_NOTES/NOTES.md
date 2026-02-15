@@ -70,3 +70,11 @@ Kopiere "10-ppt-presentation-playground/slidev-ia-presenter-auto.md" nach "10-pp
 bei "10-ppt-presentation-playground/slidev-ia-impress-mgm.md" wird der slide hintergrund der einzelnen slides nicht angezeigt, statt dessen ist alles weiss (obwohl impressBackground: "transparent" gesetzt ist). das ist falsch: Erwartung ist, dass der rainbow Hintegrund zu sehen ist.
 bei "10-ppt-presentation-playground/slidev-impress.md" ist der impress Hintegrund zu sehen, keine slides Hintegründe - das ist richtig.
 Korrigiere den bug bei "10-ppt-presentation-playground/slidev-ia-impress-mgm.md" ohne das verhalten bei "10-ppt-presentation-playground/slidev-impress.md" zu ändern.
+
+
+=============================================================
+
+Kann man eine "Light"-Version der slidev-App entwickeln, die rein Client-basiert (React, Theme, Addons, .md File) funktioniert? Welche Einschränkungen gibt es, welche Features würden nicht unterstützt?
+
+
+Die Präsentation "10-ppt-presentation-playground/slidev-ia-presenter.md" benutzt die "falschen" Headline Level. Ändere sie so ab, dass  h1 ("#"), h2 ("##") etc. eingesetzt werden und ändere die Style-Definitionen im Theme, so dass die Präsentation optisch nach dieser Änderung gleich aussieht (auch responsiv). Teste mit agent browser

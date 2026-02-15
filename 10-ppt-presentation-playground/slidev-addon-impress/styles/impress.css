@@ -113,7 +113,28 @@ body.impress-enabled #slideshow {
 }
 
 /* --- Keep Slidev controls above impress viewport --- */
-body.impress-enabled .slidev-nav,
-body.impress-enabled .slidev-controls {
+body.impress-enabled #page-root {
+  position: relative;
   z-index: 200;
+  pointer-events: none;
+  background: transparent !important;
+}
+/* Make slide container and content transparent so impress shows through */
+body.impress-enabled #slide-container {
+  background: transparent !important;
+  pointer-events: none;
+}
+body.impress-enabled .slidev-slide-content {
+  visibility: hidden !important;
+  pointer-events: none;
+}
+/* Re-enable pointer events on all interactive UI (NavControls, Overview, Drawing, etc.) */
+body.impress-enabled #slide-container > :not(.slidev-slide-content),
+body.impress-enabled #page-root > :not(.slidev-slide-container):not(#slide-container) {
+  pointer-events: auto;
+}
+
+/* Hide toolbar in fullscreen (default Slidev behavior) */
+body.impress-enabled:fullscreen #page-root {
+  z-index: 0;
 }
