@@ -7,7 +7,7 @@
     },
     "slidev": {
       "command": "node",
-      "args": ["/Users/aknipschild/github/claude-code-playground/10-ppt-presentation-playground/slidev-mcp-server/src/index.js"]
+      "args": ["/Users/aknipschild/github/claude-code-playground/10-slidev-impressjs-presentation-playground/slidev-mcp-server/src/index.js"]
     }
   }
 }

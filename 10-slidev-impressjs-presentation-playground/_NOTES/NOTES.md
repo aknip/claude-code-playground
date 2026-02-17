@@ -90,3 +90,7 @@ Erzeuge nur das Spezifikationsdokument, implementiere nichts.
 
 Basierend auf "10-ppt-presentation-playground/_NOTES/slidev_clientside_SPEC.md" erstelle einen Implementierungsplan "10-ppt-presentation-playground/_NOTES/slidev_clientside_PLAN.md" , der die Lösung schrittweise / iterativ und nach jedem Schritt testbar umsetzt (Tests mit agent-browser). 
 Erzeuge nur den Implementierungsplan, implementiere nichts.
+
+
+=============================================================
+
