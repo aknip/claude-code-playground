@@ -1,7 +1,12 @@
+<script setup>
+import logoSvg from './public/mgm-logo-white.svg'
+import colorBarSvg from './public/mgm-color-bar.svg'
+</script>
+
 <template>
   <div class="ia-branding">
-    <img src="/mgm-logo-white.svg" class="ia-logo" alt="mgm logo" />
-    <img src="/mgm-color-bar.svg" class="ia-color-bar" alt="mgm color bar" />
+    <img :src="logoSvg" class="ia-logo" alt="mgm logo" />
+    <img :src="colorBarSvg" class="ia-color-bar" alt="mgm color bar" />
   </div>
 </template>
 

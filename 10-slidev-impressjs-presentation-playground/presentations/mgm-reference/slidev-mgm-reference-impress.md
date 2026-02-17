@@ -1,7 +1,7 @@
 ---
-theme: ./theme-mgm
+theme: ../../theme-mgm
 addons:
-  - "@/slidev-addon-impress"
+  - "../slidev-addon-impress"
 title: Instant Slides
 author: mgm
 colorSchema: light
@@ -104,7 +104,7 @@ You will be tempted to add images while writing. Resist the temptation. To move 
 
 ::right::
 
-![placeholder](/images/image2.webp)
+![placeholder](./images/image2.webp)
 
 ---
 layout: title
@@ -132,7 +132,7 @@ Type three dashes to split your story up into slides, like this: ---
 
 ::right::
 
-![separator](/images/image3.webp)
+![separator](./images/image3.webp)
 
 ---
 layout: v-split
@@ -148,7 +148,7 @@ Make it interesting. Show words and images that make people listen. Don't explai
 
 ::right::
 
-![visible spoken](/images/image4.webp)
+![visible spoken](./images/image4.webp)
 
 ---
 layout: grid
@@ -160,7 +160,7 @@ impressRotate: 90
 ---
 
 <div class="grid-item">
-  <img src="/images/image1.webp" alt="headings" style="height: 140px; object-fit: cover; border-radius: 6px; width: 100%;" />
+  <img src="./images/image1.webp" alt="headings" style="height: 140px; object-fit: cover; border-radius: 6px; width: 100%;" />
 </div>
 
 <div class="grid-item">
@@ -172,7 +172,7 @@ Headings are always visible, so make them short, clear, and interesting.
 </div>
 
 <div class="grid-item">
-  <img src="/images/image2.webp" alt="body text" style="height: 140px; object-fit: cover; border-radius: 6px; width: 100%;" />
+  <img src="./images/image2.webp" alt="body text" style="height: 140px; object-fit: cover; border-radius: 6px; width: 100%;" />
 </div>
 
 <div class="grid-item">
@@ -184,7 +184,7 @@ To make a paragraph of plain text visible on the slide add a tab in front of the
 </div>
 
 <div class="grid-item">
-  <img src="/images/image3.webp" alt="visuals" style="height: 140px; object-fit: cover; border-radius: 6px; width: 100%;" />
+  <img src="./images/image3.webp" alt="visuals" style="height: 140px; object-fit: cover; border-radius: 6px; width: 100%;" />
 </div>
 
 <div class="grid-item">
@@ -231,7 +231,7 @@ Fine-tune text, structure, and style on the fly. The preview windows will update
 
 ::right::
 
-![editor](/images/image1.webp)
+![editor](./images/image1.webp)
 
 ---
 layout: v-split
@@ -247,7 +247,7 @@ The presentation is shown in a separate window. Use the arrow keys to go back an
 
 ::right::
 
-![preview](/images/image4.webp)
+![preview](./images/image4.webp)
 
 ---
 layout: v-split
@@ -263,7 +263,7 @@ Once you feel confident, press play and rehearse. You will quickly spot what nee
 
 ::right::
 
-![teleprompter](/images/image2.webp)
+![teleprompter](./images/image2.webp)
 
 ---
 layout: title
@@ -287,23 +287,23 @@ impressRotate: 270
 ---
 
 <div class="grid-item">
-  <img src="/images/image1.webp" alt="design 1" style="height: 180px; object-fit: cover; border-radius: 6px; width: 100%;" />
+  <img src="./images/image1.webp" alt="design 1" style="height: 180px; object-fit: cover; border-radius: 6px; width: 100%;" />
 </div>
 
 <div class="grid-item">
-  <img src="/images/image2.webp" alt="design 2" style="height: 180px; object-fit: cover; border-radius: 6px; width: 100%;" />
+  <img src="./images/image2.webp" alt="design 2" style="height: 180px; object-fit: cover; border-radius: 6px; width: 100%;" />
 </div>
 
 <div class="grid-item">
-  <img src="/images/image3.webp" alt="design 3" style="height: 180px; object-fit: cover; border-radius: 6px; width: 100%;" />
+  <img src="./images/image3.webp" alt="design 3" style="height: 180px; object-fit: cover; border-radius: 6px; width: 100%;" />
 </div>
 
 <div class="grid-item">
-  <img src="/images/image4.webp" alt="design 4" style="height: 180px; object-fit: cover; border-radius: 6px; width: 100%;" />
+  <img src="./images/image4.webp" alt="design 4" style="height: 180px; object-fit: cover; border-radius: 6px; width: 100%;" />
 </div>
 
 <div class="grid-item">
-  <img src="/images/media/image1.webp" alt="design 5" style="height: 180px; object-fit: cover; border-radius: 6px; width: 100%;" />
+  <img src="./images/image1.webp" alt="design 5" style="height: 180px; object-fit: cover; border-radius: 6px; width: 100%;" />
 </div>
 
 ---
@@ -318,7 +318,7 @@ Auto-Layout, Built In: The design adjusts itself to any device. No fiddling. No 
 
 ::image::
 
-![responsive](/images/image3.webp)
+![responsive](./images/image3.webp)
 
 ---
 layout: v-split
@@ -332,7 +332,7 @@ impressRotate: 270
 
 ::right::
 
-![thumbnails](/images/image1.webp)
+![thumbnails](./images/image1.webp)
 
 ---
 layout: v-split
@@ -342,7 +342,7 @@ impressScale: 1
 impressRotate: 270
 ---
 
-<img src="/images/image2.webp" alt="templates" style="width: 100%; height: 100%; object-fit: cover; border-radius: 6px;" />
+<img src="./images/image2.webp" alt="templates" style="width: 100%; height: 100%; object-fit: cover; border-radius: 6px;" />
 
 ::right::
 
@@ -374,7 +374,7 @@ Present from the heart. But in case you get nervous, the teleprompter will help 
 
 ::right::
 
-![safety net](/images/image4.webp)
+![safety net](./images/image4.webp)
 
 ---
 layout: v-split
@@ -390,7 +390,7 @@ You See both Thumbnail and Script
 
 ::right::
 
-![audience view](/images/image1.webp)
+![audience view](./images/image1.webp)
 
 ---
 layout: title-and-columns
@@ -406,9 +406,9 @@ When you're done, share the presentation as a handout in article form, as a seri
 
 ::columns::
 
-<img src="/images/image3.webp" alt="export" style="width: 100%; height: 100%; object-fit: contain; border-radius: 6px;" />
+<img src="./images/image3.webp" alt="export" style="width: 100%; height: 100%; object-fit: contain; border-radius: 6px;" />
 
-<img src="/images/image4.webp" alt="pdf" style="width: 100%; height: 100%; object-fit: contain; border-radius: 6px;" />
+<img src="./images/image4.webp" alt="pdf" style="width: 100%; height: 100%; object-fit: contain; border-radius: 6px;" />
 
 ---
 layout: title

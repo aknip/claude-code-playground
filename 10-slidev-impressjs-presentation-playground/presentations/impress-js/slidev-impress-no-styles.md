@@ -1,7 +1,7 @@
 ---
-theme: ./theme-mgm
+theme: ../../theme-mgm
 addons:
-  - "@/slidev-addon-impress"
+  - "../slidev-addon-impress"
 title: impress.js Demo in Slidev
 author: mgm
 colorSchema: light
