@@ -1,0 +1,44 @@
+{
+  "mode": "interactive",
+  "depth": "standard",
+  "parallelization": true,
+  "commit_docs": true,
+  "model_profile": "quality",
+  "specification_mode": "use-case",
+  "autopilot": {
+    "checkpoint_mode": "queue",
+    "max_retries": 3,
+    "budget_limit_usd": 0,
+    "notify_webhook": ""
+  },
+  "use_case": {
+    "template_version": "1.0",
+    "auto_subfunction": true,
+    "verify_scenarios": true,
+    "browser_test_ui": true,
+    "acceptance_format": "gherkin"
+  },
+  "workflow": {
+    "research": true,
+    "plan_check": true,
+    "verifier": true
+  },
+  "milestone": {
+    "current_version": "1.0.0",
+    "auto_tag": true,
+    "archive_on_complete": true
+  },
+  "session": {
+    "auto_pause_on_error": false,
+    "retention_days": 30,
+    "auto_cleanup": true
+  },
+  "agents": {
+    "uc-analyst": { "model": "sonnet" },
+    "uc-modeler": { "model": "opus" },
+    "uc-planner": { "model": "opus" },
+    "uc-executor": { "model": "sonnet" },
+    "uc-verifier": { "model": "sonnet" },
+    "uc-checker": { "model": "sonnet" }
+  }
+}

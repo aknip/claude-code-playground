@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Underwriting Workbench — Clickdummy</title>
+<style>
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --font: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb; --gray-300: #d1d5db;
+  --gray-400: #9ca3af; --gray-500: #6b7280; --gray-600: #4b5563; --gray-700: #374151;
+  --gray-800: #1f2937; --gray-900: #111827;
+  --blue-50: #eff6ff; --blue-100: #dbeafe; --blue-200: #bfdbfe; --blue-300: #93c5fd;
+  --blue-400: #60a5fa; --blue-500: #3b82f6; --blue-600: #2563eb; --blue-700: #1d4ed8;
+  --amber-50: #fffbeb; --amber-100: #fef3c7; --amber-200: #fde68a; --amber-500: #f59e0b;
+  --amber-600: #d97706;
+  --green-50: #f0fdf4; --green-100: #dcfce7; --green-500: #22c55e; --green-600: #16a34a; --green-700: #15803d;
+  --red-50: #fef2f2; --red-500: #ef4444;
+  --radius: 8px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow: 0 1px 3px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.06);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1);
+  --transition: 150ms cubic-bezier(.4,0,.2,1);
+}
+html { font-size: 14px; }
+body { font-family: var(--font); color: var(--gray-800); background: var(--gray-100); line-height: 1.5; overflow: hidden; height: 100vh; }
+
+/* ============================================================
+   LAYOUT SHELL
+   ============================================================ */
+.app-shell { display: flex; height: 100vh; }
+
+/* Sidebar */
+.sidebar {
+  width: 240px; min-width: 240px; background: var(--gray-900); color: #fff;
+  display: flex; flex-direction: column; z-index: 50;
+}
+.sidebar-header { padding: 20px 16px 16px; border-bottom: 1px solid var(--gray-700); }
+.sidebar-logo { font-size: 13px; font-weight: 700; letter-spacing: .5px; color: var(--blue-400); text-transform: uppercase; }
+.sidebar-title { font-size: 16px; font-weight: 600; margin-top: 2px; }
+.sidebar-nav { padding: 12px 8px; flex: 1; }
+.sidebar-nav-item {
+  display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 6px;
+  color: var(--gray-300); cursor: pointer; font-size: 13.5px; font-weight: 500;
+  transition: background var(--transition), color var(--transition);
+  margin-bottom: 2px; user-select: none;
+}
+.sidebar-nav-item:hover { background: var(--gray-800); color: #fff; }
+.sidebar-nav-item.active { background: var(--gray-700); color: #fff; }
+.sidebar-nav-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+.sidebar-footer { padding: 16px; border-top: 1px solid var(--gray-700); }
+.sidebar-user { display: flex; align-items: center; gap: 10px; }
+.sidebar-avatar {
+  width: 32px; height: 32px; border-radius: 50%; background: var(--blue-600);
+  display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600;
+}
+.sidebar-user-info { font-size: 12.5px; }
+.sidebar-user-name { font-weight: 600; color: #fff; }
+.sidebar-user-role { color: var(--gray-400); }
+
+/* Main area */
+.main-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+/* Top bar */
+.topbar {
+  height: 56px; min-height: 56px; background: #fff; border-bottom: 1px solid var(--gray-200);
+  display: flex; align-items: center; justify-content: space-between; padding: 0 24px; z-index: 40;
+}
+.topbar-left { display: flex; align-items: center; gap: 16px; }
+.topbar-title { font-size: 17px; font-weight: 700; color: var(--gray-900); }
+.topbar-breadcrumb { font-size: 12.5px; color: var(--gray-500); }
+.topbar-right { display: flex; align-items: center; gap: 12px; }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px;
+  border-radius: 6px; font-size: 13px; font-weight: 500; border: 1px solid transparent;
+  cursor: pointer; transition: all var(--transition); font-family: var(--font); user-select: none;
+}
+.btn:active { transform: scale(.97); }
+.btn-primary { background: var(--blue-600); color: #fff; border-color: var(--blue-700); }
+.btn-primary:hover { background: var(--blue-700); }
+.btn-secondary { background: #fff; color: var(--gray-700); border-color: var(--gray-300); }
+.btn-secondary:hover { background: var(--gray-50); }
+.btn-ghost { background: transparent; color: var(--gray-600); }
+.btn-ghost:hover { background: var(--gray-100); }
+.btn-success { background: var(--green-600); color: #fff; border-color: var(--green-700); }
+.btn-success:hover { background: var(--green-700); }
+.btn-sm { padding: 5px 10px; font-size: 12px; }
+.btn svg { width: 16px; height: 16px; }
+
+/* ============================================================
+   SCREEN CONTAINER
+   ============================================================ */
+.screen { display: none; flex: 1; overflow: hidden; }
+.screen.active { display: flex; flex-direction: column; }
+
+/* ============================================================
+   KANBAN BOARD (Screen 1)
+   ============================================================ */
+.kanban-toolbar {
+  padding: 16px 24px; display: flex; align-items: center; justify-content: space-between;
+  background: var(--gray-50); border-bottom: 1px solid var(--gray-200);
+}
+.kanban-toolbar-left { display: flex; align-items: center; gap: 12px; }
+.kanban-toolbar .filter-chip {
+  display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px;
+  background: #fff; border: 1px solid var(--gray-200); border-radius: 6px;
+  font-size: 12px; color: var(--gray-600); cursor: pointer;
+}
+.kanban-toolbar .filter-chip:hover { border-color: var(--gray-400); }
+
+.kanban-container { flex: 1; overflow-x: auto; overflow-y: hidden; padding: 20px 24px; display: flex; gap: 16px; }
+.kanban-column {
+  min-width: 260px; width: 260px; background: var(--gray-50); border-radius: var(--radius);
+  display: flex; flex-direction: column; max-height: 100%; border: 1px solid var(--gray-200);
+}
+.kanban-column-header {
+  padding: 12px 14px; display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--gray-200); flex-shrink: 0;
+}
+.kanban-column-title { font-size: 13px; font-weight: 600; color: var(--gray-700); }
+.kanban-column-count {
+  background: var(--gray-200); color: var(--gray-600); font-size: 11px; font-weight: 600;
+  padding: 1px 7px; border-radius: 10px;
+}
+.kanban-column-body { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 10px; }
+
+/* Cards */
+.kanban-card {
+  background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius);
+  padding: 14px; cursor: pointer; transition: all var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+.kanban-card:hover { box-shadow: var(--shadow-md); border-color: var(--blue-300); transform: translateY(-1px); }
+.kanban-card-top { display: flex; align-items: start; justify-content: space-between; margin-bottom: 6px; }
+.kanban-card-title { font-size: 13px; font-weight: 600; color: var(--gray-900); line-height: 1.3; }
+.kanban-card-id { font-size: 11px; color: var(--gray-400); font-weight: 500; }
+.kanban-card-subtitle { font-size: 12px; color: var(--gray-500); margin-bottom: 10px; }
+
+.kanban-card-labels { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
+.badge {
+  display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 4px;
+  font-size: 10.5px; font-weight: 600; letter-spacing: .3px;
+}
+.badge-default { background: var(--gray-100); color: var(--gray-600); }
+.badge-amber { background: var(--amber-100); color: var(--amber-600); }
+.badge-blue { background: var(--blue-100); color: var(--blue-700); }
+
+.kanban-card-footer { display: flex; align-items: center; justify-content: space-between; }
+.kanban-card-progress { display: flex; align-items: center; gap: 6px; }
+.progress-bar { width: 60px; height: 4px; background: var(--gray-200); border-radius: 2px; overflow: hidden; }
+.progress-bar-fill { height: 100%; border-radius: 2px; transition: width .3s ease; }
+.progress-bar-fill.low { background: var(--gray-400); }
+.progress-bar-fill.mid { background: var(--amber-500); }
+.progress-bar-fill.high { background: var(--green-500); }
+.progress-text { font-size: 10.5px; color: var(--gray-400); font-weight: 500; }
+.kanban-card-avatar {
+  width: 24px; height: 24px; border-radius: 50%; background: var(--gray-200);
+  display: flex; align-items: center; justify-content: center; font-size: 10px;
+  font-weight: 600; color: var(--gray-600);
+}
+
+/* ============================================================
+   DOCUMENT VIEW (Screens 2-4)
+   ============================================================ */
+.doc-layout { flex: 1; display: flex; overflow: hidden; }
+.doc-main { flex: 1; overflow-y: auto; background: var(--gray-200); padding: 32px 40px; }
+.doc-page {
+  max-width: 800px; margin: 0 auto; background: #fff; border-radius: 2px;
+  box-shadow: var(--shadow-lg); padding: 56px 64px 72px; min-height: 900px;
+  position: relative;
+}
+
+/* Document sidebar / TOC */
+.doc-sidebar {
+  width: 220px; min-width: 220px; background: #fff; border-left: 1px solid var(--gray-200);
+  padding: 20px 16px; overflow-y: auto;
+}
+.doc-sidebar-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--gray-400); margin-bottom: 12px; }
+.doc-sidebar-link {
+  display: block; padding: 6px 10px; border-radius: 4px; font-size: 12.5px;
+  color: var(--gray-600); cursor: pointer; margin-bottom: 2px; transition: all var(--transition);
+  border-left: 2px solid transparent;
+}
+.doc-sidebar-link:hover { background: var(--gray-50); color: var(--gray-900); }
+.doc-sidebar-link.active { color: var(--blue-600); border-left-color: var(--blue-600); background: var(--blue-50); font-weight: 500; }
+
+/* Doc toolbar */
+.doc-toolbar {
+  height: 48px; min-height: 48px; background: #fff; border-bottom: 1px solid var(--gray-200);
+  display: flex; align-items: center; padding: 0 20px; gap: 8px;
+}
+
+/* Document typography */
+.doc-page h1 { font-size: 22px; font-weight: 800; color: var(--gray-900); margin-bottom: 4px; letter-spacing: -.3px; }
+.doc-page h2 { font-size: 16px; font-weight: 700; color: var(--gray-800); margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--gray-100); }
+.doc-page h3 { font-size: 14px; font-weight: 600; color: var(--gray-700); margin: 24px 0 12px; }
+.doc-page p, .doc-page .doc-text { font-size: 13.5px; color: var(--gray-700); line-height: 1.7; margin-bottom: 12px; }
+.doc-subtitle { font-size: 13px; color: var(--gray-500); margin-bottom: 24px; }
+
+/* Inline editable fields */
+.doc-field-row { display: flex; align-items: baseline; margin-bottom: 8px; font-size: 13.5px; }
+.doc-field-label { color: var(--gray-500); min-width: 160px; font-weight: 500; flex-shrink: 0; }
+.doc-field-value {
+  color: var(--gray-900); font-weight: 500; padding: 2px 6px; border-radius: 4px;
+  border-bottom: 1.5px dotted var(--gray-300); cursor: text;
+  transition: all var(--transition); position: relative;
+}
+.doc-field-value:hover { background: var(--blue-50); border-bottom-color: var(--blue-400); border-bottom-style: solid; }
+.doc-field-value:focus {
+  outline: none; background: var(--blue-50); border-bottom-color: var(--blue-500);
+  border-bottom-style: solid; box-shadow: 0 0 0 2px rgba(59,130,246,.15);
+}
+
+/* Auto-enriched fields */
+.doc-field-enriched { border-left: 4px solid var(--blue-400); padding-left: 10px; }
+.enriched-indicator {
+  display: inline-flex; align-items: center; gap: 4px; font-size: 10px;
+  color: var(--blue-500); margin-left: 8px; font-weight: 500;
+}
+.enriched-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue-400); display: inline-block; }
+
+/* Table-like sections */
+.doc-data-grid { display: grid; grid-template-columns: 160px 1fr; gap: 0; margin-bottom: 4px; }
+.doc-data-grid .doc-field-label { padding: 8px 0; border-bottom: 1px solid var(--gray-100); }
+.doc-data-grid .doc-field-value { padding: 6px 6px; border-bottom: 1px solid var(--gray-100); border-bottom-style: solid; border-bottom-color: var(--gray-100); }
+.doc-data-grid .doc-field-value:hover { background: var(--blue-50); }
+
+/* Standort card */
+.standort-card {
+  background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius);
+  padding: 20px; margin-bottom: 16px;
+}
+.standort-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.standort-card-title { font-size: 14px; font-weight: 600; color: var(--gray-800); }
+.standort-badge { font-size: 11px; padding: 2px 8px; border-radius: 4px; background: var(--blue-100); color: var(--blue-700); font-weight: 500; }
+
+/* Risk assessment */
+.risk-panel {
+  background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius);
+  padding: 20px; margin-top: 16px;
+}
+.risk-score-display { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+.risk-score-circle {
+  width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; font-size: 20px; font-weight: 700; border: 4px solid;
+}
+.risk-score-circle.medium { border-color: var(--amber-500); color: var(--amber-600); background: var(--amber-50); }
+.risk-score-label { font-size: 14px; font-weight: 600; color: var(--gray-800); }
+.risk-score-sublabel { font-size: 12px; color: var(--gray-500); }
+
+.risk-checklist { list-style: none; }
+.risk-checklist li { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 13px; color: var(--gray-700); }
+.risk-checklist .check-icon { color: var(--green-600); font-weight: 700; }
+.risk-checklist .warn-icon { color: var(--amber-500); font-weight: 700; }
+
+.risk-hints { margin-top: 16px; padding: 12px 16px; background: var(--amber-50); border: 1px solid var(--amber-200); border-radius: 6px; }
+.risk-hints-title { font-size: 12px; font-weight: 600; color: var(--amber-600); margin-bottom: 6px; }
+.risk-hints ul { list-style: none; }
+.risk-hints li { font-size: 12.5px; color: var(--gray-700); padding: 3px 0; padding-left: 16px; position: relative; }
+.risk-hints li::before { content: "→"; position: absolute; left: 0; color: var(--amber-500); }
+
+/* Kalkulation */
+.calc-box {
+  background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius);
+  padding: 20px; margin-bottom: 16px;
+}
+.calc-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--gray-100); }
+.calc-row:last-child { border-bottom: none; }
+.calc-label { font-size: 13.5px; color: var(--gray-600); font-weight: 500; }
+.calc-value { font-size: 14px; font-weight: 600; color: var(--gray-900); }
+.calc-value.highlight { color: var(--blue-600); font-size: 20px; }
+.calc-value.enriched { border-left: 4px solid var(--blue-400); padding-left: 10px; }
+
+.benchmark-hint {
+  display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px;
+  background: var(--green-50); border: 1px solid var(--green-100); border-radius: 6px;
+  font-size: 12px; color: var(--green-700); margin-top: 8px;
+}
+
+.summary-box {
+  background: var(--blue-50); border: 1px solid var(--blue-200); border-radius: var(--radius);
+  padding: 20px; margin-top: 20px;
+}
+.summary-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; }
+.summary-row .label { color: var(--gray-600); }
+.summary-row .value { font-weight: 600; color: var(--gray-900); }
+.summary-actions { display: flex; gap: 10px; margin-top: 20px; }
+
+/* Risk animation placeholder */
+.risk-placeholder { text-align: center; padding: 32px; color: var(--gray-400); }
+.risk-result { display: none; }
+.risk-result.visible { display: block; animation: fadeSlideIn .5s ease; }
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Vollständigkeit bar */
+.completeness-bar { width: 100%; height: 6px; background: var(--gray-200); border-radius: 3px; overflow: hidden; margin-top: 4px; }
+.completeness-fill { height: 100%; background: var(--green-500); border-radius: 3px; transition: width .8s ease; }
+
+/* Status indicator on doc toolbar */
+.status-chip {
+  display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px;
+  border-radius: 20px; font-size: 11.5px; font-weight: 600;
+}
+.status-chip.in-progress { background: var(--amber-100); color: var(--amber-600); }
+.status-chip .status-dot { width: 6px; height: 6px; border-radius: 50%; }
+.status-chip.in-progress .status-dot { background: var(--amber-500); }
+
+/* Tooltip */
+[data-tooltip] { position: relative; }
+[data-tooltip]:hover::after {
+  content: attr(data-tooltip); position: absolute; bottom: calc(100% + 6px); left: 50%;
+  transform: translateX(-50%); background: var(--gray-900); color: #fff; padding: 4px 10px;
+  border-radius: 4px; font-size: 11px; white-space: nowrap; z-index: 100;
+  pointer-events: none; animation: tooltipIn .15s ease;
+}
+@keyframes tooltipIn { from { opacity: 0; transform: translateX(-50%) translateY(4px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+
+/* Modal overlay */
+.modal-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.4);
+  z-index: 200; align-items: center; justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: #fff; border-radius: 12px; padding: 28px; max-width: 420px; width: 90%;
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,.25); animation: modalIn .2s ease;
+}
+@keyframes modalIn { from { opacity: 0; transform: scale(.95); } to { opacity: 1; transform: scale(1); } }
+.modal h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.modal p { font-size: 13px; color: var(--gray-600); margin-bottom: 20px; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 8px; }
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gray-400); }
+
+/* Kanban empty column */
+.kanban-column-empty {
+  text-align: center; padding: 20px; color: var(--gray-400); font-size: 12px;
+  border: 2px dashed var(--gray-200); border-radius: 6px; margin: 8px;
+}
+
+/* SB input */
+.sb-input {
+  width: 120px; padding: 4px 8px; border: 1px solid var(--gray-300); border-radius: 4px;
+  font-size: 14px; font-weight: 600; font-family: var(--font); color: var(--gray-900);
+  text-align: right;
+}
+.sb-input:focus { outline: none; border-color: var(--blue-500); box-shadow: 0 0 0 2px rgba(59,130,246,.15); }
+
+/* Notification toast */
+.toast {
+  position: fixed; bottom: 24px; right: 24px; background: var(--gray-900); color: #fff;
+  padding: 12px 20px; border-radius: 8px; font-size: 13px; z-index: 300;
+  box-shadow: var(--shadow-lg); display: none; animation: toastIn .3s ease;
+}
+.toast.show { display: block; }
+@keyframes toastIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Divider */
+.divider { height: 1px; background: var(--gray-200); margin: 24px 0; }
+
+/* Premium live update flash */
+.flash { animation: flashBg .6s ease; }
+@keyframes flashBg { 0% { background: var(--blue-100); } 100% { background: transparent; } }
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+  <!-- ======== SIDEBAR ======== -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">GUD Versicherung</div>
+      <div class="sidebar-title">Underwriting Workbench</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-nav-item active" data-nav="board" onclick="navigateSidebar('board')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Dashboard / Board
+      </div>
+      <div class="sidebar-nav-item" data-nav="contracts" onclick="showToast('Vertragsliste wird geladen…')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Verträge
+      </div>
+      <div class="sidebar-nav-item" onclick="showToast('Berichte werden geladen…')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Berichte
+      </div>
+      <div class="sidebar-nav-item" onclick="showToast('Einstellungen werden geladen…')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.32 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        Einstellungen
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar">MK</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name">Maria Krüger</div>
+          <div class="sidebar-user-role">Underwriter</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ======== MAIN AREA ======== -->
+  <div class="main-area">
+
+    <!-- ============================================================
+         SCREEN 1: KANBAN BOARD
+         ============================================================ -->
+    <div id="screen-board" class="screen active">
+      <div class="topbar">
+        <div class="topbar-left">
+          <div class="topbar-title">Board</div>
+          <div class="topbar-breadcrumb">12 offene Vorgänge</div>
+        </div>
+        <div class="topbar-right">
+          <button class="btn btn-secondary btn-sm" data-tooltip="Ansicht filtern">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46"/></svg>
+            Filter
+          </button>
+          <button class="btn btn-primary" onclick="openModal()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Neuer Vorgang
+          </button>
+        </div>
+      </div>
+
+      <div class="kanban-toolbar">
+        <div class="kanban-toolbar-left">
+          <div class="filter-chip">Alle Typen ▾</div>
+          <div class="filter-chip">Alle Makler ▾</div>
+          <div class="filter-chip">Letzte 30 Tage ▾</div>
+        </div>
+      </div>
+
+      <div class="kanban-container">
+        <!-- Column: Eingang -->
+        <div class="kanban-column">
+          <div class="kanban-column-header">
+            <span class="kanban-column-title">Eingang</span>
+            <span class="kanban-column-count">3</span>
+          </div>
+          <div class="kanban-column-body">
+            <div class="kanban-card" onclick="goToDocument('basisdaten')">
+              <div class="kanban-card-top">
+                <span class="kanban-card-title">Mustermann GmbH</span>
+                <span class="kanban-card-id">V-2026-0142</span>
+              </div>
+              <div class="kanban-card-subtitle">Makler: Schmidt & Partner</div>
+              <div class="kanban-card-labels">
+                <span class="badge badge-default">Neugeschäft</span>
+              </div>
+              <div class="kanban-card-footer">
+                <div class="kanban-card-progress">
+                  <div class="progress-bar"><div class="progress-bar-fill low" style="width:15%"></div></div>
+                  <span class="progress-text">15%</span>
+                </div>
+                <div class="kanban-card-avatar" data-tooltip="Maria Krüger">MK</div>
+              </div>
+            </div>
+
+            <div class="kanban-card" onclick="goToDocument('basisdaten')">
+              <div class="kanban-card-top">
+                <span class="kanban-card-title">TechParts AG</span>
+                <span class="kanban-card-id">V-2026-0143</span>
+              </div>
+              <div class="kanban-card-subtitle">Makler: Albrecht Versicherungen</div>
+              <div class="kanban-card-labels">
+                <span class="badge badge-amber">Renewal</span>
+              </div>
+              <div class="kanban-card-footer">
+                <div class="kanban-card-progress">
+                  <div class="progress-bar"><div class="progress-bar-fill low" style="width:10%"></div></div>
+                  <span class="progress-text">10%</span>
+                </div>
+                <div class="kanban-card-avatar" data-tooltip="Thomas Weber">TW</div>
+              </div>
+            </div>
+
+            <div class="kanban-card" onclick="goToDocument('basisdaten')">
+              <div class="kanban-card-top">
+                <span class="kanban-card-title">Bauer Metallbau KG</span>
+                <span class="kanban-card-id">V-2026-0144</span>
+              </div>
+              <div class="kanban-card-subtitle">Makler: VMA Nord GmbH</div>
+              <div class="kanban-card-labels">
+                <span class="badge badge-default">Neugeschäft</span>
+              </div>
+              <div class="kanban-card-footer">
+                <div class="kanban-card-progress">
+                  <div class="progress-bar"><div class="progress-bar-fill low" style="width:5%"></div></div>
+                  <span class="progress-text">5%</span>
+                </div>
+                <div class="kanban-card-avatar" data-tooltip="Maria Krüger">MK</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column: Datenerfassung -->
+        <div class="kanban-column">
+          <div class="kanban-column-header">
+            <span class="kanban-column-title">Datenerfassung</span>
+            <span class="kanban-column-count">2</span>
+          </div>
+          <div class="kanban-column-body">
+            <div class="kanban-card" onclick="goToDocument('basisdaten')">
+              <div class="kanban-card-top">
+                <span class="kanban-card-title">Schneider Logistik GmbH</span>
+                <span class="kanban-card-id">V-2026-0138</span>
+              </div>
+              <div class="kanban-card-subtitle">Makler: Roth & Söhne</div>
+              <div class="kanban-card-labels">
+                <span class="badge badge-blue">Nachtrag</span>
+              </div>
+              <div class="kanban-card-footer">
+                <div class="kanban-card-progress">
+                  <div class="progress-bar"><div class="progress-bar-fill mid" style="width:40%"></div></div>
+                  <span class="progress-text">40%</span>
+                </div>
+                <div class="kanban-card-avatar" data-tooltip="Maria Krüger">MK</div>
+              </div>
+            </div>
+
+            <div class="kanban-card" onclick="goToDocument('basisdaten')">
+              <div class="kanban-card-top">
+                <span class="kanban-card-title">Hoffmann Chemie AG</span>
+                <span class="kanban-card-id">V-2026-0139</span>
+              </div>
+              <div class="kanban-card-subtitle">Makler: Schmidt & Partner</div>
+              <div class="kanban-card-labels">
+                <span class="badge badge-default">Neugeschäft</span>
+              </div>
+              <div class="kanban-card-footer">
+                <div class="kanban-card-progress">
+                  <div class="progress-bar"><div class="progress-bar-fill mid" style="width:55%"></div></div>
+                  <span class="progress-text">55%</span>
+                </div>
+                <div class="kanban-card-avatar" data-tooltip="Thomas Weber">TW</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column: Risikobewertung -->
+        <div class="kanban-column">
+          <div class="kanban-column-header">
+            <span class="kanban-column-title">Risikobewertung</span>
+            <span class="kanban-column-count">3</span>
+          </div>
+          <div class="kanban-column-body">
+            <div class="kanban-card" onclick="goToDocument('standorte')">
+              <div class="kanban-card-top">
+                <span class="kanban-card-title">Meier Maschinenbau GmbH</span>
+                <span class="kanban-card-id">V-2026-0134</span>
+              </div>
+              <div class="kanban-card-subtitle">Makler: Albrecht Versicherungen</div>
+              <div class="kanban-card-labels">
+                <span class="badge badge-amber">Renewal</span>
+              </div>
+              <div class="kanban-card-footer">
+                <div class="kanban-card-progress">
+                  <div class="progress-bar"><div class="progress-bar-fill mid" style="width:65%"></div></div>
+                  <span class="progress-text">65%</span>
+                </div>
+                <div class="kanban-card-avatar" data-tooltip="Maria Krüger">MK</div>
+              </div>
+            </div>
+
+            <div class="kanban-card" onclick="goToDocument('standorte')">
+              <div class="kanban-card-top">
+                <span class="kanban-card-title">Lange Elektrotechnik AG</span>
+                <span class="kanban-card-id">V-2026-0135</span>
+              </div>
+              <div class="kanban-card-subtitle">Makler: VMA Nord GmbH</div>
+              <div class="kanban-card-labels">
+                <span class="badge badge-default">Neugeschäft</span>
+              </div>
+              <div class="kanban-card-footer">
+                <div class="kanban-card-progress">
+                  <div class="progress-bar"><div class="progress-bar-fill mid" style="width:70%"></div></div>
+                  <span class="progress-text">70%</span>
+                </div>
+                <div class="kanban-card-avatar" data-tooltip="Thomas Weber">TW</div>
+              </div>
+            </div>
+
+            <div class="kanban-card" onclick="goToDocument('standorte')">
+              <div class="kanban-card-top">
+                <span class="kanban-card-title">Kraus Industrieservice</span>
+                <span class="kanban-card-id">V-2026-0136</span>
+              </div>
+              <div class="kanban-card-subtitle">Makler: Roth & Söhne</div>
+              <div class="kanban-card-labels">
+                <span class="badge badge-blue">Nachtrag</span>
+              </div>
+              <div class="kanban-card-footer">
+                <div class="kanban-card-progress">
+                  <div class="progress-bar"><div class="progress-bar-fill mid" style="width:60%"></div></div>
+                  <span class="progress-text">60%</span>
+                </div>
+                <div class="kanban-card-avatar" data-tooltip="Maria Krüger">MK</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column: Kalkulation -->
+        <div class="kanban-column">
+          <div class="kanban-column-header">
+            <span class="kanban-column-title">Kalkulation</span>
+            <span class="kanban-column-count">2</span>
+          </div>
+          <div class="kanban-column-body">
+            <div class="kanban-card" onclick="goToDocument('kalkulation')">
+              <div class="kanban-card-top">
+                <span class="kanban-card-title">Fischer Automotive GmbH</span>
+                <span class="kanban-card-id">V-2026-0130</span>
+              </div>
+              <div class="kanban-card-subtitle">Makler: Schmidt & Partner</div>
+              <div class="kanban-card-labels">
+                <span class="badge badge-default">Neugeschäft</span>
+              </div>
+              <div class="kanban-card-footer">
+                <div class="kanban-card-progress">
+                  <div class="progress-bar"><div class="progress-bar-fill high" style="width:80%"></div></div>
+                  <span class="progress-text">80%</span>
+                </div>
+                <div class="kanban-card-avatar" data-tooltip="Thomas Weber">TW</div>
+              </div>
+            </div>
+
+            <div class="kanban-card" onclick="goToDocument('kalkulation')">
+              <div class="kanban-card-top">
+                <span class="kanban-card-title">Weber Stahlbau AG</span>
+                <span class="kanban-card-id">V-2026-0131</span>
+              </div>
+              <div class="kanban-card-subtitle">Makler: Albrecht Versicherungen</div>
+              <div class="kanban-card-labels">
+                <span class="badge badge-amber">Renewal</span>
+              </div>
+              <div class="kanban-card-footer">
+                <div class="kanban-card-progress">
+                  <div class="progress-bar"><div class="progress-bar-fill high" style="width:85%"></div></div>
+                  <span class="progress-text">85%</span>
+                </div>
+                <div class="kanban-card-avatar" data-tooltip="Maria Krüger">MK</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column: Angebot -->
+        <div class="kanban-column">
+          <div class="kanban-column-header">
+            <span class="kanban-column-title">Angebot</span>
+            <span class="kanban-column-count">1</span>
+          </div>
+          <div class="kanban-column-body">
+            <div class="kanban-card" onclick="goToDocument('kalkulation')">
+              <div class="kanban-card-top">
+                <span class="kanban-card-title">Braun Werkzeuge GmbH</span>
+                <span class="kanban-card-id">V-2026-0127</span>
+              </div>
+              <div class="kanban-card-subtitle">Makler: VMA Nord GmbH</div>
+              <div class="kanban-card-labels">
+                <span class="badge badge-default">Neugeschäft</span>
+              </div>
+              <div class="kanban-card-footer">
+                <div class="kanban-card-progress">
+                  <div class="progress-bar"><div class="progress-bar-fill high" style="width:95%"></div></div>
+                  <span class="progress-text">95%</span>
+                </div>
+                <div class="kanban-card-avatar" data-tooltip="Maria Krüger">MK</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column: Abschluss -->
+        <div class="kanban-column">
+          <div class="kanban-column-header">
+            <span class="kanban-column-title">Abschluss</span>
+            <span class="kanban-column-count">1</span>
+          </div>
+          <div class="kanban-column-body">
+            <div class="kanban-card" onclick="goToDocument('kalkulation')" style="border-left:3px solid var(--green-500);">
+              <div class="kanban-card-top">
+                <span class="kanban-card-title">Klein & Sohn OHG</span>
+                <span class="kanban-card-id">V-2026-0120</span>
+              </div>
+              <div class="kanban-card-subtitle">Makler: Schmidt & Partner</div>
+              <div class="kanban-card-labels">
+                <span class="badge badge-amber">Renewal</span>
+              </div>
+              <div class="kanban-card-footer">
+                <div class="kanban-card-progress">
+                  <div class="progress-bar"><div class="progress-bar-fill high" style="width:100%"></div></div>
+                  <span class="progress-text">100%</span>
+                </div>
+                <div class="kanban-card-avatar" data-tooltip="Thomas Weber">TW</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         SCREEN 2: DOCUMENT — BASISDATEN
+         ============================================================ -->
+    <div id="screen-basisdaten" class="screen">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="btn btn-ghost btn-sm" onclick="goToBoard()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><polyline points="15,18 9,12 15,6"/></svg>
+            Zurück zum Board
+          </button>
+          <span style="color:var(--gray-300)">|</span>
+          <div class="topbar-title">V-2026-0142</div>
+          <div class="status-chip in-progress"><span class="status-dot"></span> In Bearbeitung</div>
+        </div>
+        <div class="topbar-right">
+          <button class="btn btn-secondary btn-sm" data-tooltip="Verlauf anzeigen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+            Verlauf
+          </button>
+          <button class="btn btn-secondary btn-sm" data-tooltip="Kommentar hinzufügen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            Kommentare
+          </button>
+        </div>
+      </div>
+
+      <div class="doc-toolbar">
+        <button class="btn btn-ghost btn-sm doc-tab active" data-tab="basisdaten" onclick="switchDocTab('basisdaten')">Basisdaten</button>
+        <button class="btn btn-ghost btn-sm doc-tab" data-tab="standorte" onclick="switchDocTab('standorte')">Standorte & Risiko</button>
+        <button class="btn btn-ghost btn-sm doc-tab" data-tab="kalkulation" onclick="switchDocTab('kalkulation')">Kalkulation & Angebot</button>
+      </div>
+
+      <div class="doc-layout">
+        <div class="doc-main">
+          <div class="doc-page">
+            <div style="text-align:center; margin-bottom: 32px;">
+              <h1>ANGEBOT</h1>
+              <p style="font-size:15px; color:var(--gray-600); font-weight:500; margin-bottom:2px;">Sach-Industrieversicherung</p>
+              <div class="divider" style="margin:16px auto; max-width:120px;"></div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; margin-bottom:32px;">
+              <div>
+                <span style="font-size:12px; color:var(--gray-400); font-weight:600;">VORGANGSNUMMER</span><br>
+                <span style="font-size:14px; font-weight:600;">V-2026-0142</span>
+              </div>
+              <div style="text-align:right;">
+                <span style="font-size:12px; color:var(--gray-400); font-weight:600;">DATUM</span><br>
+                <span style="font-size:14px; font-weight:600;">22.02.2026</span>
+              </div>
+            </div>
+
+            <h2>1. Vertragsdaten</h2>
+            <p class="doc-text">Nachfolgend die grundlegenden Vertragsinformationen für den vorliegenden Antrag zur Sach-Industrieversicherung.</p>
+
+            <div class="doc-data-grid">
+              <div class="doc-field-label">Versicherungsnehmer</div>
+              <div class="doc-field-value" contenteditable="true">Mustermann GmbH</div>
+
+              <div class="doc-field-label">Makler</div>
+              <div class="doc-field-value" contenteditable="true">Schmidt & Partner</div>
+
+              <div class="doc-field-label">Vertragsbeginn</div>
+              <div class="doc-field-value" contenteditable="true">01.04.2026</div>
+
+              <div class="doc-field-label">Laufzeit</div>
+              <div class="doc-field-value" contenteditable="true">1 Jahr</div>
+            </div>
+
+            <h2>2. Unternehmensdaten</h2>
+            <p class="doc-text">Die folgenden Daten wurden automatisch aus externen Quellen angereichert und mit den Angaben des Maklers abgeglichen.</p>
+
+            <div class="doc-data-grid">
+              <div class="doc-field-label">Branche</div>
+              <div class="doc-field-value doc-field-enriched" contenteditable="true">
+                Maschinenbau
+                <span class="enriched-indicator"><span class="enriched-dot"></span> auto-enriched</span>
+              </div>
+
+              <div class="doc-field-label">Mitarbeiter</div>
+              <div class="doc-field-value doc-field-enriched" contenteditable="true">
+                250
+                <span class="enriched-indicator"><span class="enriched-dot"></span> auto-enriched</span>
+              </div>
+
+              <div class="doc-field-label">Umsatz</div>
+              <div class="doc-field-value doc-field-enriched" contenteditable="true">
+                &euro; 45.000.000
+                <span class="enriched-indicator"><span class="enriched-dot"></span> auto-enriched</span>
+              </div>
+
+              <div class="doc-field-label">Rechtsform</div>
+              <div class="doc-field-value doc-field-enriched" contenteditable="true">
+                GmbH
+                <span class="enriched-indicator"><span class="enriched-dot"></span> auto-enriched</span>
+              </div>
+
+              <div class="doc-field-label">Handelsregister</div>
+              <div class="doc-field-value doc-field-enriched" contenteditable="true">
+                HRB 12345, AG Berlin
+                <span class="enriched-indicator"><span class="enriched-dot"></span> auto-enriched</span>
+              </div>
+            </div>
+
+            <div style="margin-top:24px; padding:12px 16px; background:var(--blue-50); border:1px solid var(--blue-200); border-radius:6px; font-size:12px; color:var(--blue-700);">
+              <strong>Hinweis:</strong> Felder mit blauer Markierung wurden automatisch angereichert. Bitte prüfen und bei Bedarf anpassen.
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Document Sidebar / TOC -->
+        <div class="doc-sidebar">
+          <div class="doc-sidebar-title">Abschnitte</div>
+          <div class="doc-sidebar-link active" onclick="switchDocTab('basisdaten')">1. Vertragsdaten</div>
+          <div class="doc-sidebar-link" onclick="switchDocTab('basisdaten')">2. Unternehmensdaten</div>
+          <div class="doc-sidebar-link" onclick="switchDocTab('standorte')">3. Standorte</div>
+          <div class="doc-sidebar-link" onclick="switchDocTab('standorte')">4. Risikobewertung</div>
+          <div class="doc-sidebar-link" onclick="switchDocTab('kalkulation')">5. Kalkulation</div>
+          <div class="doc-sidebar-link" onclick="switchDocTab('kalkulation')">6. Angebotsübersicht</div>
+
+          <div class="divider"></div>
+          <div class="doc-sidebar-title">Vollständigkeit</div>
+          <div style="padding:0 10px;">
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--gray-600); margin-bottom:4px;">
+              <span>Basisdaten</span><span style="font-weight:600;">100%</span>
+            </div>
+            <div class="completeness-bar"><div class="completeness-fill" style="width:100%"></div></div>
+          </div>
+          <div style="padding:6px 10px;">
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--gray-600); margin-bottom:4px;">
+              <span>Standorte</span><span style="font-weight:600;">75%</span>
+            </div>
+            <div class="completeness-bar"><div class="completeness-fill" style="width:75%; background:var(--amber-500);"></div></div>
+          </div>
+          <div style="padding:6px 10px;">
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--gray-600); margin-bottom:4px;">
+              <span>Kalkulation</span><span style="font-weight:600;">60%</span>
+            </div>
+            <div class="completeness-bar"><div class="completeness-fill" style="width:60%; background:var(--amber-500);"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         SCREEN 3: DOCUMENT — STANDORTE & RISIKOBEWERTUNG
+         ============================================================ -->
+    <div id="screen-standorte" class="screen">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="btn btn-ghost btn-sm" onclick="goToBoard()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><polyline points="15,18 9,12 15,6"/></svg>
+            Zurück zum Board
+          </button>
+          <span style="color:var(--gray-300)">|</span>
+          <div class="topbar-title">V-2026-0142</div>
+          <div class="status-chip in-progress"><span class="status-dot"></span> In Bearbeitung</div>
+        </div>
+        <div class="topbar-right">
+          <button class="btn btn-secondary btn-sm">Verlauf</button>
+          <button class="btn btn-secondary btn-sm">Kommentare</button>
+        </div>
+      </div>
+
+      <div class="doc-toolbar">
+        <button class="btn btn-ghost btn-sm doc-tab" data-tab="basisdaten" onclick="switchDocTab('basisdaten')">Basisdaten</button>
+        <button class="btn btn-ghost btn-sm doc-tab active" data-tab="standorte" onclick="switchDocTab('standorte')">Standorte & Risiko</button>
+        <button class="btn btn-ghost btn-sm doc-tab" data-tab="kalkulation" onclick="switchDocTab('kalkulation')">Kalkulation & Angebot</button>
+      </div>
+
+      <div class="doc-layout">
+        <div class="doc-main">
+          <div class="doc-page">
+            <div style="text-align:center; margin-bottom: 32px;">
+              <h1>ANGEBOT</h1>
+              <p style="font-size:15px; color:var(--gray-600); font-weight:500;">Sach-Industrieversicherung — Mustermann GmbH</p>
+              <div class="divider" style="margin:16px auto; max-width:120px;"></div>
+            </div>
+
+            <h2>3. Standorte</h2>
+            <p class="doc-text">Übersicht der versicherten Betriebsstandorte mit Risikomerkmalen und Bewertungsdaten.</p>
+
+            <!-- Standort 1 -->
+            <div class="standort-card">
+              <div class="standort-card-header">
+                <div class="standort-card-title">Standort 1 — Hauptwerk Berlin</div>
+                <span class="standort-badge">Produktionsstandort</span>
+              </div>
+              <div class="doc-data-grid">
+                <div class="doc-field-label">Adresse</div>
+                <div class="doc-field-value" contenteditable="true">Musterstraße 1, 10115 Berlin</div>
+
+                <div class="doc-field-label">Gebäudetyp</div>
+                <div class="doc-field-value" contenteditable="true">Produktionshalle</div>
+
+                <div class="doc-field-label">Baujahr</div>
+                <div class="doc-field-value" contenteditable="true">1995</div>
+
+                <div class="doc-field-label">Gebäudewert</div>
+                <div class="doc-field-value" contenteditable="true">&euro; 2.500.000</div>
+
+                <div class="doc-field-label">Inventarwert</div>
+                <div class="doc-field-value" contenteditable="true">&euro; 800.000</div>
+
+                <div class="doc-field-label">Gefahren</div>
+                <div class="doc-field-value" contenteditable="true">Feuer, Leitungswasser</div>
+
+                <div class="doc-field-label">Naturgefahrzone</div>
+                <div class="doc-field-value doc-field-enriched" contenteditable="true">
+                  Zone 1 — Niedrig
+                  <span class="enriched-indicator"><span class="enriched-dot"></span> ZÜRS Geo</span>
+                </div>
+
+                <div class="doc-field-label">Brandschutzklasse</div>
+                <div class="doc-field-value doc-field-enriched" contenteditable="true">
+                  BKL III
+                  <span class="enriched-indicator"><span class="enriched-dot"></span> auto-enriched</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Standort 2 -->
+            <div class="standort-card">
+              <div class="standort-card-header">
+                <div class="standort-card-title">Standort 2 — Lager Hamburg</div>
+                <span class="standort-badge">Lager</span>
+              </div>
+              <div class="doc-data-grid">
+                <div class="doc-field-label">Adresse</div>
+                <div class="doc-field-value" contenteditable="true">Hafenweg 12, 20095 Hamburg</div>
+
+                <div class="doc-field-label">Gebäudetyp</div>
+                <div class="doc-field-value" contenteditable="true">Lagerhalle</div>
+
+                <div class="doc-field-label">Baujahr</div>
+                <div class="doc-field-value" contenteditable="true">2010</div>
+
+                <div class="doc-field-label">Gebäudewert</div>
+                <div class="doc-field-value" contenteditable="true" style="color:var(--gray-400);">— ausstehend —</div>
+
+                <div class="doc-field-label">Inventarwert</div>
+                <div class="doc-field-value" contenteditable="true" style="color:var(--gray-400);">— ausstehend —</div>
+
+                <div class="doc-field-label">Gefahren</div>
+                <div class="doc-field-value" contenteditable="true" style="color:var(--gray-400);">— ausstehend —</div>
+
+                <div class="doc-field-label">Naturgefahrzone</div>
+                <div class="doc-field-value doc-field-enriched">
+                  Zone 2 — Mittel
+                  <span class="enriched-indicator"><span class="enriched-dot"></span> ZÜRS Geo</span>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn btn-secondary" style="margin-bottom:32px;" onclick="showToast('Neuer Standort wird hinzugefügt…')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Standort hinzufügen
+            </button>
+
+            <h2>4. Risikobewertung</h2>
+            <p class="doc-text">Automatisierte Risikoanalyse basierend auf den erfassten Standort- und Unternehmensdaten.</p>
+
+            <!-- Risk Placeholder (before assessment) -->
+            <div id="risk-placeholder" class="risk-panel">
+              <div class="risk-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--gray-300)" stroke-width="1.5" style="width:48px;height:48px;margin-bottom:12px;"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                <p style="font-size:14px; font-weight:600; color:var(--gray-500); margin-bottom:8px;">Risikobewertung ausstehend</p>
+                <p style="font-size:12.5px; color:var(--gray-400); margin-bottom:16px;">Starten Sie die automatische Bewertung auf Basis der erfassten Daten.</p>
+                <button class="btn btn-primary" onclick="startRiskAssessment()">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><polygon points="5,3 19,12 5,21"/></svg>
+                  Bewertung starten
+                </button>
+              </div>
+            </div>
+
+            <!-- Risk Result (after assessment) -->
+            <div id="risk-result" class="risk-result">
+              <div class="risk-panel">
+                <div class="risk-score-display">
+                  <div class="risk-score-circle medium">3.4</div>
+                  <div>
+                    <div class="risk-score-label">Risiko-Score: 3.4 / 5 — Mittel</div>
+                    <div class="risk-score-sublabel">Berechnet am 22.02.2026 um 10:15 Uhr</div>
+                  </div>
+                </div>
+
+                <ul class="risk-checklist">
+                  <li><span class="check-icon">&#10003;</span> Zeichnungsrichtlinie: Innerhalb Vollmacht</li>
+                  <li><span class="check-icon">&#10003;</span> Maximale Versicherungssumme: Nicht überschritten</li>
+                  <li><span class="warn-icon">&#9888;</span> Standort 2: Unvollständige Daten (Gebäude-/Inventarwert)</li>
+                </ul>
+
+                <div style="margin-top:16px;">
+                  <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:4px;">
+                    <span style="font-weight:600; color:var(--gray-700);">Vollständigkeit</span>
+                    <span style="font-weight:700; color:var(--amber-600);">92%</span>
+                  </div>
+                  <div class="completeness-bar" style="height:8px;">
+                    <div class="completeness-fill" style="width:92%; background:var(--amber-500);"></div>
+                  </div>
+                </div>
+
+                <div class="risk-hints">
+                  <div class="risk-hints-title">Hinweise</div>
+                  <ul>
+                    <li>Gebäudewert und Inventarwert für Standort 2 (Hamburg) fehlen noch</li>
+                    <li>Baujahr Standort 1 (1995) — Prüfung auf Sanierungsstatus empfohlen</li>
+                    <li>Naturgefahrzone 2 für Hamburg erfordert ggf. erhöhte Selbstbeteiligung</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Doc Sidebar -->
+        <div class="doc-sidebar">
+          <div class="doc-sidebar-title">Abschnitte</div>
+          <div class="doc-sidebar-link" onclick="switchDocTab('basisdaten')">1. Vertragsdaten</div>
+          <div class="doc-sidebar-link" onclick="switchDocTab('basisdaten')">2. Unternehmensdaten</div>
+          <div class="doc-sidebar-link active" onclick="switchDocTab('standorte')">3. Standorte</div>
+          <div class="doc-sidebar-link" onclick="switchDocTab('standorte')">4. Risikobewertung</div>
+          <div class="doc-sidebar-link" onclick="switchDocTab('kalkulation')">5. Kalkulation</div>
+          <div class="doc-sidebar-link" onclick="switchDocTab('kalkulation')">6. Angebotsübersicht</div>
+
+          <div class="divider"></div>
+          <div class="doc-sidebar-title">Standorte</div>
+          <div class="doc-sidebar-link active" style="font-size:12px;">
+            <span style="color:var(--green-600); margin-right:4px;">&#9679;</span> Berlin — Hauptwerk
+          </div>
+          <div class="doc-sidebar-link" style="font-size:12px;">
+            <span style="color:var(--amber-500); margin-right:4px;">&#9679;</span> Hamburg — Lager
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         SCREEN 4: DOCUMENT — KALKULATION & ANGEBOT
+         ============================================================ -->
+    <div id="screen-kalkulation" class="screen">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="btn btn-ghost btn-sm" onclick="goToBoard()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><polyline points="15,18 9,12 15,6"/></svg>
+            Zurück zum Board
+          </button>
+          <span style="color:var(--gray-300)">|</span>
+          <div class="topbar-title">V-2026-0142</div>
+          <div class="status-chip in-progress"><span class="status-dot"></span> In Bearbeitung</div>
+        </div>
+        <div class="topbar-right">
+          <button class="btn btn-secondary btn-sm">Verlauf</button>
+          <button class="btn btn-secondary btn-sm">Kommentare</button>
+        </div>
+      </div>
+
+      <div class="doc-toolbar">
+        <button class="btn btn-ghost btn-sm doc-tab" data-tab="basisdaten" onclick="switchDocTab('basisdaten')">Basisdaten</button>
+        <button class="btn btn-ghost btn-sm doc-tab" data-tab="standorte" onclick="switchDocTab('standorte')">Standorte & Risiko</button>
+        <button class="btn btn-ghost btn-sm doc-tab active" data-tab="kalkulation" onclick="switchDocTab('kalkulation')">Kalkulation & Angebot</button>
+      </div>
+
+      <div class="doc-layout">
+        <div class="doc-main">
+          <div class="doc-page">
+            <div style="text-align:center; margin-bottom: 32px;">
+              <h1>ANGEBOT</h1>
+              <p style="font-size:15px; color:var(--gray-600); font-weight:500;">Sach-Industrieversicherung — Mustermann GmbH</p>
+              <div class="divider" style="margin:16px auto; max-width:120px;"></div>
+            </div>
+
+            <h2>5. Kalkulation</h2>
+            <p class="doc-text">Prämienberechnung auf Basis der Risikobewertung, Versicherungssummen und gewählten Deckungsoptionen.</p>
+
+            <div class="calc-box">
+              <div class="calc-row">
+                <span class="calc-label">Versicherungssumme Gebäude</span>
+                <span class="calc-value">&euro; 2.500.000</span>
+              </div>
+              <div class="calc-row">
+                <span class="calc-label">Versicherungssumme Inventar</span>
+                <span class="calc-value">&euro; 800.000</span>
+              </div>
+              <div class="calc-row">
+                <span class="calc-label">Versicherungssumme BU</span>
+                <span class="calc-value">&euro; 5.000.000</span>
+              </div>
+              <div class="calc-row">
+                <span class="calc-label">Gesamtversicherungssumme</span>
+                <span class="calc-value" style="font-weight:700;">&euro; 8.300.000</span>
+              </div>
+            </div>
+
+            <div class="calc-box">
+              <div class="calc-row">
+                <span class="calc-label">Risiko-Score</span>
+                <span class="calc-value">3.4 / 5 — Mittel</span>
+              </div>
+              <div class="calc-row">
+                <span class="calc-label">Prämiensatz</span>
+                <span class="calc-value enriched">
+                  0,506%
+                  <span class="enriched-indicator"><span class="enriched-dot"></span> berechnet</span>
+                </span>
+              </div>
+              <div class="calc-row">
+                <div>
+                  <span class="calc-label">Selbstbeteiligung</span>
+                  <div style="font-size:11px; color:var(--gray-400); margin-top:2px;">Änderung beeinflusst die Prämie</div>
+                </div>
+                <div>
+                  <span class="calc-value">&euro;&nbsp;</span>
+                  <input type="text" class="sb-input" id="sb-input" value="10.000" oninput="updatePremium()">
+                </div>
+              </div>
+              <div class="calc-row" style="border-bottom:none; padding-top:16px;">
+                <span class="calc-label" style="font-size:16px; font-weight:700; color:var(--gray-900);">Jahresprämie (netto)</span>
+                <span class="calc-value highlight enriched" id="premium-display">&euro; 42.000</span>
+              </div>
+            </div>
+
+            <div class="benchmark-hint" id="benchmark-hint">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;flex-shrink:0;"><path d="M13 17l5-5-5-5M6 17l5-5-5-5"/></svg>
+              <span>Marktdurchschnitt: &euro; 44.500 &nbsp;|&nbsp; Ihre Prämie: <strong id="benchmark-diff">-5,6%</strong> unter Markt</span>
+            </div>
+
+            <h2>6. Angebotsübersicht</h2>
+            <p class="doc-text">Zusammenfassung aller wesentlichen Vertragsdaten für die Angebotserstellung.</p>
+
+            <div class="summary-box">
+              <div class="summary-row">
+                <span class="label">Versicherungsnehmer</span>
+                <span class="value">Mustermann GmbH</span>
+              </div>
+              <div class="summary-row">
+                <span class="label">Makler</span>
+                <span class="value">Schmidt & Partner</span>
+              </div>
+              <div class="summary-row">
+                <span class="label">Vertragsbeginn</span>
+                <span class="value">01.04.2026</span>
+              </div>
+              <div class="summary-row">
+                <span class="label">Laufzeit</span>
+                <span class="value">1 Jahr</span>
+              </div>
+              <div class="summary-row">
+                <span class="label">Anzahl Standorte</span>
+                <span class="value">2</span>
+              </div>
+              <div class="summary-row">
+                <span class="label">Gesamtversicherungssumme</span>
+                <span class="value">&euro; 8.300.000</span>
+              </div>
+              <div class="summary-row">
+                <span class="label">Selbstbeteiligung</span>
+                <span class="value" id="summary-sb">&euro; 10.000</span>
+              </div>
+              <div class="summary-row" style="padding-top:12px; border-top:2px solid var(--blue-200); margin-top:8px;">
+                <span class="label" style="font-weight:700; color:var(--gray-900); font-size:14px;">Jahresprämie (netto)</span>
+                <span class="value" style="font-size:18px; color:var(--blue-600);" id="summary-premium">&euro; 42.000</span>
+              </div>
+            </div>
+
+            <div class="summary-actions" style="margin-top:24px;">
+              <button class="btn btn-primary" onclick="showFinalizationModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+                Angebot finalisieren
+              </button>
+              <button class="btn btn-success" onclick="showApprovalModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>
+                Zur Freigabe vorlegen
+              </button>
+            </div>
+
+            <div style="margin-top:32px; padding:12px 16px; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:6px;">
+              <div style="font-size:11px; color:var(--gray-400); font-weight:600; margin-bottom:4px;">BEARBEITUNGSHINWEIS</div>
+              <div style="font-size:12.5px; color:var(--gray-600);">
+                Dieses Angebot wurde von <strong>Maria Krüger</strong> erstellt. Letzte Änderung: 22.02.2026, 10:15 Uhr.
+                Risikobewertung liegt innerhalb der Zeichnungsvollmacht (Stufe II).
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Doc Sidebar -->
+        <div class="doc-sidebar">
+          <div class="doc-sidebar-title">Abschnitte</div>
+          <div class="doc-sidebar-link" onclick="switchDocTab('basisdaten')">1. Vertragsdaten</div>
+          <div class="doc-sidebar-link" onclick="switchDocTab('basisdaten')">2. Unternehmensdaten</div>
+          <div class="doc-sidebar-link" onclick="switchDocTab('standorte')">3. Standorte</div>
+          <div class="doc-sidebar-link" onclick="switchDocTab('standorte')">4. Risikobewertung</div>
+          <div class="doc-sidebar-link active" onclick="switchDocTab('kalkulation')">5. Kalkulation</div>
+          <div class="doc-sidebar-link" onclick="switchDocTab('kalkulation')">6. Angebotsübersicht</div>
+
+          <div class="divider"></div>
+          <div class="doc-sidebar-title">Prämienrechner</div>
+          <div style="padding:8px 10px;">
+            <div style="font-size:11px; color:var(--gray-500); margin-bottom:6px;">Schnellberechnung</div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+              <span style="font-size:12px; color:var(--gray-600); white-space:nowrap;">SB:</span>
+              <select style="flex:1; padding:4px 6px; border:1px solid var(--gray-300); border-radius:4px; font-size:11px; font-family:var(--font);" onchange="quickSB(this.value)">
+                <option value="5000">&euro; 5.000</option>
+                <option value="10000" selected>&euro; 10.000</option>
+                <option value="25000">&euro; 25.000</option>
+                <option value="50000">&euro; 50.000</option>
+              </select>
+            </div>
+            <div style="font-size:12px; color:var(--gray-600); text-align:center; padding:8px; background:var(--gray-50); border-radius:4px;" id="sidebar-premium">
+              Prämie: <strong>&euro; 42.000</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main-area -->
+</div><!-- /app-shell -->
+
+<!-- ======== MODALS ======== -->
+
+<!-- New Vorgang Modal -->
+<div class="modal-overlay" id="modal-new">
+  <div class="modal">
+    <h3>Neuer Vorgang</h3>
+    <p>Erstellen Sie einen neuen Underwriting-Vorgang. Geben Sie die grundlegenden Informationen ein.</p>
+    <div style="margin-bottom:16px;">
+      <label style="display:block; font-size:12px; font-weight:600; color:var(--gray-600); margin-bottom:4px;">Versicherungsnehmer</label>
+      <input type="text" placeholder="Firmenname eingeben…" style="width:100%; padding:8px 12px; border:1px solid var(--gray-300); border-radius:6px; font-size:13px; font-family:var(--font);">
+    </div>
+    <div style="margin-bottom:16px;">
+      <label style="display:block; font-size:12px; font-weight:600; color:var(--gray-600); margin-bottom:4px;">Vorgangstyp</label>
+      <select style="width:100%; padding:8px 12px; border:1px solid var(--gray-300); border-radius:6px; font-size:13px; font-family:var(--font);">
+        <option>Neugeschäft</option>
+        <option>Renewal</option>
+        <option>Nachtrag</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('modal-new')">Abbrechen</button>
+      <button class="btn btn-primary" onclick="closeModal('modal-new'); showToast('Vorgang wurde erstellt.')">Vorgang erstellen</button>
+    </div>
+  </div>
+</div>
+
+<!-- Finalization Modal -->
+<div class="modal-overlay" id="modal-finalize">
+  <div class="modal">
+    <h3>Angebot finalisieren</h3>
+    <p>Das Angebotsdokument wird als PDF generiert und dem Vorgang zugeordnet. Möchten Sie fortfahren?</p>
+    <div style="background:var(--gray-50); border:1px solid var(--gray-200); border-radius:6px; padding:12px 16px; margin-bottom:16px;">
+      <div style="font-size:12px; color:var(--gray-600);">
+        <strong>Mustermann GmbH</strong> — V-2026-0142<br>
+        Prämie: <span id="modal-premium">&euro; 42.000</span> (netto)
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('modal-finalize')">Abbrechen</button>
+      <button class="btn btn-primary" onclick="closeModal('modal-finalize'); showToast('PDF wird generiert…')">PDF generieren</button>
+    </div>
+  </div>
+</div>
+
+<!-- Approval Modal -->
+<div class="modal-overlay" id="modal-approval">
+  <div class="modal">
+    <h3>Zur Freigabe vorlegen</h3>
+    <p>Der Vorgang wird an den Senior Underwriter zur Prüfung und Freigabe weitergeleitet.</p>
+    <div style="margin-bottom:16px;">
+      <label style="display:block; font-size:12px; font-weight:600; color:var(--gray-600); margin-bottom:4px;">Freigabe durch</label>
+      <select style="width:100%; padding:8px 12px; border:1px solid var(--gray-300); border-radius:6px; font-size:13px; font-family:var(--font);">
+        <option>Dr. Stefan Engel — Senior Underwriter</option>
+        <option>Petra Hartmann — Abteilungsleiterin UW</option>
+      </select>
+    </div>
+    <div style="margin-bottom:16px;">
+      <label style="display:block; font-size:12px; font-weight:600; color:var(--gray-600); margin-bottom:4px;">Anmerkung (optional)</label>
+      <textarea placeholder="Anmerkung für den Prüfer…" rows="2" style="width:100%; padding:8px 12px; border:1px solid var(--gray-300); border-radius:6px; font-size:13px; font-family:var(--font); resize:vertical;"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('modal-approval')">Abbrechen</button>
+      <button class="btn btn-success" onclick="closeModal('modal-approval'); showToast('Vorgang wurde zur Freigabe vorgelegt.')">Zur Freigabe senden</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('screen-' + id);
+  if (el) el.classList.add('active');
+}
+
+function goToBoard() {
+  showScreen('board');
+  document.querySelectorAll('.sidebar-nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelector('.sidebar-nav-item[data-nav="board"]').classList.add('active');
+}
+
+function goToDocument(tab) {
+  showScreen(tab);
+  document.querySelectorAll('.sidebar-nav-item').forEach(n => n.classList.remove('active'));
+}
+
+function navigateSidebar(nav) {
+  document.querySelectorAll('.sidebar-nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelector('.sidebar-nav-item[data-nav="' + nav + '"]').classList.add('active');
+  if (nav === 'board') showScreen('board');
+}
+
+function switchDocTab(tab) {
+  showScreen(tab);
+  // Update tab highlights across all screens
+  document.querySelectorAll('.doc-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.tab === tab);
+  });
+}
+
+/* ============================================================
+   MODALS
+   ============================================================ */
+function openModal() {
+  document.getElementById('modal-new').classList.add('open');
+}
+function showFinalizationModal() {
+  document.getElementById('modal-premium').textContent = document.getElementById('premium-display').textContent;
+  document.getElementById('modal-finalize').classList.add('open');
+}
+function showApprovalModal() {
+  document.getElementById('modal-approval').classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+  });
+});
+
+/* ============================================================
+   TOAST NOTIFICATIONS
+   ============================================================ */
+let toastTimer;
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+/* ============================================================
+   RISK ASSESSMENT ANIMATION
+   ============================================================ */
+function startRiskAssessment() {
+  const placeholder = document.getElementById('risk-placeholder');
+  const result = document.getElementById('risk-result');
+
+  // Show loading state
+  placeholder.innerHTML = `
+    <div style="text-align:center; padding:32px;">
+      <div style="display:inline-block; width:32px; height:32px; border:3px solid var(--gray-200); border-top-color:var(--blue-500); border-radius:50%; animation:spin 1s linear infinite;"></div>
+      <p style="font-size:13px; color:var(--gray-500); margin-top:12px;">Risikobewertung wird durchgeführt…</p>
+    </div>
+  `;
+
+  // Add spinner keyframe
+  if (!document.getElementById('spin-style')) {
+    const style = document.createElement('style');
+    style.id = 'spin-style';
+    style.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
+    document.head.appendChild(style);
+  }
+
+  // Show result after delay
+  setTimeout(() => {
+    placeholder.style.display = 'none';
+    result.classList.add('visible');
+  }, 2000);
+}
+
+/* ============================================================
+   PREMIUM CALCULATION (live update)
+   ============================================================ */
+const BASE_PREMIUM = 42000;
+const MARKET_AVG = 44500;
+
+function parseSB(val) {
+  // Remove dots and parse
+  return parseInt(val.replace(/\./g, '').replace(/\s/g, ''), 10) || 10000;
+}
+
+function formatEUR(num) {
+  return num.toLocaleString('de-DE');
+}
+
+function updatePremium() {
+  const input = document.getElementById('sb-input');
+  const sb = parseSB(input.value);
+  // Simple model: higher SB -> lower premium
+  // Base: SB=10000 -> 42000. Every +5000 SB -> -1500 premium (min 25000)
+  const diff = (sb - 10000) / 5000;
+  let premium = Math.max(25000, Math.round(BASE_PREMIUM - diff * 1500));
+
+  const premiumStr = '\u20AC ' + formatEUR(premium);
+  const premiumEl = document.getElementById('premium-display');
+  premiumEl.textContent = premiumStr;
+  premiumEl.classList.remove('flash');
+  void premiumEl.offsetWidth; // trigger reflow
+  premiumEl.classList.add('flash');
+
+  // Update summary
+  document.getElementById('summary-premium').textContent = premiumStr;
+  document.getElementById('summary-sb').textContent = '\u20AC ' + formatEUR(sb);
+
+  // Update sidebar
+  document.getElementById('sidebar-premium').innerHTML = 'Prämie: <strong>' + premiumStr + '</strong>';
+
+  // Update benchmark
+  const pct = ((premium - MARKET_AVG) / MARKET_AVG * 100).toFixed(1);
+  const benchEl = document.getElementById('benchmark-diff');
+  benchEl.textContent = pct + '%';
+  if (parseFloat(pct) <= 0) {
+    benchEl.style.color = 'var(--green-700)';
+    benchEl.textContent = pct + '% unter Markt';
+  } else {
+    benchEl.style.color = 'var(--red-500)';
+    benchEl.textContent = '+' + pct + '% über Markt';
+  }
+}
+
+function quickSB(val) {
+  const input = document.getElementById('sb-input');
+  input.value = formatEUR(parseInt(val));
+  updatePremium();
+}
+
+/* ============================================================
+   EDITABLE FIELDS — select all on focus
+   ============================================================ */
+document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+  el.addEventListener('focus', function() {
+    // Select all text on focus for easy editing
+    const range = document.createRange();
+    // Only select text nodes, not enriched indicators
+    const textNodes = [];
+    this.childNodes.forEach(n => {
+      if (n.nodeType === Node.TEXT_NODE) textNodes.push(n);
+    });
+    if (textNodes.length > 0) {
+      range.setStart(textNodes[0], 0);
+      range.setEnd(textNodes[textNodes.length - 1], textNodes[textNodes.length - 1].textContent.length);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+  });
+  // Prevent enter from creating new lines
+  el.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      this.blur();
+    }
+  });
+});
+
+/* ============================================================
+   KEYBOARD NAV
+   ============================================================ */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open'));
+  }
+});
+</script>
+
+</body>
+</html>

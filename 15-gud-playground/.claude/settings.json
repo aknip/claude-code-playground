@@ -1,0 +1,20 @@
+{
+  "statusLine": {
+    "type": "command",
+    "command": "node .claude/hooks/cli-statusline.js"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .planning/hooks/autopilot-activity.sh",
+            "async": true
+          }
+        ]
+      }
+    ]
+  }
+}

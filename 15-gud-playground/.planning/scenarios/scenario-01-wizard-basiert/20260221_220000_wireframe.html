@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Underwriting Workbench — Wizard-basiert v2 (6-Schritt-Wizard)</title>
+<style>
+  :root {
+    --background: #ffffff;
+    --foreground: #0a0a0a;
+    --card: #ffffff;
+    --card-foreground: #0a0a0a;
+    --primary: #171717;
+    --primary-foreground: #fafafa;
+    --secondary: #f5f5f5;
+    --secondary-foreground: #171717;
+    --muted: #f5f5f5;
+    --muted-foreground: #737373;
+    --accent: #f5f5f5;
+    --accent-foreground: #171717;
+    --destructive: #ef4444;
+    --border: #e5e5e5;
+    --input: #e5e5e5;
+    --ring: #171717;
+    --radius: 0.5rem;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --info: #3b82f6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--background);
+    color: var(--foreground);
+    min-height: 100vh;
+  }
+
+  .header {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .header h1 { font-size: 1rem; font-weight: 600; }
+  .header-right { display: flex; gap: 1rem; align-items: center; font-size: 0.875rem; }
+
+  .main-layout { display: flex; min-height: calc(100vh - 52px); }
+
+  .sidebar {
+    width: 240px;
+    background: var(--secondary);
+    border-right: 1px solid var(--border);
+    padding: 1rem 0;
+    flex-shrink: 0;
+  }
+  .sidebar-item {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted-foreground);
+    transition: all 0.15s;
+  }
+  .sidebar-item:hover { background: var(--accent); color: var(--foreground); }
+  .sidebar-item.active { background: var(--background); color: var(--foreground); font-weight: 500; border-left: 2px solid var(--primary); }
+  .sidebar-section { padding: 0.5rem 1.25rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); margin-top: 0.5rem; }
+  .sidebar-badge { margin-left: auto; background: var(--primary); color: var(--primary-foreground); padding: 0.125rem 0.5rem; border-radius: 9999px; font-size: 0.6875rem; }
+
+  .content { flex: 1; padding: 2rem; max-width: 960px; }
+
+  /* Stepper */
+  .stepper { display: flex; align-items: center; margin-bottom: 2rem; padding: 1rem 0; }
+  .step { display: flex; align-items: center; gap: 0.375rem; font-size: 0.75rem; color: var(--muted-foreground); white-space: nowrap; }
+  .step.active { color: var(--foreground); font-weight: 600; }
+  .step.completed { color: var(--success); }
+  .step-num {
+    width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 0.6875rem; font-weight: 600; border: 2px solid var(--border); background: var(--background); flex-shrink: 0;
+  }
+  .step.active .step-num { border-color: var(--primary); background: var(--primary); color: white; }
+  .step.completed .step-num { border-color: var(--success); background: var(--success); color: white; }
+  .step-line { flex: 1; height: 2px; background: var(--border); margin: 0 0.375rem; min-width: 12px; }
+  .step-line.done { background: var(--success); }
+
+  /* Cards */
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem; }
+  .card-title { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.75rem; }
+  .card-desc { color: var(--muted-foreground); font-size: 0.875rem; margin-bottom: 1.25rem; }
+
+  /* Form */
+  .form-group { margin-bottom: 1.25rem; }
+  .form-label { display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.375rem; }
+  .form-hint { font-size: 0.75rem; color: var(--muted-foreground); margin-top: 0.25rem; }
+  .form-input, .form-select {
+    width: 100%; padding: 0.5rem 0.75rem; border: 1px solid var(--input); border-radius: var(--radius);
+    font-size: 0.875rem; background: var(--background); color: var(--foreground); outline: none;
+  }
+  .form-input:focus, .form-select:focus { border-color: var(--ring); box-shadow: 0 0 0 1px var(--ring); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  /* Buttons */
+  .btn {
+    padding: 0.5rem 1rem; border-radius: var(--radius); font-size: 0.875rem; font-weight: 500;
+    cursor: pointer; border: 1px solid transparent; transition: all 0.15s; display: inline-flex; align-items: center; gap: 0.375rem;
+  }
+  .btn-primary { background: var(--primary); color: var(--primary-foreground); }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-outline { border-color: var(--border); background: var(--background); color: var(--foreground); }
+  .btn-outline:hover { background: var(--accent); }
+  .btn-group { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem; }
+
+  /* Badge */
+  .badge { display: inline-flex; align-items: center; padding: 0.125rem 0.625rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 500; }
+  .badge-outline { border: 1px solid var(--border); }
+  .badge-success { background: #dcfce7; color: #166534; }
+  .badge-warning { background: #fef3c7; color: #92400e; }
+  .badge-info { background: #dbeafe; color: #1e40af; }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+  th { text-align: left; padding: 0.625rem 0.75rem; border-bottom: 2px solid var(--border); font-weight: 500; color: var(--muted-foreground); font-size: 0.8125rem; }
+  td { padding: 0.625rem 0.75rem; border-bottom: 1px solid var(--border); }
+  tr:hover td { background: var(--muted); }
+
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .vorgang-row { cursor: pointer; }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 0.375rem; }
+  .status-neu { background: var(--warning); }
+  .status-bearbeitung { background: var(--info); }
+  .status-angebot { background: var(--success); }
+
+  .standort-summary {
+    display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem;
+    background: var(--secondary); border-radius: var(--radius); margin-bottom: 0.5rem; font-size: 0.875rem;
+  }
+  .standort-summary .num {
+    width: 24px; height: 24px; border-radius: 50%; background: var(--primary); color: white;
+    display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600; flex-shrink: 0;
+  }
+
+  .screen-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .screen-subtitle { color: var(--muted-foreground); font-size: 0.875rem; margin-bottom: 1.5rem; }
+
+  hr.divider { border: none; border-top: 1px solid var(--border); margin: 1.25rem 0; }
+  .section-title { font-weight: 600; margin-bottom: 1rem; font-size: 0.9375rem; }
+
+  /* Enrichment specific */
+  .enrichment-item {
+    padding: 1rem; border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 0.75rem;
+  }
+  .enrichment-item.confirmed { border-color: var(--success); background: #f0fdf4; }
+  .enrichment-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+  .enrichment-source { font-size: 0.75rem; color: var(--muted-foreground); }
+  .enrichment-data { font-size: 0.875rem; }
+  .enrichment-actions { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+  .enrichment-actions .btn { padding: 0.25rem 0.75rem; font-size: 0.8125rem; }
+
+  /* Checkbox pills */
+  .pill-group { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .pill-label {
+    display: flex; align-items: center; gap: 0.375rem; font-size: 0.875rem;
+    padding: 0.375rem 0.75rem; border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer;
+  }
+
+  /* Metric box */
+  .metric-box {
+    text-align: center; padding: 1rem; background: var(--secondary); border-radius: var(--radius);
+  }
+  .metric-value { font-size: 2rem; font-weight: 700; }
+  .metric-label { font-size: 0.75rem; color: var(--muted-foreground); }
+
+  .success-card {
+    border-color: var(--success); background: #f0fdf4; padding: 1rem 1.5rem;
+    display: flex; align-items: flex-start; gap: 0.75rem; border-radius: var(--radius); margin-bottom: 1.5rem;
+  }
+  .success-card .icon { color: var(--success); font-size: 1.25rem; font-weight: bold; flex-shrink: 0; margin-top: 0.125rem; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Underwriting Workbench</h1>
+  <div class="header-right">
+    <span>Sach-Industrieversicherung</span>
+    <span style="opacity:0.5">|</span>
+    <span>Max Mustermann (Underwriter)</span>
+  </div>
+</div>
+
+<div class="main-layout">
+  <div class="sidebar">
+    <div class="sidebar-section">Navigation</div>
+    <div class="sidebar-item active" onclick="showScreen('dashboard')">&#9632; Dashboard</div>
+    <div class="sidebar-item" onclick="showScreen('wiz-basisdaten')">&#43; Neuer Vorgang</div>
+    <div class="sidebar-section">Vorg&auml;nge</div>
+    <div class="sidebar-item" onclick="showScreen('dashboard')">&#9776; Alle Vorg&auml;nge</div>
+    <div class="sidebar-item">&#128197; Renewals <span class="sidebar-badge">3</span></div>
+    <div class="sidebar-section">Bestand</div>
+    <div class="sidebar-item">&#128196; Vertr&auml;ge</div>
+  </div>
+
+  <div class="content">
+
+    <!-- ===== DASHBOARD ===== -->
+    <div id="screen-dashboard" class="screen active">
+      <div class="screen-title">Vorgangs&uuml;bersicht</div>
+      <div class="screen-subtitle">Alle Neugesch&auml;ft-Vorg&auml;nge im &Uuml;berblick</div>
+
+      <div style="display:flex; gap:0.75rem; margin-bottom:1.5rem;">
+        <button class="btn btn-primary" onclick="showScreen('wiz-basisdaten')">+ Neuer Vorgang</button>
+        <input class="form-input" style="max-width:280px" placeholder="Vorgang suchen..." />
+      </div>
+
+      <div class="card" style="padding:0; overflow:hidden">
+        <table>
+          <thead><tr><th>Vorgang</th><th>Versicherungsnehmer</th><th>Makler</th><th>Status</th><th>Wizard-Schritt</th><th>Erstellt</th></tr></thead>
+          <tbody>
+            <tr class="vorgang-row" onclick="showScreen('wiz-anreicherung')">
+              <td><strong>VG-2026-001</strong></td><td>M&uuml;ller Metallbau GmbH</td><td>Aon Deutschland</td>
+              <td><span class="status-dot status-bearbeitung"></span>In Bearbeitung</td>
+              <td><span class="badge badge-info">Schritt 2: Anreicherung</span></td><td>19.02.2026</td>
+            </tr>
+            <tr class="vorgang-row" onclick="showScreen('wiz-basisdaten')">
+              <td><strong>VG-2026-002</strong></td><td>Schmidt Chemie AG</td><td>Marsh GmbH</td>
+              <td><span class="status-dot status-neu"></span>Neu</td>
+              <td><span class="badge badge-outline">Schritt 1: Basisdaten</span></td><td>20.02.2026</td>
+            </tr>
+            <tr class="vorgang-row">
+              <td><strong>VG-2026-003</strong></td><td>Weber Logistik KG</td><td>Willis Towers Watson</td>
+              <td><span class="status-dot status-angebot"></span>Angebot erstellt</td>
+              <td><span class="badge badge-success">Abgeschlossen</span></td><td>15.02.2026</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== WIZARD STEP 1: BASISDATEN ===== -->
+    <div id="screen-wiz-basisdaten" class="screen">
+      <div class="screen-title">Neuer Vorgang</div>
+      <div class="screen-subtitle">Schritt 1 von 6 &mdash; Basisdaten erfassen</div>
+
+      <div class="stepper">
+        <div class="step active"><div class="step-num">1</div><span>Basisdaten</span></div>
+        <div class="step-line"></div>
+        <div class="step"><div class="step-num">2</div><span>Anreicherung</span></div>
+        <div class="step-line"></div>
+        <div class="step"><div class="step-num">3</div><span>Risikodaten</span></div>
+        <div class="step-line"></div>
+        <div class="step"><div class="step-num">4</div><span>Bewertung</span></div>
+        <div class="step-line"></div>
+        <div class="step"><div class="step-num">5</div><span>Kalkulation</span></div>
+        <div class="step-line"></div>
+        <div class="step"><div class="step-num">6</div><span>Angebot</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Basisdaten</div>
+        <div class="card-desc">Versicherungsnehmer, Makler und grundlegende Vertragsinformationen.</div>
+
+        <div class="form-group">
+          <label class="form-label">Versicherungsnehmer</label>
+          <input class="form-input" placeholder="Firmenname eingeben..." value="M&uuml;ller Metallbau GmbH" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Rechtsform</label>
+            <select class="form-select"><option>GmbH</option></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Branche</label>
+            <select class="form-select"><option>Metallverarbeitung</option></select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Makler</label>
+          <input class="form-input" value="Aon Deutschland" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Sparte</label>
+            <select class="form-select"><option>Sach (Property)</option></select>
+            <div class="form-hint">Aktuell nur Sach verf&uuml;gbar</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Gew&uuml;nschter Vertragsbeginn</label>
+            <input class="form-input" type="text" value="01.04.2026" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Vertragslaufzeit</label>
+            <select class="form-select"><option>1 Jahr</option></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Jahresnettoumsatz (EUR)</label>
+            <input class="form-input" value="50.000.000" />
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-outline" onclick="showScreen('dashboard')">Abbrechen</button>
+        <button class="btn btn-primary" onclick="showScreen('wiz-anreicherung')">Weiter zur Datenanreicherung &rarr;</button>
+      </div>
+    </div>
+
+    <!-- ===== WIZARD STEP 2: DATENANREICHERUNG (NEU) ===== -->
+    <div id="screen-wiz-anreicherung" class="screen">
+      <div class="screen-title">VG-2026-001 &mdash; M&uuml;ller Metallbau GmbH</div>
+      <div class="screen-subtitle">Schritt 2 von 6 &mdash; Datenanreicherung</div>
+
+      <div class="stepper">
+        <div class="step completed"><div class="step-num">&#10003;</div><span>Basisdaten</span></div>
+        <div class="step-line done"></div>
+        <div class="step active"><div class="step-num">2</div><span>Anreicherung</span></div>
+        <div class="step-line"></div>
+        <div class="step"><div class="step-num">3</div><span>Risikodaten</span></div>
+        <div class="step-line"></div>
+        <div class="step"><div class="step-num">4</div><span>Bewertung</span></div>
+        <div class="step-line"></div>
+        <div class="step"><div class="step-num">5</div><span>Kalkulation</span></div>
+        <div class="step-line"></div>
+        <div class="step"><div class="step-num">6</div><span>Angebot</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Externe Daten</div>
+        <div class="card-desc">Das System hat automatisch Daten aus externen Quellen abgerufen. Bitte pr&uuml;fen und best&auml;tigen oder korrigieren Sie die Informationen.</div>
+
+        <!-- Handelsregister -->
+        <div class="enrichment-item confirmed">
+          <div class="enrichment-header">
+            <strong>Handelsregister-Daten</strong>
+            <span class="badge badge-success">Best&auml;tigt</span>
+          </div>
+          <div class="enrichment-source">Quelle: Handelsregister (HRB 123456, AG Stuttgart)</div>
+          <div class="enrichment-data" style="margin-top:0.5rem">
+            <table style="font-size:0.8125rem">
+              <tr><td style="width:180px; color:var(--muted-foreground); padding:0.25rem 0.5rem">Firma</td><td style="padding:0.25rem 0.5rem">M&uuml;ller Metallbau GmbH</td></tr>
+              <tr><td style="color:var(--muted-foreground); padding:0.25rem 0.5rem">Sitz</td><td style="padding:0.25rem 0.5rem">Stuttgart</td></tr>
+              <tr><td style="color:var(--muted-foreground); padding:0.25rem 0.5rem">Gr&uuml;ndungsjahr</td><td style="padding:0.25rem 0.5rem">1987</td></tr>
+              <tr><td style="color:var(--muted-foreground); padding:0.25rem 0.5rem">Gesch&auml;ftsf&uuml;hrer</td><td style="padding:0.25rem 0.5rem">Thomas M&uuml;ller, Sandra Weber</td></tr>
+              <tr><td style="color:var(--muted-foreground); padding:0.25rem 0.5rem">Stammkapital</td><td style="padding:0.25rem 0.5rem">500.000 EUR</td></tr>
+            </table>
+          </div>
+          <div class="enrichment-actions">
+            <button class="btn btn-outline" style="border-color:var(--success); color:#166534">&#10003; Best&auml;tigt</button>
+            <button class="btn btn-outline">Korrigieren</button>
+          </div>
+        </div>
+
+        <!-- Branchenrisiko -->
+        <div class="enrichment-item">
+          <div class="enrichment-header">
+            <strong>Branchenrisikoprofil</strong>
+            <span class="badge badge-warning">Pr&uuml;fung offen</span>
+          </div>
+          <div class="enrichment-source">Quelle: Branchenrisikodatenbank</div>
+          <div class="enrichment-data" style="margin-top:0.5rem">
+            <table style="font-size:0.8125rem">
+              <tr><td style="width:180px; color:var(--muted-foreground); padding:0.25rem 0.5rem">Branche</td><td style="padding:0.25rem 0.5rem">Metallverarbeitung (WZ 25.1)</td></tr>
+              <tr><td style="color:var(--muted-foreground); padding:0.25rem 0.5rem">Feuerrisiko</td><td style="padding:0.25rem 0.5rem"><span class="badge badge-warning">Erh&ouml;ht</span> &mdash; Schweiß-, Schneid- und Schleifarbeiten</td></tr>
+              <tr><td style="color:var(--muted-foreground); padding:0.25rem 0.5rem">BU-Exponierung</td><td style="padding:0.25rem 0.5rem"><span class="badge badge-outline">Mittel</span> &mdash; Abh&auml;ngig von Maschinenpark</td></tr>
+              <tr><td style="color:var(--muted-foreground); padding:0.25rem 0.5rem">Empfohlener Pr&auml;miensatz</td><td style="padding:0.25rem 0.5rem">2,5 &ndash; 3,5 &permil;</td></tr>
+            </table>
+          </div>
+          <div class="enrichment-actions">
+            <button class="btn btn-primary" style="font-size:0.8125rem">&Uuml;bernehmen</button>
+            <button class="btn btn-outline">Korrigieren</button>
+          </div>
+        </div>
+
+        <!-- Naturgefahrzonen -->
+        <div class="enrichment-item">
+          <div class="enrichment-header">
+            <strong>Naturgefahrzonen</strong>
+            <span class="badge badge-warning">Pr&uuml;fung offen</span>
+          </div>
+          <div class="enrichment-source">Quelle: Z&Uuml;RS Geo / Naturgefahren-DB</div>
+          <div class="enrichment-data" style="margin-top:0.5rem">
+            <div style="font-size:0.8125rem; color:var(--muted-foreground); margin-bottom:0.5rem">Basierend auf bekannter Adresse: Industriestr. 42, 70565 Stuttgart</div>
+            <table style="font-size:0.8125rem">
+              <tr><td style="width:180px; color:var(--muted-foreground); padding:0.25rem 0.5rem">&Uuml;berschwemmung (Z&Uuml;RS)</td><td style="padding:0.25rem 0.5rem"><span class="badge badge-success">Zone 1</span> &mdash; Geringes Risiko</td></tr>
+              <tr><td style="color:var(--muted-foreground); padding:0.25rem 0.5rem">Erdbeben</td><td style="padding:0.25rem 0.5rem"><span class="badge badge-success">Zone 0</span> &mdash; Kein Risiko</td></tr>
+              <tr><td style="color:var(--muted-foreground); padding:0.25rem 0.5rem">Hagel</td><td style="padding:0.25rem 0.5rem"><span class="badge badge-outline">Zone 2</span> &mdash; Mittleres Risiko</td></tr>
+            </table>
+          </div>
+          <div class="enrichment-actions">
+            <button class="btn btn-primary" style="font-size:0.8125rem">&Uuml;bernehmen</button>
+            <button class="btn btn-outline">Korrigieren</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#f0f4ff; border:1px solid #bfdbfe; border-radius:var(--radius); padding:0.75rem 1rem; font-size:0.8125rem; color:#1e40af; margin-bottom:1.5rem">
+        &#9432; Best&auml;tigte Daten flie&szlig;en automatisch in die n&auml;chsten Wizard-Schritte ein.
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-outline" onclick="showScreen('wiz-basisdaten')">&larr; Zur&uuml;ck</button>
+        <button class="btn btn-primary" onclick="showScreen('wiz-risikodaten')">Weiter zu Risikodaten &rarr;</button>
+      </div>
+    </div>
+
+    <!-- ===== WIZARD STEP 3: RISIKODATEN ===== -->
+    <div id="screen-wiz-risikodaten" class="screen">
+      <div class="screen-title">VG-2026-001 &mdash; M&uuml;ller Metallbau GmbH</div>
+      <div class="screen-subtitle">Schritt 3 von 6 &mdash; Risikodaten erfassen</div>
+
+      <div class="stepper">
+        <div class="step completed"><div class="step-num">&#10003;</div><span>Basisdaten</span></div>
+        <div class="step-line done"></div>
+        <div class="step completed"><div class="step-num">&#10003;</div><span>Anreicherung</span></div>
+        <div class="step-line done"></div>
+        <div class="step active"><div class="step-num">3</div><span>Risikodaten</span></div>
+        <div class="step-line"></div>
+        <div class="step"><div class="step-num">4</div><span>Bewertung</span></div>
+        <div class="step-line"></div>
+        <div class="step"><div class="step-num">5</div><span>Kalkulation</span></div>
+        <div class="step-line"></div>
+        <div class="step"><div class="step-num">6</div><span>Angebot</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Erfasste Standorte</div>
+        <div class="card-desc">Jeden Standort einzeln erfassen. Nach dem letzten Standort zur Risikobewertung weiter.</div>
+
+        <div class="standort-summary">
+          <div class="num">1</div>
+          <div style="flex:1">
+            <strong>Hauptwerk Stuttgart</strong><br/>
+            <span style="font-size:0.8125rem; color:var(--muted-foreground)">Industriestr. 42, 70565 Stuttgart &mdash; 3 Geb&auml;ude, TSI: 45.000.000 EUR</span>
+          </div>
+          <span class="badge badge-success">Erfasst</span>
+        </div>
+
+        <div class="standort-summary" style="border:2px solid var(--primary); background:white">
+          <div class="num">2</div>
+          <div style="flex:1">
+            <strong>Standort 2 wird erfasst...</strong><br/>
+            <span style="font-size:0.8125rem; color:var(--muted-foreground)">Aktueller Standort</span>
+          </div>
+          <span class="badge badge-warning">In Erfassung</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Standort 2 erfassen</div>
+
+        <div class="form-group">
+          <label class="form-label">Standortbezeichnung</label>
+          <input class="form-input" placeholder="z.B. Lager M&uuml;nchen, Verwaltung Berlin..." />
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Stra&szlig;e &amp; Hausnummer</label><input class="form-input" /></div>
+          <div class="form-group"><label class="form-label">PLZ / Ort</label><input class="form-input" /></div>
+        </div>
+
+        <hr class="divider" />
+        <div class="section-title">Geb&auml;ude an diesem Standort</div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Anzahl Geb&auml;ude</label><input class="form-input" type="number" value="1" min="1" /></div>
+          <div class="form-group">
+            <label class="form-label">Bauart</label>
+            <select class="form-select"><option value="">Bitte w&auml;hlen</option><option>Massivbau</option><option>Stahlbau</option><option>Stahlbeton</option><option>Holzbau</option></select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Gesamtfl&auml;che (m&sup2;)</label><input class="form-input" /></div>
+          <div class="form-group"><label class="form-label">Baujahr</label><input class="form-input" /></div>
+        </div>
+
+        <hr class="divider" />
+        <div class="section-title">Versicherungswerte (EUR)</div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Geb&auml;udewert</label><input class="form-input" placeholder="EUR" /></div>
+          <div class="form-group"><label class="form-label">Inhalt / BU</label><input class="form-input" placeholder="EUR" /></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Gesamtversicherungssumme (TSI)</label>
+          <input class="form-input" placeholder="Wird automatisch berechnet" disabled style="background:#f9f9f9" />
+        </div>
+
+        <hr class="divider" />
+        <div class="section-title">Gefahren</div>
+        <div class="pill-group">
+          <label class="pill-label"><input type="checkbox" checked /> Feuer</label>
+          <label class="pill-label"><input type="checkbox" checked /> Leitungswasser</label>
+          <label class="pill-label"><input type="checkbox" /> Sturm/Hagel</label>
+          <label class="pill-label"><input type="checkbox" /> &Uuml;berschwemmung</label>
+          <label class="pill-label"><input type="checkbox" /> Erdbeben</label>
+          <label class="pill-label"><input type="checkbox" /> Einbruchdiebstahl</label>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-outline" onclick="showScreen('wiz-anreicherung')">&larr; Zur&uuml;ck</button>
+        <button class="btn btn-outline">Standort speichern &amp; weiteren hinzuf&uuml;gen</button>
+        <button class="btn btn-primary" onclick="showScreen('wiz-bewertung')">Speichern &amp; weiter zur Bewertung &rarr;</button>
+      </div>
+    </div>
+
+    <!-- ===== WIZARD STEP 4: BEWERTUNG ===== -->
+    <div id="screen-wiz-bewertung" class="screen">
+      <div class="screen-title">VG-2026-001 &mdash; M&uuml;ller Metallbau GmbH</div>
+      <div class="screen-subtitle">Schritt 4 von 6 &mdash; Risikobewertung</div>
+
+      <div class="stepper">
+        <div class="step completed"><div class="step-num">&#10003;</div><span>Basisdaten</span></div>
+        <div class="step-line done"></div>
+        <div class="step completed"><div class="step-num">&#10003;</div><span>Anreicherung</span></div>
+        <div class="step-line done"></div>
+        <div class="step completed"><div class="step-num">&#10003;</div><span>Risikodaten</span></div>
+        <div class="step-line done"></div>
+        <div class="step active"><div class="step-num">4</div><span>Bewertung</span></div>
+        <div class="step-line"></div>
+        <div class="step"><div class="step-num">5</div><span>Kalkulation</span></div>
+        <div class="step-line"></div>
+        <div class="step"><div class="step-num">6</div><span>Angebot</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Vollst&auml;ndigkeitspr&uuml;fung</div>
+        <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.875rem">
+          <div>&#10003; <span style="color:var(--success)">Basisdaten vollst&auml;ndig</span></div>
+          <div>&#10003; <span style="color:var(--success)">Externe Daten best&auml;tigt</span></div>
+          <div>&#10003; <span style="color:var(--success)">2 Standorte erfasst</span></div>
+          <div>&#9888; <span style="color:var(--warning)">Standort 2: Baujahr fehlt</span></div>
+          <div>&#10003; <span style="color:var(--success)">Gefahren zugeordnet</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Risiko-Scoring</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; margin-bottom:1.5rem">
+          <div class="metric-box"><div class="metric-value" style="color:#f59e0b">B+</div><div class="metric-label">Gesamtrisiko</div></div>
+          <div class="metric-box"><div class="metric-value">72</div><div class="metric-label">Score (0-100)</div></div>
+          <div class="metric-box"><div class="metric-value" style="color:var(--success)">&#10003;</div><div class="metric-label">Zeichnungsf&auml;hig</div></div>
+        </div>
+        <table>
+          <thead><tr><th>Kriterium</th><th>Bewertung</th><th>Anmerkung</th></tr></thead>
+          <tbody>
+            <tr><td>Branchenrisiko</td><td><span class="badge badge-warning">Mittel</span></td><td>Metallverarbeitung &mdash; Feuerrisiko erh&ouml;ht (aus Anreicherung)</td></tr>
+            <tr><td>Standortrisiko</td><td><span class="badge badge-success">Niedrig</span></td><td>Z&Uuml;RS Zone 1, keine Erdbebengefahr (aus Anreicherung)</td></tr>
+            <tr><td>Geb&auml;udequalit&auml;t</td><td><span class="badge badge-success">Gut</span></td><td>Massivbau, Brandmeldeanlage</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Zeichnungsrichtlinien</div>
+        <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.875rem">
+          <div>&#10003; <span style="color:var(--success)">TSI innerhalb Zeichnungsvollmacht (45 Mio. EUR &lt; Limit 100 Mio. EUR)</span></div>
+          <div>&#10003; <span style="color:var(--success)">Branche nicht auf Ausschlussliste</span></div>
+          <div>&#10003; <span style="color:var(--success)">Keine Vier-Augen-Freigabe erforderlich</span></div>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-outline" onclick="showScreen('wiz-risikodaten')">&larr; Zur&uuml;ck</button>
+        <button class="btn btn-primary" onclick="showScreen('wiz-kalkulation')">Weiter zur Kalkulation &rarr;</button>
+      </div>
+    </div>
+
+    <!-- ===== WIZARD STEP 5: KALKULATION ===== -->
+    <div id="screen-wiz-kalkulation" class="screen">
+      <div class="screen-title">VG-2026-001 &mdash; M&uuml;ller Metallbau GmbH</div>
+      <div class="screen-subtitle">Schritt 5 von 6 &mdash; Pricing &amp; Kalkulation</div>
+
+      <div class="stepper">
+        <div class="step completed"><div class="step-num">&#10003;</div><span>Basisdaten</span></div>
+        <div class="step-line done"></div>
+        <div class="step completed"><div class="step-num">&#10003;</div><span>Anreicherung</span></div>
+        <div class="step-line done"></div>
+        <div class="step completed"><div class="step-num">&#10003;</div><span>Risikodaten</span></div>
+        <div class="step-line done"></div>
+        <div class="step completed"><div class="step-num">&#10003;</div><span>Bewertung</span></div>
+        <div class="step-line done"></div>
+        <div class="step active"><div class="step-num">5</div><span>Kalkulation</span></div>
+        <div class="step-line"></div>
+        <div class="step"><div class="step-num">6</div><span>Angebot</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Pr&auml;mienberechnung</div>
+        <div class="card-desc">Das System hat 3 Standard-Varianten auf Basis der Risikodaten berechnet. W&auml;hlen Sie eine Variante oder passen Sie Parameter an.</div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.5rem">
+          <div class="metric-box">
+            <div class="metric-label">Gesamtversicherungssumme</div>
+            <div class="metric-value" style="font-size:1.5rem">45.000.000 EUR</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">Empfohlene Jahresnettpr&auml;mie</div>
+            <div class="metric-value" style="font-size:1.5rem">127.350 EUR</div>
+          </div>
+        </div>
+
+        <table>
+          <thead><tr><th></th><th>Variante</th><th>Selbstbehalt</th><th>Pr&auml;miensatz</th><th>Nettopr&auml;mie</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><input type="radio" name="var" /></td><td>Niedrige SB</td><td>10.000 EUR</td><td>3,24 &permil;</td><td>145.800 EUR</td><td></td></tr>
+            <tr style="background:#f0f4ff"><td><input type="radio" name="var" checked /></td><td><strong>Standard</strong></td><td>25.000 EUR</td><td>2,83 &permil;</td><td><strong>127.350 EUR</strong></td><td><span class="badge badge-info">Empfohlen</span></td></tr>
+            <tr><td><input type="radio" name="var" /></td><td>Hohe SB</td><td>50.000 EUR</td><td>2,41 &permil;</td><td>108.450 EUR</td><td></td></tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top:1rem">
+          <button class="btn btn-outline" style="font-size:0.8125rem">Parameter manuell anpassen</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Portfolio-Benchmark</div>
+        <div style="font-size:0.875rem; color:var(--muted-foreground)">[TBD &mdash; Benchmark-Daten werden nach Implementierung verf&uuml;gbar]</div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-outline" onclick="showScreen('wiz-bewertung')">&larr; Zur&uuml;ck</button>
+        <button class="btn btn-primary" onclick="showScreen('wiz-angebot')">Weiter zum Angebot &rarr;</button>
+      </div>
+    </div>
+
+    <!-- ===== WIZARD STEP 6: ANGEBOT ===== -->
+    <div id="screen-wiz-angebot" class="screen">
+      <div class="screen-title">VG-2026-001 &mdash; M&uuml;ller Metallbau GmbH</div>
+      <div class="screen-subtitle">Schritt 6 von 6 &mdash; Angebot erstellen</div>
+
+      <div class="stepper">
+        <div class="step completed"><div class="step-num">&#10003;</div><span>Basisdaten</span></div>
+        <div class="step-line done"></div>
+        <div class="step completed"><div class="step-num">&#10003;</div><span>Anreicherung</span></div>
+        <div class="step-line done"></div>
+        <div class="step completed"><div class="step-num">&#10003;</div><span>Risikodaten</span></div>
+        <div class="step-line done"></div>
+        <div class="step completed"><div class="step-num">&#10003;</div><span>Bewertung</span></div>
+        <div class="step-line done"></div>
+        <div class="step completed"><div class="step-num">&#10003;</div><span>Kalkulation</span></div>
+        <div class="step-line done"></div>
+        <div class="step active"><div class="step-num">6</div><span>Angebot</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Zusammenfassung</div>
+        <table>
+          <tbody>
+            <tr><td style="width:200px; color:var(--muted-foreground)">Versicherungsnehmer</td><td><strong>M&uuml;ller Metallbau GmbH</strong></td></tr>
+            <tr><td style="color:var(--muted-foreground)">Makler</td><td>Aon Deutschland</td></tr>
+            <tr><td style="color:var(--muted-foreground)">Sparte</td><td>Sach (Property)</td></tr>
+            <tr><td style="color:var(--muted-foreground)">Vertragsbeginn</td><td>01.04.2026</td></tr>
+            <tr><td style="color:var(--muted-foreground)">Laufzeit</td><td>1 Jahr</td></tr>
+            <tr><td style="color:var(--muted-foreground)">Standorte</td><td>2 Standorte (Daten angereichert &#10003;)</td></tr>
+            <tr><td style="color:var(--muted-foreground)">TSI</td><td>45.000.000 EUR</td></tr>
+            <tr><td style="color:var(--muted-foreground)">Risiko-Score</td><td>B+ (72/100)</td></tr>
+            <tr><td style="color:var(--muted-foreground)">Gew&auml;hlte Variante</td><td>Standard (SB 25.000 EUR)</td></tr>
+            <tr><td style="color:var(--muted-foreground)"><strong>Nettopr&auml;mie</strong></td><td><strong style="font-size:1.125rem">127.350 EUR</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Dokument erstellen</div>
+        <div class="card-desc">Das Angebotsdokument wird automatisch aus den erfassten Daten generiert.</div>
+        <div style="display:flex; gap:1rem">
+          <button class="btn btn-outline" style="flex:1; justify-content:center; padding:1rem">&#128196; Angebot (PDF)</button>
+          <button class="btn btn-outline" style="flex:1; justify-content:center; padding:1rem">&#128196; Deckungsnote (PDF)</button>
+        </div>
+      </div>
+
+      <div class="success-card">
+        <div class="icon">&#10003;</div>
+        <div>
+          <strong>Vorgang bereit zur Freigabe</strong><br/>
+          <span style="font-size:0.875rem; color:var(--muted-foreground)">Alle Pflichtdaten erfasst. Zeichnungsvollmacht ausreichend. Keine Vier-Augen-Freigabe n&ouml;tig.</span>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-outline" onclick="showScreen('wiz-kalkulation')">&larr; Zur&uuml;ck</button>
+        <button class="btn btn-outline">Als Entwurf speichern</button>
+        <button class="btn btn-primary" onclick="alert('Angebot freigegeben! Vorgang abgeschlossen.')">Angebot freigeben &#10003;</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('screen-' + name);
+  if (el) el.classList.add('active');
+  document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+  if (name === 'dashboard') document.querySelectorAll('.sidebar-item')[0].classList.add('active');
+  else if (name.startsWith('wiz-')) document.querySelectorAll('.sidebar-item')[1].classList.add('active');
+}
+</script>
+
+</body>
+</html>
