@@ -56,6 +56,7 @@ uc/new project
 
 #
 Ich möchte eine Underwriting Workbench bauen, die einem Underwriter (Industrieversicherung) bei der Bearbeitung von Neugeschäft (Angebote, Verträge) und Bestandsgeschäft (Vertragsänderungen), Risikobewertung und Abrechnung unterstützt.
+Neben Menschen (Undewritern, Underwiter-Assistenten) sollen AI-Agenten große Teile der Arbeit übernehmen oder vorbereiten. Sie sind dabei als Team-Mitglieder zu sehen, die ebenso zu managen sind wie Mitarbeiter. Ein gemeinsames Kanban-Board soll den Prozess-Flow und insbeosndere auch die Arbeit der AI-Agenten transparent machen: Was geschieht automatisch, was geschieht manuell, was muss geprüft und freigegeben werden?
 
   Spannend — eine Underwriting Workbench   
   für Industrieversicherung. Da steckt

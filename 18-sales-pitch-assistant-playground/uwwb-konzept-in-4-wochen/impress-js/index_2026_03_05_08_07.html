@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>UWWB Konzept in 4 Wochen</title>
+
+    <link href="fonts/fonts.css" rel="stylesheet" />
+    <link href="css/impress-common.css" rel="stylesheet" />
+    <link href="css/impress-demo.css" rel="stylesheet" />
+
+    <style>
+        :root {
+            --orange: #e8590c;
+            --black: #1a1a1a;
+        }
+
+        body {
+            background: #f5f5f0;
+            font-family: 'Open Sans', 'PT Sans', Arial, sans-serif;
+            color: var(--black);
+        }
+
+        .step {
+            width: 900px;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        .step h1 {
+            font-family: 'PT Serif', Georgia, serif;
+            font-size: 72px;
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--black);
+        }
+
+        .step h2 {
+            font-family: 'PT Serif', Georgia, serif;
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--black);
+        }
+
+        .step p {
+            font-size: 32px;
+            line-height: 1.4;
+            color: var(--black);
+        }
+
+        .step .big-number {
+            font-family: 'PT Serif', Georgia, serif;
+            font-size: 160px;
+            font-weight: 700;
+            color: var(--orange);
+            line-height: 1;
+        }
+
+        .step .orange {
+            color: var(--orange);
+        }
+
+        .step .label {
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #888;
+        }
+
+        .step .highlight {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--orange);
+        }
+
+        .step .versus {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .step .versus .alt {
+            text-align: center;
+            flex: 1;
+        }
+
+        .step .versus .alt .num {
+            font-family: 'PT Serif', Georgia, serif;
+            font-size: 64px;
+            font-weight: 700;
+        }
+
+        .step .versus .alt .desc {
+            font-size: 22px;
+            margin-top: 8px;
+        }
+
+        .step .versus .vs {
+            font-family: 'PT Serif', Georgia, serif;
+            font-size: 36px;
+            color: #aaa;
+        }
+
+        .step .compact-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 22px;
+        }
+
+        .step .compact-table th {
+            text-align: left;
+            padding: 10px 16px;
+            border-bottom: 2px solid var(--black);
+            font-weight: 700;
+        }
+
+        .step .compact-table td {
+            padding: 10px 16px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .step .compact-table .old {
+            color: #999;
+        }
+
+        .step .compact-table .new {
+            color: var(--orange);
+            font-weight: 700;
+        }
+
+        .step .next-step {
+            font-size: 28px;
+            margin: 12px 0;
+            padding-left: 24px;
+            border-left: 4px solid var(--orange);
+        }
+
+        /* Animations */
+        .future .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .present .fade-in {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s ease 0.3s;
+        }
+
+        .future .fade-in-delayed {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .present .fade-in-delayed {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s ease 0.8s;
+        }
+    </style>
+</head>
+
+<body class="impress-not-supported">
+
+<div class="fallback-message">
+    <p>Ihr Browser unterstützt die benötigten Features nicht.</p>
+</div>
+
+<div id="impress"
+    data-transition-duration="1200"
+    data-width="1024"
+    data-height="768"
+    data-max-scale="3"
+    data-min-scale="0"
+    data-perspective="1000">
+
+    <!-- ============================================ -->
+    <!-- AKT I: EINSTIEG                              -->
+    <!-- ============================================ -->
+
+    <!-- 1. HOOK / SETTING -->
+    <div id="hook" class="step" data-x="0" data-y="0" data-scale="3">
+        <p class="label">Industrieversicherung</p>
+        <h1>Underwriting<br/><span class="orange">Workbench</span></h1>
+    </div>
+
+    <!-- 2. RELEVANZ -->
+    <div id="relevanz" class="step" data-x="2500" data-y="800" data-rotate="15" data-scale="2">
+        <h2>Ihr UWWB-Projekt.</h2>
+        <p class="fade-in">Geplant, diskutiert, verschoben?</p>
+    </div>
+
+    <!-- 3. HERAUSFORDERUNG / UNGLEICHGEWICHT -->
+    <div id="problem-zeit" class="step" data-x="1200" data-y="2800" data-scale="1">
+        <p class="label">Typische Konzeptionsphase</p>
+        <span class="big-number">12+</span>
+        <p>Monate</p>
+    </div>
+
+    <div id="problem-kosten" class="step" data-x="2800" data-y="3200" data-rotate="-10" data-scale="1">
+        <p class="label">Typische Kosten</p>
+        <span class="big-number">2-3</span>
+        <p>Mio. Euro</p>
+    </div>
+
+    <div id="problem-versanden" class="step" data-x="4200" data-y="2600" data-rotate="5" data-scale="1.5">
+        <h2>Viele Projekte<br/><span class="orange">versanden.</span></h2>
+    </div>
+
+    <!-- 4. WUNSCH / GLEICHGEWICHT -->
+    <div id="wunsch" class="step" data-x="5800" data-y="1400" data-z="-500" data-rotate-x="-10" data-scale="2">
+        <h2>Was, wenn es<br/>anders ginge?</h2>
+        <p class="fade-in-delayed">Schnell. Konkret. Umsetzbar.</p>
+    </div>
+
+    <!-- 5. LÖSUNG / PLAN -->
+    <div id="loesung" class="step" data-x="4000" data-y="-400" data-z="-200" data-scale="3">
+        <p class="label">Unser Ansatz</p>
+        <h1>UWWB-Konzept<br/>in <span class="orange">4 Wochen</span></h1>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- AKT II: UMSETZUNG                            -->
+    <!-- ============================================ -->
+
+    <!-- Kernpunkt 1: Was wir liefern -->
+    <div id="lieferung" class="step" data-x="7000" data-y="-200" data-rotate="30" data-scale="1.5">
+        <p class="label">Ergebnis</p>
+        <h2>Konzept + <span class="orange">Prototyp</span></h2>
+        <p class="fade-in">Kein PowerPoint. Funktional.</p>
+    </div>
+
+    <!-- Kernpunkt 2: Wie wir arbeiten -->
+    <div id="methodik" class="step" data-x="8500" data-y="1200" data-rotate="-15" data-scale="1.5">
+        <p class="label">Methodik</p>
+        <h2>AI-gestützte<br/><span class="orange">Sprints</span></h2>
+        <p class="fade-in">Täglich sichtbare Ergebnisse</p>
+    </div>
+
+    <!-- Kernpunkt 3: Was wir brauchen -->
+    <div id="voraussetzungen" class="step" data-x="7500" data-y="2800" data-scale="1.2">
+        <p class="label">Voraussetzungen</p>
+        <h2>Ihr Beitrag</h2>
+        <p class="fade-in next-step">Fachbereiche: 50-100 PT</p>
+        <p class="fade-in-delayed next-step">Vorstandssponsor: 1h / Tag</p>
+    </div>
+
+    <!-- Kernpunkt 4: Das Team -->
+    <div id="team" class="step" data-x="9500" data-y="2400" data-rotate="20" data-z="-300" data-scale="1.2">
+        <p class="label">Unser Team</p>
+        <h2>Underwriting.<br/>Prozesse.<br/><span class="orange">IT & AI.</span></h2>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- AKT III: ZUSAMMENFASSUNG                     -->
+    <!-- ============================================ -->
+
+    <!-- Vergleich: Vorher / Nachher -->
+    <div id="vergleich" class="step" data-x="6000" data-y="4800" data-scale="2">
+        <table class="compact-table">
+            <tr>
+                <th></th>
+                <th class="old">Klassisch</th>
+                <th class="new">Unser Ansatz</th>
+            </tr>
+            <tr>
+                <td>Dauer</td>
+                <td class="old">12+ Monate</td>
+                <td class="new">4 Wochen</td>
+            </tr>
+            <tr>
+                <td>Kosten</td>
+                <td class="old">2-3 Mio. Euro</td>
+                <td class="new">mind. 75% weniger</td>
+            </tr>
+            <tr>
+                <td>Ergebnis</td>
+                <td class="old">Konzeptpapier</td>
+                <td class="new">Prototyp + Konzept</td>
+            </tr>
+            <tr>
+                <td>Risiko</td>
+                <td class="old">Projekt kann versanden</td>
+                <td class="new">Tägliche Ergebnisse</td>
+            </tr>
+            <tr>
+                <td>Danach</td>
+                <td class="old">1,5 Jahre Projektplanung</td>
+                <td class="new">Sofort umsetzbar</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Nächste Schritte -->
+    <div id="next-steps" class="step" data-x="9000" data-y="4500" data-rotate="-10" data-scale="1.5">
+        <h2>Nächste Schritte</h2>
+        <p class="fade-in next-step">Vertraulichkeitsvereinbarung</p>
+        <p class="fade-in-delayed next-step">Kick-off in 2 Wochen</p>
+    </div>
+
+    <!-- Abschluss -->
+    <div id="abschluss" class="step" data-x="4000" data-y="6000" data-z="-800" data-rotate-x="-15" data-scale="3">
+        <h1><span class="orange">4 Wochen.</span><br/>Ihr UWWB-Konzept.</h1>
+    </div>
+
+    <!-- Übersicht -->
+    <div id="overview" class="step" data-x="4500" data-y="2500" data-z="0" data-scale="12">
+    </div>
+
+</div>
+
+<div id="impress-toolbar"></div>
+
+<div class="hint">
+    <p>Leertaste oder Pfeiltasten zur Navigation. 'P' für Moderatoransicht.</p>
+</div>
+
+<script src="impress.js"></script>
+<script>impress().init();</script>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hello World - impress.js</title>
+        <style>
+            body {
+                font-family: 'Helvetica Neue', Arial, sans-serif;
+                background: #1a1a2e;
+                color: #eee;
+            }
+
+            .fallback-message {
+                display: none;
+                font-family: sans-serif;
+                line-height: 1.3;
+                width: 780px;
+                padding: 10px 10px 0;
+                margin: 20px auto;
+                border: 1px solid #e4c652;
+                border-radius: 10px;
+                background: #fffcdb;
+                color: #333;
+            }
+
+            .impress-not-supported .fallback-message {
+                display: block;
+            }
+
+            .step {
+                width: 900px;
+                padding: 40px;
+                box-sizing: border-box;
+                font-size: 48px;
+                line-height: 1.5;
+            }
+
+            .step h1 {
+                font-size: 72px;
+                margin-bottom: 20px;
+            }
+
+            #hello {
+                text-align: center;
+            }
+
+            #hello h1 {
+                font-size: 120px;
+                color: #e94560;
+            }
+
+            #world {
+                text-align: center;
+            }
+
+            #world h1 {
+                font-size: 100px;
+                color: #0f3460;
+                background: #e94560;
+                padding: 20px 60px;
+                border-radius: 10px;
+                display: inline-block;
+            }
+
+            #together h1 {
+                font-size: 96px;
+                text-align: center;
+                color: #16213e;
+                background: linear-gradient(135deg, #e94560, #0f3460);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            #together p {
+                text-align: center;
+                font-size: 32px;
+                color: #888;
+                margin-top: 20px;
+            }
+        </style>
+    </head>
+    <body class="impress-not-supported">
+        <div class="fallback-message">
+            <p>Your browser <b>doesn't support the features required</b> by impress.js.</p>
+            <p>For best results use <b>Chrome</b>, <b>Safari</b>, or <b>Firefox</b>.</p>
+        </div>
+
+        <div id="impress">
+            <div id="hello" class="step" data-x="0" data-y="0" data-scale="1">
+                <h1>Hello</h1>
+            </div>
+
+            <div id="world" class="step" data-x="1500" data-y="0" data-scale="1" data-rotate="90">
+                <h1>World!</h1>
+            </div>
+
+            <div id="together" class="step" data-x="750" data-y="-1000" data-scale="3" data-rotate="0">
+                <h1>Hello World!</h1>
+                <p>Built with impress.js</p>
+            </div>
+        </div>
+
+        <script src="impress.js"></script>
+        <script>impress().init()</script>
+    </body>
+</html>

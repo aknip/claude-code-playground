@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>UWWB Konzept in 4 Wochen</title>
+
+    <link href="fonts/fonts.css" rel="stylesheet" />
+    <link href="css/impress-common.css" rel="stylesheet" />
+    <link href="css/impress-demo.css" rel="stylesheet" />
+
+    <style>
+        /* UWWB Presentation Styles */
+        :root {
+            --orange: #e67e22;
+            --dark: #2c3e50;
+            --light-bg: #fafafa;
+        }
+
+        .step.slide {
+            background: var(--light-bg);
+            color: var(--dark);
+            font-family: 'Open Sans', 'PT Sans', sans-serif;
+            padding: 60px 80px;
+            box-sizing: border-box;
+        }
+
+        .step.slide h1 {
+            font-family: 'PT Serif', serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 40px;
+            line-height: 1.2;
+        }
+
+        .step.slide h1 .highlight {
+            color: var(--orange);
+        }
+
+        .step.slide h2 {
+            font-family: 'PT Serif', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--orange);
+            margin-bottom: 20px;
+            margin-top: 30px;
+        }
+
+        .step.slide p {
+            font-size: 22px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .step.slide ul {
+            font-size: 22px;
+            line-height: 1.8;
+            margin-left: 20px;
+        }
+
+        .step.slide ul li {
+            margin-bottom: 8px;
+        }
+
+        .step.slide .big-question {
+            font-family: 'PT Serif', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--dark);
+            text-align: center;
+            margin-top: 160px;
+            line-height: 1.3;
+        }
+
+        .step.slide .big-question .highlight {
+            color: var(--orange);
+        }
+
+        .step.slide .subtitle {
+            font-size: 18px;
+            color: #7f8c8d;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        .comparison-table th {
+            background: var(--dark);
+            color: white;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table th:first-child {
+            width: 25%;
+        }
+
+        .comparison-table th.col-old {
+            background: #95a5a6;
+            width: 37.5%;
+        }
+
+        .comparison-table th.col-new {
+            background: var(--orange);
+            width: 37.5%;
+        }
+
+        .comparison-table td {
+            padding: 10px 16px;
+            border-bottom: 1px solid #ecf0f1;
+            vertical-align: top;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f5f5f5;
+        }
+
+        .comparison-table td:last-child {
+            color: var(--orange);
+            font-weight: 600;
+        }
+
+        /* Pain Points */
+        .pain-point {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 24px;
+        }
+
+        .pain-point .number {
+            font-family: 'PT Serif', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--orange);
+            margin-right: 20px;
+            min-width: 40px;
+        }
+
+        .pain-point .text {
+            font-size: 22px;
+            line-height: 1.5;
+        }
+
+        .pain-point .text strong {
+            color: var(--dark);
+        }
+
+        /* Two Columns */
+        .two-col {
+            display: flex;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .two-col .col {
+            flex: 1;
+        }
+
+        .two-col .col h2 {
+            font-size: 22px;
+            margin-bottom: 16px;
+        }
+
+        .two-col .col ul {
+            font-size: 19px;
+            line-height: 1.7;
+        }
+
+        /* Requirements */
+        .req-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 18px;
+            font-size: 20px;
+        }
+
+        .req-item .icon {
+            color: var(--orange);
+            font-size: 22px;
+            margin-right: 14px;
+            min-width: 24px;
+        }
+
+        /* Next Steps */
+        .next-step-question {
+            font-family: 'PT Serif', serif;
+            font-size: 26px;
+            color: var(--dark);
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .next-step-action {
+            background: var(--orange);
+            color: white;
+            padding: 20px 30px;
+            margin-top: 30px;
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        /* Speaker notes (hidden, for reference) */
+        .notes {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="impress-not-supported">
+
+<div class="fallback-message">
+    <p>Ihr Browser <b>unterstützt die benötigten Features nicht</b>.</p>
+    <p>Bitte verwenden Sie die aktuelle Version von <b>Chrome</b>, <b>Safari</b> oder <b>Firefox</b>.</p>
+</div>
+
+<div id="impress"
+    data-transition-duration="1000"
+    data-width="1024"
+    data-height="768"
+    data-max-scale="3"
+    data-min-scale="0"
+    data-perspective="1000"
+    data-autoplay="0">
+
+    <!-- ============================================ -->
+    <!-- FOLIE 1: Aufhänger (Frage)                    -->
+    <!-- ============================================ -->
+    <div id="aufhaenger" class="step slide" data-x="-1000" data-y="-1500">
+        <p class="big-question">Was wäre, wenn Ihr<br/><span class="highlight">UWWB-Konzept</span><br/>in <span class="highlight">4 Wochen</span> steht?</p>
+        <p class="subtitle">Underwriting Workbench &mdash; Konzept &amp; Prototyp</p>
+
+        <div class="notes">
+            Keine lange Einleitung. Die Frage direkt in den Raum stellen und wirken lassen.
+            Kurze Pause. Dann: "Genau das möchten wir Ihnen heute zeigen."
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- FOLIE 2: Das Problem                         -->
+    <!-- ============================================ -->
+    <div id="problem" class="step slide" data-x="0" data-y="-1500">
+        <h1>UWWB-Projekte heute</h1>
+
+        <div class="pain-point">
+            <span class="number">1</span>
+            <span class="text"><strong>12+ Monate</strong> Konzeptionsphase</span>
+        </div>
+
+        <div class="pain-point">
+            <span class="number">2</span>
+            <span class="text"><strong>2-3 Mio. EUR</strong> Kosten allein für die Konzeption</span>
+        </div>
+
+        <div class="pain-point">
+            <span class="number">3</span>
+            <span class="text">Viele Initiativen <strong>verlieren Momentum</strong> und versanden</span>
+        </div>
+
+        <div class="notes">
+            Sachlich benennen, nicht dramatisieren. "Das kennen Sie vermutlich:
+            UWWB-Initiativen dauern typischerweise über ein Jahr, kosten Millionen
+            - und nicht wenige werden nie fertiggestellt."
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- FOLIE 3: Lösung (Vorher/Nachher)              -->
+    <!-- ============================================ -->
+    <div id="loesung" class="step slide" data-x="1000" data-y="-1500">
+        <h1>Klassischer Weg vs. <span class="highlight">4-Wochen-Sprint</span></h1>
+
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th class="col-old">Klassisch</th>
+                    <th class="col-new">4-Wochen-Sprint</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Zeitrahmen</strong></td>
+                    <td>12+ Monate</td>
+                    <td>4 Wochen</td>
+                </tr>
+                <tr>
+                    <td><strong>Kosten</strong></td>
+                    <td>2-3 Mio. EUR</td>
+                    <td>mind. 75% günstiger</td>
+                </tr>
+                <tr>
+                    <td><strong>Ergebnis</strong></td>
+                    <td>PowerPoint-Konzept</td>
+                    <td>Konzept + Prototyp</td>
+                </tr>
+                <tr>
+                    <td><strong>Risiko</strong></td>
+                    <td>Projekt kann versanden</td>
+                    <td>Tägliche Ergebnisse</td>
+                </tr>
+                <tr>
+                    <td><strong>Danach</strong></td>
+                    <td>1,5 Jahre Projektplanung</td>
+                    <td>Sofort umsetzungsbereit</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="notes">
+            Tabelle sprechen lassen. "Die Zahlen sprechen für sich.
+            Links der Weg, den Sie kennen. Rechts unser Angebot."
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- FOLIE 4: Team & Methodik                     -->
+    <!-- ============================================ -->
+    <div id="team" class="step slide" data-x="2000" data-y="-1500">
+        <h1>Wer wir sind und wie wir arbeiten</h1>
+
+        <div class="two-col">
+            <div class="col">
+                <h2>Team</h2>
+                <ul>
+                    <li>Underwriting-Expertise</li>
+                    <li>Prozess-Know-how</li>
+                    <li>IT/AI &amp; Prototyping</li>
+                </ul>
+            </div>
+            <div class="col">
+                <h2>Methodik</h2>
+                <ul>
+                    <li>AI-gestützter Sprint</li>
+                    <li>Tägliche Ergebnisse</li>
+                    <li>Analyse &rarr; Konzept &rarr; Prototyp</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="notes">
+            "Unser Team vereint drei Disziplinen, die normalerweise in getrennten
+            Projekten arbeiten. Im Sprint arbeiten sie gemeinsam - unterstützt
+            durch AI - und liefern täglich sichtbare Ergebnisse."
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- FOLIE 5: Voraussetzungen                     -->
+    <!-- ============================================ -->
+    <div id="voraussetzungen" class="step slide" data-x="3000" data-y="-1500">
+        <h1>Was wir von Ihnen brauchen</h1>
+
+        <div class="req-item">
+            <span class="icon">&#9654;</span>
+            <span><strong>Vorstandssponsor</strong> (CIO/COO/CUO) &mdash; ca. 1h/Tag für 4 Wochen</span>
+        </div>
+
+        <div class="req-item">
+            <span class="icon">&#9654;</span>
+            <span><strong>Fachbereiche</strong> (UW, Vertragsservice, Produktmanagement, IT) &mdash; 50-100 PT</span>
+        </div>
+
+        <div class="req-item">
+            <span class="icon">&#9654;</span>
+            <span><strong>Systemzugriff</strong> auf relevante Systeme und Verzeichnisse</span>
+        </div>
+
+        <div class="req-item">
+            <span class="icon">&#9654;</span>
+            <span><strong>Vertraulichkeit</strong> &mdash; beidseitig, streng</span>
+        </div>
+
+        <div class="notes">
+            Transparenz schafft Vertrauen. "Das ist kein Projekt im stillen Kämmerlein.
+            Wir brauchen Ihre Leute und Ihren Zugang. Dafür bekommen Sie in 4 Wochen
+            ein Ergebnis, das sonst ein Jahr dauert."
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- FOLIE 6: Nächste Schritte                     -->
+    <!-- ============================================ -->
+    <div id="next-steps" class="step slide" data-x="4000" data-y="-1500">
+        <h1>Wie geht es weiter?</h1>
+
+        <p class="next-step-question">Ist das ein Thema, das Sie aktuell beschäftigt?</p>
+
+        <p class="next-step-question">Passt der Ansatz zu Ihrer Situation?</p>
+
+        <div class="next-step-action">
+            Nächster Schritt: Gemeinsamer Workshop (2h) zur Bestandsaufnahme
+        </div>
+
+        <div class="notes">
+            Kein Druck. Offen fragen: "Ist das ein Thema, das bei Ihnen gerade relevant ist?"
+            Wenn ja: "Dann wäre ein gemeinsamer Workshop ein guter nächster Schritt -
+            2 Stunden, unverbindlich." Wenn nein: professionell verabschieden.
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- OVERVIEW                                      -->
+    <!-- ============================================ -->
+    <div id="overview" class="step" data-x="1500" data-y="-1500" data-z="0" data-scale="6">
+    </div>
+
+</div>
+
+<div id="impress-toolbar"></div>
+
+<div class="hint">
+    <p>Leertaste oder Pfeiltasten zur Navigation. <br/>
+       'P' für Moderatoransicht.</p>
+</div>
+<script>
+if ("ontouchstart" in document.documentElement) {
+    document.querySelector(".hint").innerHTML = "<p>Wischen Sie nach links oder rechts</p>";
+}
+</script>
+
+<script src="impress.js"></script>
+<script>impress().init();</script>
+
+</body>
+</html>
