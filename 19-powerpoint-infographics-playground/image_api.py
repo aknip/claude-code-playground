@@ -46,18 +46,18 @@ def build_file_part(data_url_or_path, mime=None):
 
 
 def build_user_message(text, attachment_path=None):
-    """Baut die User-Message mit optionalem Dateianhang (Bild oder PDF)."""
+    """Baut die User-Message mit optionalem Dateianhang (Bild, PDF oder Liste davon)."""
     if not attachment_path:
         return {"role": "user", "content": text}
 
-    part = build_file_part(attachment_path)
-    return {
-        "role": "user",
-        "content": [
-            {"type": "text", "text": text},
-            part,
-        ],
-    }
+    # Einzelnen Pfad in Liste normalisieren
+    paths = attachment_path if isinstance(attachment_path, list) else [attachment_path]
+
+    content = [{"type": "text", "text": text}]
+    for p in paths:
+        content.append(build_file_part(p))
+
+    return {"role": "user", "content": content}
 
 
 def call_openrouter(api_key, messages, model=DEFAULT_MODEL, image_config=None, has_image_input=False,

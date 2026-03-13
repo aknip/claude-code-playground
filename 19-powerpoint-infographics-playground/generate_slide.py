@@ -3,7 +3,7 @@
 Generiert ein Folienbild via OpenRouter API.
 
 - Liest den Prompt aus _NOTES/prompt.md
-- Sendet das Bild _NOTES/Folienlayout 1.png als Kontext mit
+- Sendet das PDF _NOTES/Folienlayout 4.pdf als Kontext mit
 - Speichert das Ergebnis in images/ mit Zeitstempel
 
 API-Key: Environment-Variable OPENROUTER_API_KEY
@@ -18,13 +18,20 @@ from image_api import build_user_message, call_openrouter, save_images
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROMPT_FILE = os.path.join(SCRIPT_DIR, "_NOTES", "prompt.md")
-IMAGE_FILE = os.path.join(SCRIPT_DIR, "_NOTES", "Folienlayout 1.png")
+DEFAULT_IMAGES = [
+    os.path.join(SCRIPT_DIR, "_NOTES", "Folienlayout 4", "Folie1.jpeg"),
+    os.path.join(SCRIPT_DIR, "_NOTES", "Folienlayout 4", "Folie2.jpeg"),
+    os.path.join(SCRIPT_DIR, "_NOTES", "Folienlayout 4", "Folie3.jpeg"),
+    os.path.join(SCRIPT_DIR, "_NOTES", "Folienlayout 4", "Folie4.jpeg"),
+]
 MODEL = "google/gemini-3-pro-image-preview"
 
 
 def main():
     parser = argparse.ArgumentParser(description="Folienbild via OpenRouter API generieren")
     parser.add_argument("slide", type=int, help="Foliennummer (z.B. 7)")
+    parser.add_argument("--images", nargs="+", metavar="FILE",
+                        help="Bild-/PDF-Dateien als Kontext (Standard: _NOTES/Folienlayout 1.png)")
     args = parser.parse_args()
 
     api_key = os.environ.get("OPENROUTER_API_KEY", "").strip()
@@ -37,16 +44,19 @@ def main():
 
     prompt_text = re.sub(r"Erstelle Folie \d+", f"Erstelle Folie {args.slide}", prompt_text)
 
-    if not os.path.isfile(IMAGE_FILE):
-        print(f"Fehler: Bild nicht gefunden: {IMAGE_FILE}", file=sys.stderr)
-        sys.exit(1)
+    image_files = args.images if args.images else DEFAULT_IMAGES
+    for img in image_files:
+        if not os.path.isfile(img):
+            print(f"Fehler: Datei nicht gefunden: {img}", file=sys.stderr)
+            sys.exit(1)
 
-    message = build_user_message(prompt_text, IMAGE_FILE)
+    message = build_user_message(prompt_text, image_files)
     messages = [message]
 
     print(f"Modell: {MODEL}")
     print(f"Prompt: {len(prompt_text)} Zeichen aus {PROMPT_FILE}")
-    print(f"Bild:   {IMAGE_FILE}")
+    for img in image_files:
+        print(f"Bild:   {img}")
     print("Sende Request...", flush=True)
 
     result = call_openrouter(
@@ -63,7 +73,9 @@ def main():
         if p.get("type") == "text":
             print(f"\n{p['text']}")
 
-    saved = save_images(parts, MODEL)
+    # Nur das erste Bild speichern
+    first_image = [p for p in parts if p.get("type") == "image_url"][:1]
+    saved = save_images(first_image, MODEL)
     if saved:
         print(f"\n{len(saved)} Bild(er) gespeichert:")
         for path in saved:

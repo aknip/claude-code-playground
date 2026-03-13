@@ -9,6 +9,7 @@ Beispiele:
   python image_cli.py "Foto Schäferhund"
   python image_cli.py "Foto Schäferhund" --model google/gemini-3-pro-image-preview --size 2K --ratio 16:9
   python image_cli.py "Beschreibe das Bild" --attachment bild.png
+  python image_cli.py "Beschreibe die Bilder" --attachment bild1.png bild2.png layout.pdf
   python image_cli.py "Mach den Hintergrund blau" --attachment bild.png --edit
 """
 
@@ -22,7 +23,8 @@ from image_api import DEFAULT_MODEL, build_user_message, call_openrouter, save_i
 def main():
     parser = argparse.ArgumentParser(description="CLI Bildgenerierung via OpenRouter")
     parser.add_argument("message", help="Chat-Nachricht / Prompt")
-    parser.add_argument("--attachment", "-a", help="Pfad zu einem Bild oder PDF als Anhang")
+    parser.add_argument("--attachment", "-a", nargs="+", metavar="FILE",
+                        help="Pfad(e) zu Bild(ern) oder PDF(s) als Anhang")
     parser.add_argument("--model", "-m", default=DEFAULT_MODEL, help=f"Modell (default: {DEFAULT_MODEL})")
     parser.add_argument("--size", "-s", default="1K", choices=["0.5K", "1K", "2K", "4K"], help="Auflösung (default: 1K)")
     parser.add_argument("--ratio", "-r", default=None, help="Seitenverhältnis, z.B. 16:9, 1:1, 3:2")
@@ -35,13 +37,15 @@ def main():
         print("Fehler: OPENROUTER_API_KEY nicht gesetzt.", file=sys.stderr)
         sys.exit(1)
 
-    if args.attachment and not os.path.isfile(args.attachment):
-        print(f"Fehler: Datei nicht gefunden: {args.attachment}", file=sys.stderr)
-        sys.exit(1)
+    if args.attachment:
+        for att in args.attachment:
+            if not os.path.isfile(att):
+                print(f"Fehler: Datei nicht gefunden: {att}", file=sys.stderr)
+                sys.exit(1)
 
-    is_pdf = args.attachment and args.attachment.lower().endswith(".pdf")
-    has_image_input = bool(args.attachment) and not is_pdf
-    message = build_user_message(args.message, args.attachment)
+    attachments = args.attachment or []
+    has_image_input = any(not a.lower().endswith(".pdf") for a in attachments)
+    message = build_user_message(args.message, attachments or None)
     messages = [message]
 
     image_config = {}

@@ -1,4 +1,7 @@
 Anbei die Inhalte für eine Präsentation und eine Präsentationsvorlage (Titelfolie, Beispielinhalt 1, Beispielinahlt 2, Icons (Streamline Icon Library). 
+Halte dich streng an das Layout und Design der Präsentationsvorlage.
+Bildformat 16:9.
+Font: Roboto
 
 Erstelle Folie 10. 
 

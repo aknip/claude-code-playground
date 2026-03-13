@@ -185,8 +185,8 @@ HTML = r"""<!DOCTYPE html>
 <div id="input-area">
   <label id="edit-label"><input type="checkbox" id="edit-mode"> Bildkorrektur</label>
   <button id="upload-btn" title="Bild hochladen">+</button>
-  <input type="file" id="upload-file" accept="image/png,image/jpeg,image/webp,image/gif,application/pdf,.pdf" style="display:none">
-  <div id="upload-preview"><img><button class="remove" title="Bild entfernen">&times;</button></div>
+  <input type="file" id="upload-file" accept="image/png,image/jpeg,image/webp,image/gif,application/pdf,.pdf" multiple style="display:none">
+  <div id="upload-previews" style="display:flex;gap:4px;flex-wrap:wrap;"></div>
   <textarea id="prompt" rows="1" placeholder="Nachricht eingeben… (Shift+Enter für Zeilenumbruch)"></textarea>
   <button id="send">Senden</button>
 </div>
@@ -233,42 +233,50 @@ promptSelect.addEventListener('change', () => {
 });
 let history = [];      // text-only history (lightweight)
 let richHistory = [];  // full multimodal history (with images)
-let uploadedFileDataUrl = null; // base64 data URL of uploaded file
-let uploadedFileName = null;
-let uploadedFileIsPdf = false;
+let uploadedFiles = []; // [{dataUrl, name, isPdf}]
 
 // Upload button
 const uploadBtn = document.getElementById('upload-btn');
 const uploadFile = document.getElementById('upload-file');
-const uploadPreview = document.getElementById('upload-preview');
+const uploadPreviews = document.getElementById('upload-previews');
 uploadBtn.addEventListener('click', () => uploadFile.click());
 uploadFile.addEventListener('change', () => {
-  const file = uploadFile.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    uploadedFileDataUrl = e.target.result;
-    uploadedFileName = file.name;
-    uploadedFileIsPdf = file.type === 'application/pdf' || file.name.endsWith('.pdf');
-    const img = uploadPreview.querySelector('img');
-    if (uploadedFileIsPdf) {
-      img.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="%23e0e0e0" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><text x="7" y="17" font-size="6" fill="%23e0e0e0" font-family="sans-serif">PDF</text></svg>');
-    } else {
-      img.src = uploadedFileDataUrl;
-    }
-    uploadPreview.style.display = 'block';
-    uploadBtn.classList.add('has-file');
-  };
-  reader.readAsDataURL(file);
+  for (const file of uploadFile.files) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const isPdf = file.type === 'application/pdf' || file.name.endsWith('.pdf');
+      const entry = {dataUrl: e.target.result, name: file.name, isPdf};
+      uploadedFiles.push(entry);
+      renderUploadPreviews();
+    };
+    reader.readAsDataURL(file);
+  }
   uploadFile.value = '';
 });
-uploadPreview.querySelector('.remove').addEventListener('click', () => {
-  uploadedFileDataUrl = null;
-  uploadedFileName = null;
-  uploadedFileIsPdf = false;
-  uploadPreview.style.display = 'none';
-  uploadBtn.classList.remove('has-file');
-});
+function renderUploadPreviews() {
+  uploadPreviews.innerHTML = '';
+  uploadedFiles.forEach((entry, idx) => {
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'position:relative;flex-shrink:0;';
+    const img = document.createElement('img');
+    img.style.cssText = 'height:40px;border-radius:6px;border:1px solid var(--border);';
+    if (entry.isPdf) {
+      img.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="%23e0e0e0" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><text x="7" y="17" font-size="6" fill="%23e0e0e0" font-family="sans-serif">PDF</text></svg>');
+    } else {
+      img.src = entry.dataUrl;
+    }
+    const btn = document.createElement('button');
+    btn.className = 'remove';
+    btn.title = 'Entfernen';
+    btn.innerHTML = '&times;';
+    btn.style.cssText = 'position:absolute;top:-6px;right:-6px;background:#e44;color:#fff;border:none;border-radius:50%;width:18px;height:18px;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;';
+    btn.addEventListener('click', () => { uploadedFiles.splice(idx, 1); renderUploadPreviews(); });
+    wrap.appendChild(img);
+    wrap.appendChild(btn);
+    uploadPreviews.appendChild(wrap);
+  });
+  uploadBtn.classList.toggle('has-file', uploadedFiles.length > 0);
+}
 
 // PPT Import
 const pptBtn = document.getElementById('ppt-import-btn');
@@ -362,31 +370,30 @@ async function send() {
   prompt.value = ''; autoResize();
   sendBtn.disabled = true;
 
-  // Build user message parts (text + optional file)
+  // Build user message parts (text + optional files)
   const userParts = [{type: 'text', text}];
   const userRichParts = [{type: 'text', text}];
-  const attachedFile = uploadedFileDataUrl;
-  const attachedIsPdf = uploadedFileIsPdf;
-  const attachedName = uploadedFileName;
-  if (attachedFile) {
-    if (attachedIsPdf) {
-      const filePart = {type: 'file', file: {filename: attachedName, file_data: attachedFile}};
+  const attachedFiles = [...uploadedFiles];
+  let hasImageInput = false;
+  for (const f of attachedFiles) {
+    if (f.isPdf) {
+      const filePart = {type: 'file', file: {filename: f.name, file_data: f.dataUrl}};
       userParts.push(filePart);
       userRichParts.push(filePart);
     } else {
-      userParts.push({type: 'image_url', image_url: {url: attachedFile}});
-      userRichParts.push({type: 'image_url', image_url: {url: attachedFile}});
+      userParts.push({type: 'image_url', image_url: {url: f.dataUrl}});
+      userRichParts.push({type: 'image_url', image_url: {url: f.dataUrl}});
+      hasImageInput = true;
     }
-    // Clear upload state
-    uploadedFileDataUrl = null;
-    uploadedFileName = null;
-    uploadedFileIsPdf = false;
-    uploadPreview.style.display = 'none';
-    uploadBtn.classList.remove('has-file');
+  }
+  // Clear upload state
+  if (attachedFiles.length) {
+    uploadedFiles = [];
+    renderUploadPreviews();
   }
   addMsg('user', userParts);
-  // For text-only history: always use multimodal content format when file attached
-  if (attachedFile) {
+  // For text-only history: always use multimodal content format when files attached
+  if (attachedFiles.length) {
     history.push({role: 'user', content: userRichParts});
   } else {
     history.push({role: 'user', content: text});
@@ -408,7 +415,7 @@ async function send() {
       body: JSON.stringify({
         messages: msgs,
         model: modelSelect.value,
-        has_image_input: !!(attachedFile && !attachedIsPdf),
+        has_image_input: hasImageInput,
         image_config: Object.assign({}, sizeSelect.value ? {image_size: sizeSelect.value} : {}, ratioSelect.value ? {aspect_ratio: ratioSelect.value} : {})
       })
     });
