@@ -1,0 +1,6 @@
+{
+  "enabledPlugins": {
+    "sales-pitch-assistant@aknip-claude-code-marketplace": true,
+    "ba@aknip-claude-code-marketplace": true
+  }
+}

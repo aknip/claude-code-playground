@@ -1,87 +1,66 @@
-# PRODUCT.md — UWWB Konzept in 4 Wochen
+# UWWB Konzept in 4 Wochen
 
 ## Produkt
 
-**Underwriting Workbench (UWWB) — Konzept in 4 Wochen**
+**Underwriting Workbench (UWWB) — Konzept und Prototyp in 4 Wochen**
 
-Ein spezialisiertes Beratungsteam mit Industrieversicherungs- und Prozessknowhow (Underwriting, Processes, IT/AI) liefert innerhalb von 4 Wochen:
+Beratungsleistung für mittelgroße bis große Industrieversicherer: Ein erfahrenes Expertenteam (Underwriting, Prozesse, IT/AI) erarbeitet innerhalb von 4 Wochen ein maßgeschneidertes UWWB-Konzept — inklusive funktionalem Prototyp in der gewünschten Zieltechnologie des Kunden.
 
-- Analyse der IST-Situation (Organisation und IT-Systeme)
-- Fachliche Konzeption einer maßgeschneiderten UWWB (Arbeitsweise, Prozesse, Systeme)
-- Entwicklung und Übergabe eines funktionalen Prototypen in der gewünschten Technologie
-- Bei vorliegenden Daten: konkrete Effizienzpotentiale für das Kundenhaus
+Das Angebot umfasst:
+- Analyse der IST-Situation (Organisation, Prozesse, IT-Systeme)
+- Fachliche Konzeption: Arbeitsweise, Prozesse, Systeme
+- Funktionaler Prototyp in der Zieltechnologie des Kunden
+- Konkrete Effizienzpotentiale (sofern Daten vorliegen)
 
-**Methodik:** AI-gestützter Sprint-Ansatz mit täglichen Ergebnissen. Iterativ, transparent, schnell.
-
-**Voraussetzungen beim Kunden:**
-- Zugriff auf Fachbereiche (UW je Sparte, Vertragsservice, Produktmanagement, Anwendungsentwicklung, IT-Architektur) — in Summe 50-100 PT
-- Vorstandssponsor (CUO, CIO, COO) für 4 Wochen, ca. 1h/Tag, Abschlusspräsentation vor dem Vorstand
+Das Angebot erfordert vom Kunden:
+- Zugriff auf Fachbereiche (UW je Sparte, Vertragsservice, Produktmanagement, Anwendungsentwicklung, IT-Architektur) — in Summe 50–100 PT
+- Vorstandssponsor (CUO, CIO oder COO) für 4 Wochen, ca. 1h/Tag, Abschlusspräsentation vor dem Vorstand
 - Zugriff auf Systeme und Verzeichnisse
 - Beidseitige, strenge Vertraulichkeit
 
 
 ## Zielgruppe & Kaufentscheider
 
-**Zielunternehmen:** Mittelgroße und große Industrieversicherer (DACH-Markt)
+**Primäre Zielgruppe:** Mittelgroße bis große Industrieversicherer (DACH)
 
-**Primärer Kaufentscheider:** C-Level / Vorstandsebene
-- CIO / IT-Vorstand — Systemlandschaft, Digitalisierung
-- COO / Operations — Operative Effizienz, Prozessoptimierung
-- (CUO, sofern vorhanden — UW-Strategie)
+**Kaufentscheider (dual):**
+- **C-Level:** CUO (Chief Underwriting Officer), CIO, COO — strategische Entscheidung, Sponsoring
+- **Abteilungsleitung:** Leitung Underwriting — fachlicher Treiber, kennt operative Schmerzen
 
 
 ## Selling the Wheel — Einordnung
 
-| Dimension | Auswahl | Bedeutung |
-|-----------|---------|-----------|
-| Lebenszyklusphase | **Pionier** | Neues, innovatives Angebot — Markt muss erst überzeugt werden. Keine etablierte Kategorie „UWWB in 4 Wochen". Kunden kennen das Format noch nicht. |
-| Verkäufertyp | **Wizard + Builder** | Wizard: Technische Expertise und Beratungskompetenz stehen im Vordergrund. Der Kunde muss verstehen, *wie* das funktioniert. Builder: Langfristige Vertrauensbeziehung, da der Kunde Zugang zu internen Systemen und Fachbereichen gewährt. |
-
-**Implikationen für den Pitch:**
-- Pionier-Phase erfordert Aufklärung und Demonstration — nicht Überzeugung durch Druck
-- Wizard-Rolle: Expertise zeigen, nicht verkaufen. Dem Kunden helfen, die Lösung selbst zu erkennen
-- Builder-Rolle: Vertrauen aufbauen durch Transparenz, klare Leistungsversprechen, minimales Risiko
-- Kein Referenzprojekt vorhanden → Risikominimierung und Vertrauensaufbau besonders wichtig
+| Dimension | Auswahl | Bedeutung für den Verkauf |
+|-----------|---------|---------------------------|
+| Lebenszyklusphase | **Pionier** | Markt muss erst überzeugt werden. Kunden haben oft keine klare Vorstellung, was eine UWWB leisten kann. Aufklärung und Vertrauensaufbau sind zentral. |
+| Verkäufertyp | **Wizard + Builder** | Technische Expertise und Beratungskompetenz (Wizard) kombiniert mit langfristigem Beziehungsaufbau und Vertrauen (Builder). Kein Push-Verkauf, sondern Kompetenz demonstrieren und Vertrauen aufbauen. |
 
 
 ## Pain Points
 
-1. **Zu lange Projektlaufzeiten** — UWWB-Konzeption dauert bei Versicherern typischerweise 12+ Monate. Strategische Initiativen kommen nicht voran, der Vorstand verliert Geduld.
+1. **Gescheiterte Projekte in der Vergangenheit** — Viele Versicherer haben bereits UWWB-Initiativen gestartet, die zu lang, zu teuer oder zu komplex wurden und nicht zum Ergebnis geführt haben. Das Vertrauen in solche Vorhaben ist beschädigt, die Risikoaversion hoch.
 
-2. **Zu hohe Kosten & Risiko** — 2-3 Mio. € für die Konzeptionsphase allein. Ergebnis ungewiss. Vorstand scheut das Investitionsrisiko bei unklarem Ausgang.
+2. **Lange Planungszyklen** — Die Konzeption einer UWWB dauert typischerweise 12+ Monate und kostet 2–3 Mio. Euro — bevor überhaupt die Umsetzung beginnt. Das bindet Ressourcen und verzögert die Modernisierung.
 
-3. **Projekte versanden** — Viele UWWB-Initiativen werden gestartet, aber nicht fertiggestellt. Zu viele Stakeholder, zu komplexe Abstimmung, kein greifbares Zwischenergebnis — das Projekt verliert an Momentum.
+3. **Ineffiziente Prozesse** — Medienbrüche, manuelle Schritte, verteilte Systeme. Kein durchgängiger UW-Workflow, steigende Kosten bei gleichzeitigem Fachkräftemangel.
 
 
 ## Akteure im Kaufprozess
 
 | Akteur | Rolle | Primäre Ziele |
 |--------|-------|---------------|
-| CIO / IT-Vorstand | Technischer Sponsor | Modernisierung der Systemlandschaft, Digitalisierungsstrategie umsetzen, IT-Kosten kontrollieren |
-| COO / Operations | Prozess-Sponsor | Operative Effizienz steigern, Durchlaufzeiten senken, Prozesse standardisieren |
-| Leiter Underwriting / Spartenleiter | Fachliche Evaluierung | Praxistaugliche Lösung, die den UW-Alltag verbessert, Akzeptanz im Team sicherstellen |
+| Vorstand (CUO/CIO/COO) | Sponsor, finaler Entscheider | Strategische Modernisierung, Kostensenkung, Wettbewerbsfähigkeit sichern |
+| Leitung Underwriting | Fachlicher Treiber | Operative Effizienz, bessere Werkzeuge für das Team, Wissenssicherung |
 
 
 ## Mafia Offer — Kernversprechen
 
-**Das Angebot, das man nicht ablehnen kann:**
+**„In 4 Wochen ein fertiges UWWB-Konzept mit Prototyp — oder Sie zahlen nichts."**
 
-> In 4 Wochen liefern wir ein vollständiges, maßgeschneidertes UWWB-Konzept mit funktionalem Prototypen — statt 12 Monaten Planungsphase und 2-3 Mio. € Kosten. **Zeitgarantie: Dauert es länger als 4 Wochen, reduziert sich das Honorar.**
+Die Kernelemente des Angebots, das schwer abzulehnen ist:
 
-**Warum es unwiderstehlich ist:**
-
-| Dimension | Klassischer Weg | Unser Angebot |
-|-----------|----------------|---------------|
-| Zeitrahmen | 12+ Monate Konzeption | 4 Wochen — garantiert |
-| Kosten | 2-3 Mio. € | mind. 75% günstiger |
-| Ergebnis | PowerPoint-Konzept | Funktionaler Prototyp + Konzept |
-| Risiko | Projekt kann versanden | Tägliche Ergebnisse, Vorstand sieht Fortschritt |
-| Zeitgarantie | Keine | Dauert es länger, zahlen Sie weniger |
-| Nächster Schritt | Weitere 1,5 Jahre Projektplanung | Sofort umsetzungsbereit |
-
-**Risikostruktur für den Kunden:**
-- Minimaler Zeitinvest: 4 Wochen statt 12+ Monate
-- Minimaler Kosteninvest: Bruchteil der üblichen Konzeptionskosten
-- Maximale Transparenz: Tägliche Sprint-Ergebnisse, keine Black Box
-- Konkretes Ergebnis: Prototyp, nicht nur Papier
-- Zeitgarantie: Geschwindigkeit ist vertraglich abgesichert
+1. **Zeitversprechen:** 4 Wochen statt 12+ Monate — ein Bruchteil der üblichen Planungsdauer
+2. **Kostenversprechen:** Mindestens 75% günstiger als konventionelle Konzeptionsphase (2–3 Mio.)
+3. **Ergebnisversprechen:** Kein PowerPoint-Konzept, sondern ein funktionaler Prototyp in der Zieltechnologie
+4. **Risikoversprechen:** Minimales Risiko für den Kunden — klares, abgrenzbares 4-Wochen-Projekt
+5. **Anschlussfähigkeit:** Ergebnis ermöglicht direkte Festpreisanfragen bei Anbietern oder internen Projektstart — kein weiteres Planungsprojekt nötig

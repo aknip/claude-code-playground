@@ -1,0 +1,6 @@
+{
+  "enabledPlugins": {
+    "pptx-with-templates@aknip-claude-code-marketplace": true,
+    "pptx-tools@aknip-claude-code-marketplace": true
+  }
+}

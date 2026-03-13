@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<a:theme xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" name="mgm Master">
+  <a:themeElements>
+    <a:clrScheme name="mgm 2023">
+      <a:dk1>
+        <a:srgbClr val="000000"/>
+      </a:dk1>
+      <a:lt1>
+        <a:srgbClr val="FFFFFF"/>
+      </a:lt1>
+      <a:dk2>
+        <a:srgbClr val="207475"/>
+      </a:dk2>
+      <a:lt2>
+        <a:srgbClr val="047FA3"/>
+      </a:lt2>
+      <a:accent1>
+        <a:srgbClr val="5E8013"/>
+      </a:accent1>
+      <a:accent2>
+        <a:srgbClr val="7E6703"/>
+      </a:accent2>
+      <a:accent3>
+        <a:srgbClr val="B83403"/>
+      </a:accent3>
+      <a:accent4>
+        <a:srgbClr val="A0012C"/>
+      </a:accent4>
+      <a:accent5>
+        <a:srgbClr val="6A287D"/>
+      </a:accent5>
+      <a:accent6>
+        <a:srgbClr val="1D4E86"/>
+      </a:accent6>
+      <a:hlink>
+        <a:srgbClr val="1D4E86"/>
+      </a:hlink>
+      <a:folHlink>
+        <a:srgbClr val="1D4E86"/>
+      </a:folHlink>
+    </a:clrScheme>
+    <a:fontScheme name="Benutzerdefiniert 1">
+      <a:majorFont>
+        <a:latin typeface="Roboto Black"/>
+        <a:ea typeface=""/>
+        <a:cs typeface=""/>
+      </a:majorFont>
+      <a:minorFont>
+        <a:latin typeface="Roboto"/>
+        <a:ea typeface=""/>
+        <a:cs typeface=""/>
+      </a:minorFont>
+    </a:fontScheme>
+    <a:fmtScheme name="Office">
+      <a:fillStyleLst>
+        <a:solidFill>
+          <a:schemeClr val="phClr"/>
+        </a:solidFill>
+        <a:gradFill rotWithShape="1">
+          <a:gsLst>
+            <a:gs pos="0">
+              <a:schemeClr val="phClr">
+                <a:lumMod val="110000"/>
+                <a:satMod val="105000"/>
+                <a:tint val="67000"/>
+              </a:schemeClr>
+            </a:gs>
+            <a:gs pos="50000">
+              <a:schemeClr val="phClr">
+                <a:lumMod val="105000"/>
+                <a:satMod val="103000"/>
+                <a:tint val="73000"/>
+              </a:schemeClr>
+            </a:gs>
+            <a:gs pos="100000">
+              <a:schemeClr val="phClr">
+                <a:lumMod val="105000"/>
+                <a:satMod val="109000"/>
+                <a:tint val="81000"/>
+              </a:schemeClr>
+            </a:gs>
+          </a:gsLst>
+          <a:lin ang="5400000" scaled="0"/>
+        </a:gradFill>
+        <a:gradFill rotWithShape="1">
+          <a:gsLst>
+            <a:gs pos="0">
+              <a:schemeClr val="phClr">
+                <a:satMod val="103000"/>
+                <a:lumMod val="102000"/>
+                <a:tint val="94000"/>
+              </a:schemeClr>
+            </a:gs>
+            <a:gs pos="50000">
+              <a:schemeClr val="phClr">
+                <a:satMod val="110000"/>
+                <a:lumMod val="100000"/>
+                <a:shade val="100000"/>
+              </a:schemeClr>
+            </a:gs>
+            <a:gs pos="100000">
+              <a:schemeClr val="phClr">
+                <a:lumMod val="99000"/>
+                <a:satMod val="120000"/>
+                <a:shade val="78000"/>
+              </a:schemeClr>
+            </a:gs>
+          </a:gsLst>
+          <a:lin ang="5400000" scaled="0"/>
+        </a:gradFill>
+      </a:fillStyleLst>
+      <a:lnStyleLst>
+        <a:ln w="6350" cap="flat" cmpd="sng" algn="ctr">
+          <a:solidFill>
+            <a:schemeClr val="phClr"/>
+          </a:solidFill>
+          <a:prstDash val="solid"/>
+          <a:miter lim="800000"/>
+        </a:ln>
+        <a:ln w="12700" cap="flat" cmpd="sng" algn="ctr">
+          <a:solidFill>
+            <a:schemeClr val="phClr"/>
+          </a:solidFill>
+          <a:prstDash val="solid"/>
+          <a:miter lim="800000"/>
+        </a:ln>
+        <a:ln w="19050" cap="flat" cmpd="sng" algn="ctr">
+          <a:solidFill>
+            <a:schemeClr val="phClr"/>
+          </a:solidFill>
+          <a:prstDash val="solid"/>
+          <a:miter lim="800000"/>
+        </a:ln>
+      </a:lnStyleLst>
+      <a:effectStyleLst>
+        <a:effectStyle>
+          <a:effectLst/>
+        </a:effectStyle>
+        <a:effectStyle>
+          <a:effectLst/>
+        </a:effectStyle>
+        <a:effectStyle>
+          <a:effectLst>
+            <a:outerShdw blurRad="57150" dist="19050" dir="5400000" algn="ctr" rotWithShape="0">
+              <a:srgbClr val="000000">
+                <a:alpha val="63000"/>
+              </a:srgbClr>
+            </a:outerShdw>
+          </a:effectLst>
+        </a:effectStyle>
+      </a:effectStyleLst>
+      <a:bgFillStyleLst>
+        <a:solidFill>
+          <a:schemeClr val="phClr"/>
+        </a:solidFill>
+        <a:solidFill>
+          <a:schemeClr val="phClr">
+            <a:tint val="95000"/>
+            <a:satMod val="170000"/>
+          </a:schemeClr>
+        </a:solidFill>
+        <a:gradFill rotWithShape="1">
+          <a:gsLst>
+            <a:gs pos="0">
+              <a:schemeClr val="phClr">
+                <a:tint val="93000"/>
+                <a:satMod val="150000"/>
+                <a:shade val="98000"/>
+                <a:lumMod val="102000"/>
+              </a:schemeClr>
+            </a:gs>
+            <a:gs pos="50000">
+              <a:schemeClr val="phClr">
+                <a:tint val="98000"/>
+                <a:satMod val="130000"/>
+                <a:shade val="90000"/>
+                <a:lumMod val="103000"/>
+              </a:schemeClr>
+            </a:gs>
+            <a:gs pos="100000">
+              <a:schemeClr val="phClr">
+                <a:shade val="63000"/>
+                <a:satMod val="120000"/>
+              </a:schemeClr>
+            </a:gs>
+          </a:gsLst>
+          <a:lin ang="5400000" scaled="0"/>
+        </a:gradFill>
+      </a:bgFillStyleLst>
+    </a:fmtScheme>
+  </a:themeElements>
+  <a:objectDefaults>
+    <a:spDef>
+      <a:spPr>
+        <a:solidFill>
+          <a:schemeClr val="accent6"/>
+        </a:solidFill>
+        <a:ln>
+          <a:noFill/>
+        </a:ln>
+      </a:spPr>
+      <a:bodyPr lIns="108000" tIns="108000" rIns="108000" bIns="108000" rtlCol="0" anchor="ctr"/>
+      <a:lstStyle>
+        <a:defPPr marL="0" indent="0" algn="ctr">
+          <a:buNone/>
+          <a:defRPr/>
+        </a:defPPr>
+      </a:lstStyle>
+      <a:style>
+        <a:lnRef idx="2">
+          <a:schemeClr val="accent1">
+            <a:shade val="50000"/>
+          </a:schemeClr>
+        </a:lnRef>
+        <a:fillRef idx="1">
+          <a:schemeClr val="accent1"/>
+        </a:fillRef>
+        <a:effectRef idx="0">
+          <a:schemeClr val="accent1"/>
+        </a:effectRef>
+        <a:fontRef idx="minor">
+          <a:schemeClr val="lt1"/>
+        </a:fontRef>
+      </a:style>
+    </a:spDef>
+    <a:lnDef>
+      <a:spPr>
+        <a:ln w="12700">
+          <a:solidFill>
+            <a:schemeClr val="tx1"/>
+          </a:solidFill>
+        </a:ln>
+      </a:spPr>
+      <a:bodyPr/>
+      <a:lstStyle/>
+      <a:style>
+        <a:lnRef idx="1">
+          <a:schemeClr val="accent1"/>
+        </a:lnRef>
+        <a:fillRef idx="0">
+          <a:schemeClr val="accent1"/>
+        </a:fillRef>
+        <a:effectRef idx="0">
+          <a:schemeClr val="accent1"/>
+        </a:effectRef>
+        <a:fontRef idx="minor">
+          <a:schemeClr val="tx1"/>
+        </a:fontRef>
+      </a:style>
+    </a:lnDef>
+    <a:txDef>
+      <a:spPr>
+        <a:noFill/>
+      </a:spPr>
+      <a:bodyPr wrap="square" lIns="0" tIns="0" rIns="0" bIns="0" rtlCol="0">
+        <a:noAutofit/>
+      </a:bodyPr>
+      <a:lstStyle>
+        <a:defPPr marL="0" indent="0" algn="l">
+          <a:buNone/>
+          <a:defRPr/>
+        </a:defPPr>
+      </a:lstStyle>
+    </a:txDef>
+  </a:objectDefaults>
+  <a:extraClrSchemeLst>
+    <a:extraClrScheme>
+      <a:clrScheme name="mgm 2023">
+        <a:dk1>
+          <a:srgbClr val="000000"/>
+        </a:dk1>
+        <a:lt1>
+          <a:srgbClr val="FFFFFF"/>
+        </a:lt1>
+        <a:dk2>
+          <a:srgbClr val="207475"/>
+        </a:dk2>
+        <a:lt2>
+          <a:srgbClr val="047FA3"/>
+        </a:lt2>
+        <a:accent1>
+          <a:srgbClr val="5E8013"/>
+        </a:accent1>
+        <a:accent2>
+          <a:srgbClr val="7E6703"/>
+        </a:accent2>
+        <a:accent3>
+          <a:srgbClr val="B83403"/>
+        </a:accent3>
+        <a:accent4>
+          <a:srgbClr val="A0012C"/>
+        </a:accent4>
+        <a:accent5>
+          <a:srgbClr val="6A287D"/>
+        </a:accent5>
+        <a:accent6>
+          <a:srgbClr val="1D4E86"/>
+        </a:accent6>
+        <a:hlink>
+          <a:srgbClr val="1D4E86"/>
+        </a:hlink>
+        <a:folHlink>
+          <a:srgbClr val="1D4E86"/>
+        </a:folHlink>
+      </a:clrScheme>
+    </a:extraClrScheme>
+  </a:extraClrSchemeLst>
+  <a:custClrLst>
+    <a:custClr name="mgm Gray 1">
+      <a:srgbClr val="F0F2F4"/>
+    </a:custClr>
+    <a:custClr name="mgm Gray 2">
+      <a:srgbClr val="E0E3E7"/>
+    </a:custClr>
+    <a:custClr name="mgm Gray 3">
+      <a:srgbClr val="68778C"/>
+    </a:custClr>
+    <a:custClr name="mgm Gray 4">
+      <a:srgbClr val="4E5A68"/>
+    </a:custClr>
+  </a:custClrLst>
+  <a:extLst>
+    <a:ext uri="{05A4C25C-085E-4340-85A3-A5531E510DB2}">
+      <thm15:themeFamily xmlns:thm15="http://schemas.microsoft.com/office/thememl/2012/main" name="mgm-Template-2023_with sample slides.potx" id="{F2F743F7-CE81-41D7-AAD6-6A6869CD81F2}" vid="{F60207B9-C30B-4174-B1AA-106068C61077}"/>
+    </a:ext>
+  </a:extLst>
+</a:theme>
