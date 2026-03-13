@@ -6,28 +6,21 @@ mit Bildgenerierung via google/gemini-2.5-flash-image-preview.
 Abhängigkeiten: nur Python-Standardbibliothek (>=3.8)
 API-Key: Environment-Variable OPENROUTER_API_KEY
 
-Start: python chat_llm.py
+Start: python image_chat.py
 """
 
-import base64
-import datetime
-import http.client
 import http.server
+import io
 import json
 import os
-import ssl
 import sys
-import urllib.error
-import urllib.parse
-import urllib.request
-import io
 import xml.etree.ElementTree as ET
 import zipfile
 from functools import partial
 
+from image_api import DEFAULT_MODEL, build_file_part, call_openrouter, save_images
+
 PORT = 8080
-MODEL = "google/gemini-3.1-flash-image-preview"
-OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 HTML = r"""<!DOCTYPE html>
 <html lang="de">
@@ -192,7 +185,7 @@ HTML = r"""<!DOCTYPE html>
 <div id="input-area">
   <label id="edit-label"><input type="checkbox" id="edit-mode"> Bildkorrektur</label>
   <button id="upload-btn" title="Bild hochladen">+</button>
-  <input type="file" id="upload-file" accept="image/png,image/jpeg,image/webp,image/gif" style="display:none">
+  <input type="file" id="upload-file" accept="image/png,image/jpeg,image/webp,image/gif,application/pdf,.pdf" style="display:none">
   <div id="upload-preview"><img><button class="remove" title="Bild entfernen">&times;</button></div>
   <textarea id="prompt" rows="1" placeholder="Nachricht eingeben… (Shift+Enter für Zeilenumbruch)"></textarea>
   <button id="send">Senden</button>
@@ -240,7 +233,9 @@ promptSelect.addEventListener('change', () => {
 });
 let history = [];      // text-only history (lightweight)
 let richHistory = [];  // full multimodal history (with images)
-let uploadedImageDataUrl = null; // base64 data URL of uploaded image
+let uploadedFileDataUrl = null; // base64 data URL of uploaded file
+let uploadedFileName = null;
+let uploadedFileIsPdf = false;
 
 // Upload button
 const uploadBtn = document.getElementById('upload-btn');
@@ -252,8 +247,15 @@ uploadFile.addEventListener('change', () => {
   if (!file) return;
   const reader = new FileReader();
   reader.onload = (e) => {
-    uploadedImageDataUrl = e.target.result;
-    uploadPreview.querySelector('img').src = uploadedImageDataUrl;
+    uploadedFileDataUrl = e.target.result;
+    uploadedFileName = file.name;
+    uploadedFileIsPdf = file.type === 'application/pdf' || file.name.endsWith('.pdf');
+    const img = uploadPreview.querySelector('img');
+    if (uploadedFileIsPdf) {
+      img.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="%23e0e0e0" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><text x="7" y="17" font-size="6" fill="%23e0e0e0" font-family="sans-serif">PDF</text></svg>');
+    } else {
+      img.src = uploadedFileDataUrl;
+    }
     uploadPreview.style.display = 'block';
     uploadBtn.classList.add('has-file');
   };
@@ -261,7 +263,9 @@ uploadFile.addEventListener('change', () => {
   uploadFile.value = '';
 });
 uploadPreview.querySelector('.remove').addEventListener('click', () => {
-  uploadedImageDataUrl = null;
+  uploadedFileDataUrl = null;
+  uploadedFileName = null;
+  uploadedFileIsPdf = false;
   uploadPreview.style.display = 'none';
   uploadBtn.classList.remove('has-file');
 });
@@ -324,6 +328,8 @@ function renderContent(parts) {
       html += '<p>' + t + '</p>';
     } else if (p.type === 'image_url') {
       html += '<img src="' + p.image_url.url + '" onclick="event.stopPropagation();showLightbox(this.src)">';
+    } else if (p.type === 'file') {
+      html += '<p style="color:var(--accent)">📎 ' + esc(p.file.filename) + '</p>';
     }
   }
   return html;
@@ -356,21 +362,31 @@ async function send() {
   prompt.value = ''; autoResize();
   sendBtn.disabled = true;
 
-  // Build user message parts (text + optional image)
+  // Build user message parts (text + optional file)
   const userParts = [{type: 'text', text}];
   const userRichParts = [{type: 'text', text}];
-  const attachedImage = uploadedImageDataUrl;
-  if (attachedImage) {
-    userParts.push({type: 'image_url', image_url: {url: attachedImage}});
-    userRichParts.push({type: 'image_url', image_url: {url: attachedImage}});
+  const attachedFile = uploadedFileDataUrl;
+  const attachedIsPdf = uploadedFileIsPdf;
+  const attachedName = uploadedFileName;
+  if (attachedFile) {
+    if (attachedIsPdf) {
+      const filePart = {type: 'file', file: {filename: attachedName, file_data: attachedFile}};
+      userParts.push(filePart);
+      userRichParts.push(filePart);
+    } else {
+      userParts.push({type: 'image_url', image_url: {url: attachedFile}});
+      userRichParts.push({type: 'image_url', image_url: {url: attachedFile}});
+    }
     // Clear upload state
-    uploadedImageDataUrl = null;
+    uploadedFileDataUrl = null;
+    uploadedFileName = null;
+    uploadedFileIsPdf = false;
     uploadPreview.style.display = 'none';
     uploadBtn.classList.remove('has-file');
   }
   addMsg('user', userParts);
-  // For text-only history: always use multimodal content format when image attached
-  if (attachedImage) {
+  // For text-only history: always use multimodal content format when file attached
+  if (attachedFile) {
     history.push({role: 'user', content: userRichParts});
   } else {
     history.push({role: 'user', content: text});
@@ -392,7 +408,7 @@ async function send() {
       body: JSON.stringify({
         messages: msgs,
         model: modelSelect.value,
-        has_image_input: !!attachedImage,
+        has_image_input: !!(attachedFile && !attachedIsPdf),
         image_config: Object.assign({}, sizeSelect.value ? {image_size: sizeSelect.value} : {}, ratioSelect.value ? {aspect_ratio: ratioSelect.value} : {})
       })
     });
@@ -456,7 +472,6 @@ class ChatHandler(http.server.BaseHTTPRequestHandler):
         super().__init__(*args, **kwargs)
 
     def log_message(self, fmt, *args):
-        # Minimal logging
         sys.stderr.write(f"[{self.log_date_time_string()}] {fmt % args}\n")
 
     def do_GET(self):
@@ -482,17 +497,14 @@ class ChatHandler(http.server.BaseHTTPRequestHandler):
         length = int(self.headers.get("Content-Length", 0))
         body = json.loads(self.rfile.read(length))
         messages = body.get("messages", [])
-        model = body.get("model", MODEL)
+        model = body.get("model", DEFAULT_MODEL)
         image_config = body.get("image_config")
         has_image_input = body.get("has_image_input", False)
 
         try:
-            result = self._call_openrouter(messages, model, image_config, has_image_input)
+            result = call_openrouter(self.api_key, messages, model, image_config, has_image_input)
+            save_images(result["parts"], model)
             self._json_response(200, result)
-        except urllib.error.HTTPError as e:
-            error_body = e.read().decode("utf-8", errors="replace")
-            sys.stderr.write(f"OpenRouter API error {e.code}: {error_body}\n")
-            self._json_response(500, {"error": f"API-Fehler {e.code}: {error_body}"})
         except Exception as e:
             import traceback
             sys.stderr.write(f"Error in /api/chat: {traceback.format_exc()}\n")
@@ -504,17 +516,14 @@ class ChatHandler(http.server.BaseHTTPRequestHandler):
             length = int(self.headers.get("Content-Length", 0))
             raw = self.rfile.read(length)
 
-            # Parse multipart form data to extract file
             boundary = content_type.split("boundary=")[1].encode()
             parts = raw.split(b"--" + boundary)
             file_data = None
             for part in parts:
                 if b"filename=" in part:
-                    # Skip headers, file content starts after \r\n\r\n
                     header_end = part.find(b"\r\n\r\n")
                     if header_end != -1:
                         file_data = part[header_end + 4:]
-                        # Remove trailing \r\n
                         if file_data.endswith(b"\r\n"):
                             file_data = file_data[:-2]
                     break
@@ -551,121 +560,6 @@ class ChatHandler(http.server.BaseHTTPRequestHandler):
                     texts.append("\n".join(slide_texts))
         return "\n\n".join(texts)
 
-    def _call_openrouter(self, messages, model=MODEL, image_config=None, has_image_input=False):
-        body = {
-            "model": model,
-            "messages": messages,
-        }
-        # Only request image generation when no image was uploaded
-        if not has_image_input:
-            body["modalities"] = ["image", "text"]
-        if image_config and not has_image_input:
-            body["image_config"] = image_config
-        payload = json.dumps(body).encode()
-
-        parsed = urllib.parse.urlparse(OPENROUTER_URL)
-        ctx = ssl.create_default_context()
-        conn = http.client.HTTPSConnection(parsed.hostname, timeout=180, context=ctx)
-        try:
-            conn.request(
-                "POST", parsed.path,
-                body=payload,
-                headers={
-                    "Content-Type": "application/json",
-                    "Content-Length": str(len(payload)),
-                    "Authorization": f"Bearer {self.api_key}",
-                    "HTTP-Referer": "http://localhost:8080",
-                },
-            )
-            resp = conn.getresponse()
-            # Read response in chunks to avoid IncompleteRead
-            chunks = []
-            while True:
-                chunk = resp.read(65536)
-                if not chunk:
-                    break
-                chunks.append(chunk)
-            raw = b"".join(chunks)
-
-            if resp.status != 200:
-                sys.stderr.write(f"OpenRouter API error {resp.status}: {raw[:500]}\n")
-                raise urllib.error.HTTPError(
-                    OPENROUTER_URL, resp.status, raw.decode("utf-8", errors="replace"),
-                    resp.headers, None
-                )
-        finally:
-            conn.close()
-        data = json.loads(raw)
-
-        choice = data["choices"][0]["message"]
-        sys.stderr.write(f"API response keys: {list(choice.keys())}\n")
-        sys.stderr.write(f"content type: {type(choice.get('content'))}\n")
-        content_preview = str(choice.get("content", ""))[:300]
-        sys.stderr.write(f"content preview: {content_preview}\n")
-        content = choice.get("content", "")
-
-        parts = []
-        has_images = False
-
-        # Primary: images array (OpenRouter/Gemini image generation)
-        images = choice.get("images")
-        if images:
-            for img in (images if isinstance(images, list) else [images]):
-                if isinstance(img, dict) and img.get("type") == "image_url":
-                    url = img.get("image_url", {}).get("url", "")
-                    if url:
-                        parts.append({
-                            "type": "image_url",
-                            "image_url": {"url": url}
-                        })
-                        has_images = True
-
-        # Fallback: content array (only extract images if not already found)
-        if isinstance(content, list):
-            for item in content:
-                if item.get("type") == "text":
-                    parts.append({"type": "text", "text": item["text"]})
-                elif item.get("type") == "image_url" and not has_images:
-                    parts.append({
-                        "type": "image_url",
-                        "image_url": {"url": item["image_url"]["url"]}
-                    })
-        elif isinstance(content, str) and content:
-            parts.append({"type": "text", "text": content})
-
-        if not parts:
-            parts.append({"type": "text", "text": "(Keine Antwort vom Modell)"})
-
-        # Save images to disk
-        short_name = model.split("/")[-1].replace("-preview", "")
-        ts = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-        img_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "images")
-        os.makedirs(img_dir, exist_ok=True)
-        img_count = 0
-        for p in parts:
-            if p.get("type") == "image_url":
-                url = p["image_url"]["url"]
-                if url.startswith("data:"):
-                    b64_data = url.split(",", 1)[1]
-                    img_bytes = base64.b64decode(b64_data)
-                    suffix = f"_{img_count}" if img_count else ""
-                    fname = f"{ts}{suffix}_{short_name}.png"
-                    fpath = os.path.join(img_dir, fname)
-                    with open(fpath, "wb") as f:
-                        f.write(img_bytes)
-                    sys.stderr.write(f"Bild gespeichert: {fpath}\n")
-                    img_count += 1
-
-        result = {"parts": parts}
-        cost = data.get("usage", {}).get("cost")
-        if cost is not None:
-            result["cost"] = cost
-        # Pass reasoning_details for selective image editing
-        reasoning = choice.get("reasoning_details")
-        if reasoning:
-            result["reasoning_details"] = reasoning
-        return result
-
     def _json_response(self, code, obj):
         body = json.dumps(obj).encode()
         self.send_response(code)
@@ -685,7 +579,7 @@ def main():
     handler = partial(ChatHandler, api_key)
     server = http.server.HTTPServer(("0.0.0.0", PORT), handler)
     print(f"Server gestartet: http://localhost:{PORT}")
-    print(f"Modell: {MODEL}")
+    print(f"Modell: {DEFAULT_MODEL}")
     print("Beenden mit Ctrl+C")
 
     try:
